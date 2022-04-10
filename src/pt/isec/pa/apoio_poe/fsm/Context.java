@@ -16,16 +16,20 @@ public class Context {
         this.state = state;
     }
 
-    public boolean insert(Object object) {
-        return state.insert(object);
+    public <T> boolean insert(Object object,Class<T> typeClass) {
+        return state.insert(object,typeClass);
     }
 
-    public <T,K> boolean edit(T entity,K value,String label) {
-        return state.edit(entity,value,label);
+    public <T,K,A> boolean edit(T entity,K value,String label,Class<A> typeClass) {
+        return state.edit(entity,value,label,typeClass);
     }
 
-    public <T> boolean remove(T id) {
-        return state.remove(id);
+    public <T,K> boolean remove(T id,Class<K> typeClass) {
+        return state.remove(id,typeClass);
+    }
+
+    public <T> String querying(Class<T> typeClass){
+        return state.querying(typeClass);
     }
 
     public void changeManagementMode(EManagement management) {

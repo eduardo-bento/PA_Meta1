@@ -25,6 +25,7 @@ public class Teacher {
     }
 
     public void setEmail(String email) {
+        Log.getInstance().addMessage("Email changed");
         this.email = email;
     }
 
@@ -33,6 +34,7 @@ public class Teacher {
     }
 
     public void setName(String name) {
+        Log.getInstance().addMessage("Name changed");
         this.name = name;
     }
 

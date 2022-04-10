@@ -7,4 +7,12 @@ public class SelfProposal extends Proposal {
         super(id, title);
         this.student = student;
     }
+
+    public long getStudent() {
+        return student;
+    }
+
+    public void setStudent(long student) {
+        this.student = student;
+    }
 }

@@ -17,23 +17,26 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public void closePhase() {
-
-    }
+    public void closePhase() {}
 
     @Override
-    public boolean insert(Object object) {
+    public <T> boolean insert(Object object,Class<T> typeClass) {
         return false;
     }
 
     @Override
-    public <T,K> boolean edit(T entity, K value, String label) {
+    public <T,K,A> boolean edit(T entity, K value, String label, Class<A> typeClass) {
         return false;
     }
 
     @Override
-    public <T> boolean remove(T id) {
+    public <T,K> boolean remove(T id,Class<K> typeClass) {
         return false;
+    }
+
+    @Override
+    public <T> String querying(Class<T> typeClass) {
+        return null;
     }
 
     @Override

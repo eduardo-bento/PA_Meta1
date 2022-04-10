@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.utils;
 
+import java.util.List;
 import java.util.Scanner;
 
 public final class Input {
@@ -76,7 +77,7 @@ public final class Input {
         }
     }
 
-    public static double readNumber(String title) {
+    public static double readDouble(String title) {
         while (true) {
             if (title != null)
                 System.out.print(title);
@@ -107,5 +108,23 @@ public final class Input {
         } while (option < 1 || option > options.length);
         return option;
     }
+
+    public static int chooseOption(String title, List<String> options) {
+        int option = -1;
+        do {
+            if (title != null)
+                System.out.println(System.lineSeparator()+title);
+            System.out.println();
+            for(int i = 0; i < options.size(); i++) {
+                System.out.printf("%3d - %s\n",i+1,options.get(i));
+            }
+            System.out.print("\nOption: ");
+            if (sc.hasNextInt())
+                option = sc.nextInt();
+            sc.nextLine();
+        } while (option < 1 || option > options.size());
+        return option;
+    }
+
 
 }

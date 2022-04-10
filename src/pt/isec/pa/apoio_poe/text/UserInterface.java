@@ -2,15 +2,15 @@ package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.data.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.data.Proposals.Project;
-import pt.isec.pa.apoio_poe.data.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.data.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.data.Student;
-import pt.isec.pa.apoio_poe.data.Teacher;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
+import pt.isec.pa.apoio_poe.utils.Utils;
 
+import java.lang.reflect.Array;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 public class UserInterface {
@@ -33,86 +33,54 @@ public class UserInterface {
     }
 
     public void configuration(){
-        if(Input.chooseOption("Chose - ","goCandicy","Insert,Edit,remove") == 1){
+        if(Input.chooseOption("State - " + context.getState(),"goCandicy","Insert,Edit,remove") == 1){
             context.goCandidacy();
             return;
         }
 
-        EManagement management = EManagement.fromInteger(Input.readInt("Chose " + EManagement.getTypes()));
+        EManagement management = EManagement.fromInteger(Input.chooseOption("Chose Mode",EManagement.getTypes()) - 1);
         context.changeManagementMode(management);
+        Object object;
+        List<Object> data = new ArrayList<>();
 
-        switch (Input.chooseOption("Chose - " + management.name().toLowerCase(Locale.ROOT), "Insert", "Edit", "Remove", "goCandicy")) {
+        Field[] myClass = management.getDataClass().getDeclaredFields();
+        Field[] superClassFields = management.getDataClass().getSuperclass().getDeclaredFields();
+        List<Field> fields = new ArrayList<>(myClass.length + superClassFields.length);
+        Collections.addAll(fields,superClassFields);
+        Collections.addAll(fields,myClass);
+
+        switch (Input.chooseOption(Utils.capitalString(management.name()), "Insert", "Edit", "Remove","Querying")) {
             case 1 -> {
-                if (management == EManagement.STUDENTS) {
-                    long id = Input.readLong("Id ");
-                    Student student = new Student(id, "qwe", "qwe", "qwe", "qwe", 123123, true);
-                    context.insert(student);
-                } else if (management == EManagement.TEACHER) {
-                    String name = Input.readString("Name: ", false);
-                    String email = Input.readString("Email: ", true);
-                    boolean advisor = Input.readBoolean("Is advisor?");
-                    Teacher teacher = new Teacher(email, name, advisor);
-                    context.insert(teacher);
-                } else if (management == EManagement.PROJECT_STAGE) {
-                    switch (Input.chooseOption("Type of proposal", "InterShip", "Project", "SelfProposal")) {
-                        case 1: {
-                            String id = Input.readString("Id: ", false);
-                            String title = Input.readString("Title: ", false);
-                            String destiny = Input.readString("Destiny: ", false);
-                            String entity = Input.readString("Entity: ", false);
-                            long studentId = Input.readLong("Student id: ");
-
-                            InterShip interShip = new InterShip(id, title, destiny, entity, studentId);
-                            context.insert(interShip);
-                        }
-                        case 2: {
-                            String id = Input.readString("Id: ", false);
-                            String title = Input.readString("Title: ", false);
-                            String destiny = Input.readString("Destiny: ", false);
-                            String teacher = Input.readString("Teacher: ", false);
-                            long studentId = Input.readLong("Student id: ");
-
-                            Project project = new Project(id, title, destiny, teacher, studentId);
-                            context.insert(project);
-                        }
-                        case 3: {
-                            String id = Input.readString("Id: ", false);
-                            String title = Input.readString("Title: ", false);
-                            long studentId = Input.readLong("Student id: ");
-
-                            SelfProposal selfProposal = new SelfProposal(id, title, studentId);
-                            context.insert(selfProposal);
-                        }
-                    }
+                for (Field f : fields){
+                    String type = Utils.splitString(f.getType().getName(),".");
+                    data.add(Utils.invokeMethod(type,type + " - " + f.getName(),Input.class));
                 }
+                object = management.factory(data);
+                context.insert(object,management.getDataClass());
             }
             case 2 -> {
-                if (management == EManagement.STUDENTS) {
-                    long id = Input.readLong("Id ");
-                    switch (Input.chooseOption("Witch atribute you want to change", Student.getTypes())) {
-                        case 1 -> context.edit(id, Input.readString("New name: ", false), "name");
-                        case 2 -> context.edit(id, Input.readString("New email: ", false), "email");
-                        case 3 -> context.edit(id, Input.readString("New acronym Curse: ", false), "curse");
-                        case 4 -> context.edit(id, Input.readString("New acronym branch: ", false), "branch");
-                        case 5 -> context.edit(id, Input.readNumber("New classification: "), "classification");
-                        case 6 -> context.edit(id, Input.readBoolean("Have stage/don´t have stage: "), "stage");
-                    }
-                } else if (management == EManagement.TEACHER) {
-                    String email = Input.readString("Email ", true);
-                    switch (Input.chooseOption("Witch atribute you want to change", "name", "advisor -> true/false")) {
-                        case 1 -> context.edit(email, Input.readString("New name: ", false), "name");
-                        case 2 -> context.edit(email, Input.readBoolean("Is advidor?:"), "advisor");
-                    }
+                Field entityField = fields.get(0);
+                data.add(Utils.invokeMethod(Utils.splitString(entityField.getType().getName(),"."),entityField.getName(),Input.class));
+
+                List<String> names = new ArrayList<>();
+                for (Field e : fields){
+                    names.add(e.getName());
                 }
+
+                int option = Input.chooseOption("Witch attribute you want to change", names);
+
+                Field changeField = fields.get(option - 1);
+                data.add(Utils.invokeMethod(Utils.splitString(changeField.getType().getName(),"."),changeField.getName(),Input.class));
+
+                context.edit(data.get(0),data.get(1),changeField.getName(),management.getDataClass());
             }
             case 3 -> {
-                if (management == EManagement.STUDENTS) {
-                    long id = Input.readLong("Id ");
-                    context.remove(id);
-                } else if (management == EManagement.TEACHER) {
-                    String email = Input.readString("Email: ", false);
-                    context.remove(email);
-                }
+                Field entityField = fields.get(0);
+                data.add(Utils.invokeMethod(Utils.splitString(entityField.getType().getName(),"."),entityField.getName(),Input.class));
+                context.remove(data.get(0),management.getDataClass());
+            }
+            case 4 ->{
+                System.out.println(context.querying(management.getDataClass()));
             }
         }
     }

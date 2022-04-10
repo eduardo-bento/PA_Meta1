@@ -14,6 +14,22 @@ public class InterShip extends Proposal{
         this.student = student;
     }
 
+    public String getEntity() {
+        return entity;
+    }
+
+    public void setEntity(String entity) {
+        this.entity = entity;
+    }
+
+    public long getStudent() {
+        return student;
+    }
+
+    public void setStudent(long student) {
+        this.student = student;
+    }
+
     public String getDestiny() {
         return destiny;
     }

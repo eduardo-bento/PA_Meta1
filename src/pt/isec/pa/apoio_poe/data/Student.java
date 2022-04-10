@@ -11,7 +11,7 @@ public class Student {
     private String acronymCurse;
     private String acronymBranch;
     private double classification;
-    private boolean haveProject_Stage;
+    private boolean project;
 
     public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean haveProject_Stage) {
         this.id = id;
@@ -20,7 +20,7 @@ public class Student {
         this.acronymCurse = acronymCurse;
         this.acronymBranch = acronymBranch;
         this.classification = classification;
-        this.haveProject_Stage = haveProject_Stage;
+        this.project = haveProject_Stage;
     }
 
     public static Student getFakeStudent(long id){
@@ -40,7 +40,7 @@ public class Student {
     }
 
     public void setName(String name) {
-        Log.getInstance().addMessage("The name was changed");
+        Log.getInstance().addMessage("The student name was changed");
         this.name = name;
     }
 
@@ -49,7 +49,7 @@ public class Student {
     }
 
     public void setEmail(String email) {
-        Log.getInstance().addMessage("The email was changed");
+        Log.getInstance().addMessage("The student email was changed");
         this.email = email;
     }
 
@@ -77,15 +77,15 @@ public class Student {
         this.classification = classification;
     }
 
-    public boolean isHaveProject_Stage() {
-        return haveProject_Stage;
+    public boolean isProject() {
+        return project;
     }
 
-    public void setHaveProject_Stage(boolean haveProject_Stage) {
-        if (this.haveProject_Stage == haveProject_Stage){
-            Log.getInstance().addMessage("You tried to change the stage to" + haveProject_Stage + "but the atribute already has that value");
+    public void setProject(boolean project) {
+        if (this.project == project){
+            Log.getInstance().addMessage("You tried to change the stage to" + project + "but the attribute already has that value");
         }
-        this.haveProject_Stage = haveProject_Stage;
+        this.project = project;
     }
 
     @Override
@@ -103,22 +103,12 @@ public class Student {
 
     @Override
     public String toString() {
-        return "id :" + id +
-                ", name: " + name + '\'' +
-                ", email: " + email + '\'' +
-                ", acronymCurse: " + acronymCurse + '\'' +
-                ", acronymBranch: " + acronymBranch + '\'' +
-                ", classification: " + classification +
-                ", haveProject_Stage: " + haveProject_Stage;
-    }
-
-    public static String getTypes(){
-        return "id," +
-                "name," +
-                "email," +
-                "acronymCurse," +
-                "acronymBranch," +
-                "classification," +
-                "haveProject_Stage";
+        return "\nStudent id :" + id + "\n" +
+                "name: " + name + "\n" +
+                "email: " + email + "\n" +
+                "acronymCurse: " + acronymCurse + "\n" +
+                "acronymBranch: " + acronymBranch + "\n" +
+                "classification: " + classification + "\n" +
+                "haveProject_Stage: " + project;
     }
 }

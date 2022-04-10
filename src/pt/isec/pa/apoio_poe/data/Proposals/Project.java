@@ -1,7 +1,5 @@
 package pt.isec.pa.apoio_poe.data.Proposals;
 
-import pt.isec.pa.apoio_poe.data.Teacher;
-
 public class Project extends Proposal{
     private String destiny;
     private String teacher;
@@ -11,6 +9,26 @@ public class Project extends Proposal{
         super(id, title);
         this.destiny = destiny;
         this.teacher = teacher;
+        this.student = student;
+    }
+
+    public String getDestiny() {
+        return destiny;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public long getStudent() {
+        return student;
+    }
+
+    public void setStudent(long student) {
         this.student = student;
     }
 
