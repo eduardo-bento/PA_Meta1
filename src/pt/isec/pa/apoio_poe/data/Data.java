@@ -15,12 +15,14 @@ public class Data {
     private final Set<Student> students;
     private final Set<Teacher> teachers;
     private final Set<Proposal> proposals;
+    private final Set<Candicy> candicies;
 
     public Data() {
         management = new HashMap<>();
         students = new HashSet<>();
         teachers = new HashSet<>();
         proposals = new HashSet<>();
+        candicies = new HashSet<>();
         management.put(Student.class,students);
         management.put(Teacher.class,teachers);
         management.put(Proposal.class,proposals);
@@ -31,8 +33,8 @@ public class Data {
         return phasesLock[state.ordinal()];
     }
 
-    public void lockPhase(EState state){
-        phasesLock[state.ordinal()] = true;
+    public boolean lockPhase(EState state){
+        return phasesLock[state.ordinal()] = true;
     }
 
     public <T> boolean insert(Object object, Class<T> typeClass){

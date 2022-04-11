@@ -8,7 +8,7 @@ public interface IState {
     <T,K> boolean remove(T id,Class<K> typeClass);
     <T> String querying(Class<T> typeClass);
     void changeManagementMode(EManagement management);
-    void closePhase();
+    boolean closePhase();
 
     void goCandidacy();
     boolean backConfiguration();

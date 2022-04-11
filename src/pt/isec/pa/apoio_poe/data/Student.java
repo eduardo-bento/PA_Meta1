@@ -2,6 +2,8 @@ package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Student {
@@ -13,6 +15,9 @@ public class Student {
     private double classification;
     private boolean project;
 
+
+
+
     public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean haveProject_Stage) {
         this.id = id;
         this.name = name;
@@ -21,6 +26,8 @@ public class Student {
         this.acronymBranch = acronymBranch;
         this.classification = classification;
         this.project = haveProject_Stage;
+
+        Flyweight.addStudentToBranch(acronymBranch);
     }
 
     public static Student getFakeStudent(long id){
@@ -104,11 +111,11 @@ public class Student {
     @Override
     public String toString() {
         return "\nStudent id :" + id + "\n" +
-                "name: " + name + "\n" +
-                "email: " + email + "\n" +
-                "acronymCurse: " + acronymCurse + "\n" +
-                "acronymBranch: " + acronymBranch + "\n" +
-                "classification: " + classification + "\n" +
-                "haveProject_Stage: " + project;
+                "-name: " + name + "\n" +
+                "-email: " + email + "\n" +
+                "-acronymCurse: " + acronymCurse + "\n" +
+                "-acronymBranch: " + acronymBranch + "\n" +
+                "-classification: " + classification + "\n" +
+                "-haveProject_Stage: " + project;
     }
 }

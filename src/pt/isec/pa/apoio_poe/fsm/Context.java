@@ -36,6 +36,10 @@ public class Context {
         state.changeManagementMode(management);
     }
 
+    public boolean closePhase(){
+        return state.closePhase();
+    }
+
     public void goCandidacy() {
         state.goCandidacy();
     }

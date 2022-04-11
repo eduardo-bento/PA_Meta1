@@ -1,5 +1,7 @@
 package pt.isec.pa.apoio_poe.data.Proposals;
 
+import pt.isec.pa.apoio_poe.data.Flyweight;
+
 public class Project extends Proposal{
     private String destiny;
     private String teacher;
@@ -10,6 +12,8 @@ public class Project extends Proposal{
         this.destiny = destiny;
         this.teacher = teacher;
         this.student = student;
+
+        Flyweight.addProposalToBranch(destiny);
     }
 
     public String getDestiny() {

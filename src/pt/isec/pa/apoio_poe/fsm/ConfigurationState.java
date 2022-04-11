@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.data.Flyweight;
 
 public class ConfigurationState extends ContextAdapter {
     private EManagement management;
@@ -27,8 +28,11 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
-    public void closePhase() {
-        data.lockPhase(getState());
+    public boolean closePhase() {
+        if (Flyweight.branchGreatherProposals()){
+            return data.lockPhase(getState());
+        }
+        return false;
     }
 
     @Override

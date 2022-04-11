@@ -2,16 +2,15 @@ package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.data.Flyweight;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class UserInterface {
     private final Context context;
@@ -27,14 +26,20 @@ public class UserInterface {
                 case CONFIGURATION -> configuration();
                 case CANDIDACY -> candicy();
             }
+            System.out.println(Flyweight.getStudentBranchAmount("RAS"));
             System.out.println(Log.getInstance().toString());
         }
 
     }
 
     public void configuration(){
-        if(Input.chooseOption("State - " + context.getState(),"goCandicy","Insert,Edit,remove") == 1){
+        int choseTransition = Input.chooseOption("State - " + context.getState(),"goCandicy","Close phase","Insert,Edit,Remove,Querying");
+
+        if(choseTransition == 1){
             context.goCandidacy();
+            return;
+        } else if(choseTransition == 2){
+            context.closePhase();
             return;
         }
 
