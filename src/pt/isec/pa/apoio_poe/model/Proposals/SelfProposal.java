@@ -8,6 +8,10 @@ public class SelfProposal extends Proposal {
         this.student = student;
     }
 
+    public static SelfProposal getFakeSelfProposal(String id, String title, long student){
+        return new SelfProposal(id,title,student);
+    }
+
     public long getStudent() {
         return student;
     }

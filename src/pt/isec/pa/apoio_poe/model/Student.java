@@ -8,20 +8,20 @@ public class Student {
     private long id;
     private String name;
     private String email;
-    private String acronymCurse;
-    private String acronymBranch;
+    private String curse;
+    private String branch;
     private double classification;
     private boolean hasStage;
-    private boolean _hasCandicy;
+    private boolean _hasCandidacy;
 
-    public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean haveProject_Stage) {
+    public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean hasStage) {
         this.id = id;
         this.name = name;
         this.email = email;
-        this.acronymCurse = acronymCurse;
-        this.acronymBranch = acronymBranch;
+        this.curse = acronymCurse;
+        this.branch = acronymBranch;
         this.classification = classification;
-        this.hasStage = haveProject_Stage;
+        this.hasStage = hasStage;
     }
 
     public static Student getFakeStudent(long id){
@@ -54,20 +54,20 @@ public class Student {
         this.email = email;
     }
 
-    public String getAcronymCurse() {
-        return acronymCurse;
+    public String getCurse() {
+        return curse;
     }
 
-    public void setAcronymCurse(String acronymCurse) {
-        this.acronymCurse = acronymCurse;
+    public void setCurse(String curse) {
+        this.curse = curse;
     }
 
-    public String getAcronymBranch() {
-        return acronymBranch;
+    public String getBranch() {
+        return branch;
     }
 
-    public void setAcronymBranch(String acronymBranch) {
-        this.acronymBranch = acronymBranch;
+    public void setBranch(String branch) {
+        this.branch = branch;
     }
 
     public double getClassification() {
@@ -83,11 +83,11 @@ public class Student {
     }
 
     public boolean hasCandicy() {
-        return _hasCandicy;
+        return _hasCandidacy;
     }
 
-    public void set_hasCandicy(boolean candidacy) {
-        this._hasCandicy = candidacy;
+    public void set_hasCandidacy(boolean candidacy) {
+        this._hasCandidacy = candidacy;
     }
 
     public void setHasStage(boolean hasStage) {
@@ -115,8 +115,8 @@ public class Student {
         return "\nStudent id :" + id + "\n" +
                 "-Name: " + name + "\n" +
                 "-Email: " + email + "\n" +
-                "-Curse: " + acronymCurse + "\n" +
-                "-Branch: " + acronymBranch + "\n" +
+                "-Curse: " + curse + "\n" +
+                "-Branch: " + branch + "\n" +
                 "-Classification: " + classification + "\n" +
                 "-Has project: " + hasStage;
     }

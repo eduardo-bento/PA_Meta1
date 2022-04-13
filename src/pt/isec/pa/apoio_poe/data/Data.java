@@ -32,7 +32,7 @@ public class Data {
         teachers = new HashSet<>();
         proposals = new HashSet<>();
         candidacies = new HashSet<>();
-        management.put(Student.class,candidacies);
+        management.put(Student.class,students);
         management.put(Teacher.class,teachers);
         management.put(Proposal.class,proposals);
         management.put(Candidacy.class, candidacies);
@@ -145,43 +145,30 @@ public class Data {
     }
 
     public boolean addProposal(long id,String idProposal){
-        for(Candidacy c : candidacies){
-            if(c.getStudentId() == id){
-                for (Proposal proposal : proposals){
-                    if (idProposal.equals(proposal.getId())){
-                        proposal.addCandicy();
-                        Log.getInstance().addMessage("The proposal was added to the candidacy");
-                        c.addProposal(idProposal);
-                        for (Student s : students){
-                            if (s.getId() == id){
-                                s.set_hasCandicy(true);
-                            }
-                        }
-                        return true;
-                    }
+        Candidacy candidacy = find(id,Candidacy.class);
+        if (candidacy != null && candidacy.addProposal(idProposal)){
+            for (Proposal proposal : proposals){
+                if (idProposal.equals(proposal.getId())){
+                    proposal.addCandicy();
                 }
             }
+            Log.getInstance().addMessage("The proposal was added to the candidacy");
+            return true;
         }
         Log.getInstance().addMessage("The proposal was not added to the candidacy");
         return false;
     }
 
-    public boolean removeProposal(long id, String value) {
-        for(Candidacy c : candidacies){
-            if (c.getStudentId() == id){
-                for (String p : c.getProposals()){
-                    if (p.equals(value)){
-                        c.getProposals().remove(p);
-                        for (Proposal pr : proposals){
-                            if (pr.getId().equals(value)){
-                                pr.subCandicy();
-                            }
-                        }
-                        Log.getInstance().addMessage("The proposal was remove from the candidacy");
-                        return true;
-                    }
+    public boolean removeProposal(long id, String idProposal) {
+        Candidacy candidacy = find(id,Candidacy.class);
+        if (candidacy != null && candidacy.removeProposal(idProposal)){
+            for (Proposal proposal : proposals){
+                if (idProposal.equals(proposal.getId())){
+                    proposal.subCandicy();
                 }
             }
+            Log.getInstance().addMessage("The proposal was remove from the candidacy");
+            return true;
         }
         Log.getInstance().addMessage("The proposal was not remove from the candidacy");
         return false;
@@ -190,6 +177,7 @@ public class Data {
     public String getListOfStudents(){
         List<Long> withCandidacy = new ArrayList<>();
         List<Long> withoutCandidacy = new ArrayList<>();
+
         for (Student s : students){
             if (s.hasCandicy()){
                 withCandidacy.add(s.getId());
@@ -203,29 +191,37 @@ public class Data {
     public String getListProposals(List<Integer> filters){
         StringBuilder stringBuilder = new StringBuilder();
         for (int f : filters){
-            if (f == 1){
-                for (Proposal p : proposals){
-                    if (p instanceof SelfProposal){
-                        stringBuilder.append(p).append("\n");
+            switch (f){
+                case 1 -> {
+                    stringBuilder.append("SelfProposals").append("\n");
+                    for (Proposal p : proposals){
+                        if (p instanceof SelfProposal){
+                            stringBuilder.append(p).append("\n");
+                        }
                     }
                 }
-            } else if(f == 2){
-                for (Proposal p : proposals){
-                    if (p instanceof Project){
-                        stringBuilder.append(p).append("\n");
+                case 2 ->{
+                    stringBuilder.append("Teacher Proposals").append("\n");
+                    for (Proposal p : proposals){
+                        if (p instanceof Project){
+                            stringBuilder.append(p).append("\n");
+                        }
                     }
                 }
-            } else if (f == 3){
-                for (Proposal p : proposals){
-                    if (p.get_hasCandidacy() > 0){
-                        stringBuilder.append(p).append("\n");
+                case 3 ->{
+                    stringBuilder.append("Proposals with candidacy").append("\n");
+                    for (Proposal p : proposals){
+                        if (p.get_hasCandidacy() > 0){
+                            stringBuilder.append(p).append("\n");
+                        }
                     }
                 }
-
-            } else if(f == 4){
-                for (Proposal p : proposals){
-                    if (p.get_hasCandidacy() == 0 && !(p instanceof SelfProposal)){
-                        stringBuilder.append(p).append("\n");
+                case 4 ->{
+                    stringBuilder.append("Proposals without candidacy").append("\n");
+                    for (Proposal p : proposals){
+                        if (p.get_hasCandidacy() == 0 && !(p instanceof SelfProposal)){
+                            stringBuilder.append(p).append("\n");
+                        }
                     }
                 }
             }
@@ -233,4 +229,13 @@ public class Data {
         return stringBuilder.toString();
     }
 
+    public void automaticAssignment(){
+       /* for (Proposal p : proposals){
+            if (p instanceof SelfProposal){
+                SelfProposal proposal = (SelfProposal) p;
+                Candidacy candidacy = new Candidacy(proposal.getStudent());
+                candidacy.addProposal(proposal.getId());
+            }
+        }*/
+    }
 }

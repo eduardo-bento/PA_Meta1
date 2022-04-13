@@ -11,12 +11,16 @@ public class Candidacy {
         proposals = new HashSet<>();
     }
 
-    public Candidacy getFakeCandidacy(long id){
+    public static Candidacy getFakeCandidacy(long id){
         return new Candidacy(id);
     }
 
-    public void addProposal(String proposal){
-        proposals.add(proposal);
+    public boolean addProposal(String proposal){
+        return proposals.add(proposal);
+    }
+
+    public boolean removeProposal(String proposal){
+        return proposals.remove(proposal);
     }
 
     public long getStudentId() {
@@ -35,8 +39,8 @@ public class Candidacy {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Candidacy candicy = (Candidacy) o;
-        return studentId == candicy.studentId;
+        Candidacy candidacy = (Candidacy) o;
+        return studentId == candidacy.studentId;
     }
 
     @Override

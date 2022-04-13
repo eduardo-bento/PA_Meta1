@@ -1,8 +1,10 @@
 package pt.isec.pa.apoio_poe.model.Proposals;
 
+
+
 public class InterShip extends Proposal{
-    private String destiny;
     private String entity;
+    private String destiny;
     private long student;
 
     public InterShip(String id, String title, String destiny, String entity, long student) {
@@ -10,6 +12,10 @@ public class InterShip extends Proposal{
         this.destiny = destiny;
         this.entity = entity;
         this.student = student;
+    }
+
+    public static InterShip getFakeInterShip(String id, String title, String destiny, String entity, long student){
+        return new InterShip(id,title,destiny,entity,student);
     }
 
     public String getEntity() {

@@ -12,6 +12,10 @@ public class Project extends Proposal{
         this.student = student;
     }
 
+    public static Project getFakeProject(String id, String title, String destiny, String teacher, long student){
+        return new Project(id,title,destiny,teacher,student);
+    }
+
     public String getDestiny() {
         return destiny;
     }

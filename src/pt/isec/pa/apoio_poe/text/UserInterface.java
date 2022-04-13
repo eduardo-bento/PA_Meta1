@@ -44,15 +44,16 @@ public class UserInterface {
         Collections.addAll(fields,myClass);
 
         switch (Input.chooseOption("State - " + context.getState().toString().toLowerCase(Locale.ROOT) +
-                        "\ncurrent mode: " + management.toString().toLowerCase(Locale.ROOT),"Next State - Candidacy","Change Mode",
+                        "\ncurrent mode: " + context.getManagementMode().toString().toLowerCase(Locale.ROOT),"Next State - Candidacy","Change Mode",
                 "ClosePhase","Insert","Edit","Remove","Querying")){
             case 1 -> context.forward();
             case 2 -> {
-                int option = Input.chooseOption("Chose Mode",EManagement.getTypes());
-                if (option == 3){
-                    option += Input.chooseOption("With type","Project","InterShip","SelfProposal");
+                int option = Input.chooseOption("Chose Mode",EManagement.getTypes()) - 1;
+                if (option == 2){
+                    option += Input.chooseOption("With type","InterShip","Project","SelfProposal") - 1;
                 }
-                EManagement changeManager = EManagement.fromInteger(option - 1);
+
+                EManagement changeManager = EManagement.fromInteger(option);
                 context.changeManagementMode(changeManager);
             }
             case 3 -> context.closePhase();
@@ -131,6 +132,6 @@ public class UserInterface {
     }
 
     public void proposals(){
-        Input.chooseOption("Proposals");
+        Input.chooseOption("Proposals","Automatic assignment");
     }
 }

@@ -69,12 +69,7 @@ public final class Input {
                 System.out.print(title);
             else
                 System.out.print("> ");
-            if (sc.hasNextBoolean()) {
-                boolean booleanValue = sc.nextBoolean();
-                sc.nextLine();
-                return booleanValue;
-            } else
-                sc.nextLine();
+            return chooseOption(null, "true", "false") == 1;
         }
     }
 

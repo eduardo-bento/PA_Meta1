@@ -9,10 +9,8 @@ import java.util.Set;
 
 public class CandidacyManager {
     private final Set<Candidacy> candidacies;
-    private final Map<Integer,Candidacy> candidaciesMap;
 
     public CandidacyManager() {
         candidacies = new HashSet<>();
-        candidaciesMap = new HashMap<>();
     }
 }

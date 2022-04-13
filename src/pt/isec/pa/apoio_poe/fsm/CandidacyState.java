@@ -39,10 +39,10 @@ public class CandidacyState extends ContextAdapter{
 
     @Override
     public boolean insert(Object object) {
-        Candidacy candicy = (Candidacy) object;
-        Student student = data.find(candicy.getStudentId(),Student.class);
+        Candidacy candidacy = (Candidacy) object;
+        Student student = data.find(candidacy.getStudentId(),Student.class);
         if (student != null){
-            student.set_hasCandicy(true);
+            student.set_hasCandidacy(true);
             return data.insert(object);
         }
         return false;
@@ -58,7 +58,7 @@ public class CandidacyState extends ContextAdapter{
         Candidacy candidacy = data.find(id,Candidacy.class);
         Student student = data.find(candidacy.getStudentId(),Student.class);
         if (student != null){
-            student.set_hasCandicy(false);
+            student.set_hasCandidacy(false);
             data.remove(id,typeClass);
             return true;
         }
