@@ -1,13 +1,16 @@
 package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.data.Commands;
 import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.data.EManagement;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
+import pt.isec.pa.apoio_poe.utils.Tuple;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
+import javax.swing.text.Style;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +37,7 @@ public class UserInterface {
     }
 
     public void configuration(){
+        Commands commands = new Commands();
         Object object;
         List<Object> data = new ArrayList<>();
         EManagement management = context.getManagementMode();
@@ -58,11 +62,12 @@ public class UserInterface {
             }
             case 3 -> context.closePhase();
             case 4 -> {
-                for (Field f : fields){
-                    if (!(f.getName().charAt(0) == '_')){
-                        String type = Utils.splitString(f.getType().getName(),"\\.");
-                        data.add(Utils.invokeMethod(type,type + " - " + f.getName(),Input.class));
-                    }
+                List<String> info = commands.getInfo(management.getDataClass());
+                for (int i = 0,j = 0; i < info.size() ;i++,j++){
+                    if (fields.get(j).getName().charAt(0) == '_') j++;
+
+                    String type = Utils.splitString(fields.get(j).getType().getName(),"\\.");
+                    data.add(Utils.invokeMethod(type,type + " " + info.get(i),Input.class));
                 }
                 object = management.factory(data);
                 context.insert(object);

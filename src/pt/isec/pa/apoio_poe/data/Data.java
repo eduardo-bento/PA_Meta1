@@ -134,7 +134,7 @@ public class Data {
         }
     }
 
-    public <T> String querying(Class<T> typeClass){
+    public <T> String querying(Class<T> typeClass) {
         Set set = management.get(Utils.getSuperClass(typeClass));
         StringBuilder stringBuilder = new StringBuilder();
 

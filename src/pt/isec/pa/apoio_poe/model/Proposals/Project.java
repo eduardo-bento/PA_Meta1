@@ -1,8 +1,8 @@
 package pt.isec.pa.apoio_poe.model.Proposals;
 
 public class Project extends Proposal{
-    private String destiny;
     private String teacher;
+    private String destiny;
     private long student;
 
     public Project(String id, String title, String destiny, String teacher, long student) {

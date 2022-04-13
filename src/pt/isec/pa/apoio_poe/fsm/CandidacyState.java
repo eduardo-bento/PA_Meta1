@@ -84,6 +84,11 @@ public class CandidacyState extends ContextAdapter{
     }
 
     @Override
+    public void automaticAssignment() {
+
+    }
+
+    @Override
     public EState getState() {
         return EState.CANDIDACY;
     }

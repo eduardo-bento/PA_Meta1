@@ -49,6 +49,11 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
+    public void automaticAssignment() {
+
+    }
+
+    @Override
     public boolean back() {
         return false;
     }
