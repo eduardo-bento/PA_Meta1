@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 public class Utils {
     public static String splitString(String string,String c){
-        String[] strings = string.split("\\.");
+        String[] strings = string.split(c);
         return capitalString(strings[strings.length -1]);
     }
 

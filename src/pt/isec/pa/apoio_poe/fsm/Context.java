@@ -3,6 +3,8 @@ package pt.isec.pa.apoio_poe.fsm;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
 
+import java.util.List;
+
 public class Context {
     IState state;
     Data data;
@@ -16,8 +18,8 @@ public class Context {
         this.state = state;
     }
 
-    public <T> boolean insert(Object object,Class<T> typeClass) {
-        return state.insert(object,typeClass);
+    public boolean insert(Object object) {
+        return state.insert(object);
     }
 
     public <T,K,A> boolean edit(T entity,K value,String label,Class<A> typeClass) {
@@ -36,24 +38,27 @@ public class Context {
         state.changeManagementMode(management);
     }
 
+    public EManagement getManagementMode(){
+        return state.getManagementMode();
+    }
     public boolean closePhase(){
         return state.closePhase();
     }
 
-    public void goCandidacy() {
-        state.goCandidacy();
+    public void forward() {
+        state.forward();
     }
 
-    public boolean backConfiguration() {
-        return state.backConfiguration();
+    public boolean back() {
+        return state.back();
     }
 
     public String getListOfStudents() {
         return state.getListOfStudents();
     }
 
-    public String getListOfProjects_Stage() {
-        return state.getListOfProjects_Stages();
+    public String getFilterList(List<Integer> filters){
+        return state.getFilterList(filters);
     }
 
     public EState getState(){

@@ -3,6 +3,8 @@ package pt.isec.pa.apoio_poe.fsm;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
 
+import java.util.List;
+
 abstract class ContextAdapter implements IState{
     protected Context context;
     protected Data data;
@@ -22,7 +24,7 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public <T> boolean insert(Object object,Class<T> typeClass) {
+    public boolean insert(Object object) {
         return false;
     }
 
@@ -42,12 +44,12 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public void goCandidacy() {
+    public void forward() {
 
     }
 
     @Override
-    public boolean backConfiguration() {
+    public boolean back() {
         return false;
     }
 
@@ -57,10 +59,15 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public String getListOfProjects_Stages() {
+    public String getFilterList(List<Integer> filters) {
         return null;
     }
 
     @Override
     public void changeManagementMode(EManagement management){}
+
+    @Override
+    public EManagement getManagementMode() {
+        return null;
+    }
 }

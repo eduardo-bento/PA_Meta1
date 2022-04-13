@@ -1,6 +1,4 @@
-package pt.isec.pa.apoio_poe.data.Proposals;
-
-import pt.isec.pa.apoio_poe.data.Student;
+package pt.isec.pa.apoio_poe.model.Proposals;
 
 public class InterShip extends Proposal{
     private String destiny;
@@ -38,5 +36,13 @@ public class InterShip extends Proposal{
         if (destiny.equals("RAS") || destiny.equals("DA") || destiny.equals("SI")){
             this.destiny = destiny;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "InterShip: " +
+                "destiny: " + destiny + "\n" +
+                "id: " + id + "\n" +
+                "title: " + title + "\n";
     }
 }

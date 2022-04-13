@@ -2,23 +2,25 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.data.Flyweight;
 
 public class ConfigurationState extends ContextAdapter {
-    private EManagement management;
     public ConfigurationState(Context context, Data data) {
         super(context, data);
-        management = EManagement.STUDENTS;
     }
 
     @Override
     public void changeManagementMode(EManagement management) {
-        this.management = management;
+        data.setCurrentMode(management);
     }
 
     @Override
-    public <T> boolean insert(Object object,Class<T> typeClass) {
-       return data.insert(object,typeClass);
+    public EManagement getManagementMode() {
+        return data.getCurrentMode();
+    }
+
+    @Override
+    public boolean insert(Object object) {
+       return data.insert(object);
     }
 
     @Override
@@ -26,13 +28,9 @@ public class ConfigurationState extends ContextAdapter {
         data.edit(entity,value,label,typeClass);
         return true;
     }
-
     @Override
     public boolean closePhase() {
-        if (Flyweight.branchGreatherProposals()){
-            return data.lockPhase(getState());
-        }
-        return false;
+        return data.lockPhase(getState());
     }
 
     @Override
@@ -47,7 +45,7 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
-    public void goCandidacy() {
+    public void forward() {
         changeState(EState.CANDIDACY);
     }
 

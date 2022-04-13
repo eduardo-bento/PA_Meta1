@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -107,6 +108,40 @@ public final class Input {
             sc.nextLine();
         } while (option < 1 || option > options.length);
         return option;
+    }
+
+    public static List<Integer> chooseMultipleOptions(String title, String ... options) {
+        String option = null;
+        boolean dontPrint = false;
+        List<Integer> values = new ArrayList<>();
+        do {
+            if (!dontPrint){
+                if (title != null)
+                    System.out.println(System.lineSeparator()+title);
+                System.out.println();
+                for(int i = 0; i < options.length; i++) {
+                    System.out.printf("%3d - %s\n",i+1,options[i]);
+                }
+                dontPrint = true;
+            }
+            System.out.print("\nOption (ex: 1,3): ");
+            option = sc.nextLine().trim();
+            String[] value = option.split(",");
+            for (String v : value){
+                try{
+                    int add = Integer.parseInt(v);
+                    if (add < 0 || add > options.length || values.contains(add)){
+                        values.clear();
+                        continue;
+                    }
+                    values.add(add);
+                }catch (NumberFormatException e){
+                    values.clear();
+                    continue;
+                }
+            }
+        } while (option.isBlank() || values.isEmpty());
+        return values;
     }
 
     public static int chooseOption(String title, List<String> options) {

@@ -1,6 +1,4 @@
-package pt.isec.pa.apoio_poe.data.Proposals;
-
-import pt.isec.pa.apoio_poe.data.Flyweight;
+package pt.isec.pa.apoio_poe.model.Proposals;
 
 public class Project extends Proposal{
     private String destiny;
@@ -12,8 +10,6 @@ public class Project extends Proposal{
         this.destiny = destiny;
         this.teacher = teacher;
         this.student = student;
-
-        Flyweight.addProposalToBranch(destiny);
     }
 
     public String getDestiny() {
@@ -40,5 +36,13 @@ public class Project extends Proposal{
         if (destiny.equals("RAS") || destiny.equals("DA") || destiny.equals("SI")){
             this.destiny = destiny;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Project: " +
+                "destiny: " + destiny + "\n" +
+                "id: " + id + "\n" +
+                "title: " + title + "\n";
     }
 }

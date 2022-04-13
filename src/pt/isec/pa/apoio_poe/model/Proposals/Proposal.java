@@ -1,8 +1,9 @@
-package pt.isec.pa.apoio_poe.data.Proposals;
+package pt.isec.pa.apoio_poe.model.Proposals;
 
 public abstract class Proposal {
     protected String id;
     protected String title;
+    private int _hasCandidacy;
 
     public Proposal(String id, String title) {
         this.id = id;
@@ -23,5 +24,17 @@ public abstract class Proposal {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int get_hasCandidacy() {
+        return _hasCandidacy;
+    }
+
+    public void addCandicy() {
+        _hasCandidacy++;
+    }
+
+    public void subCandicy() {
+        _hasCandidacy--;
     }
 }

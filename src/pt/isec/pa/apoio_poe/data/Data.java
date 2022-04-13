@@ -1,8 +1,13 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.lang.reflect.Field;
@@ -10,23 +15,36 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 public class Data {
+    private EManagement currentMode;
     private final boolean[] phasesLock;
     private final Map<Class,Set> management;
+    private final ConfigurationManager configuration;
     private final Set<Student> students;
     private final Set<Teacher> teachers;
     private final Set<Proposal> proposals;
-    private final Set<Candicy> candicies;
+    private final Set<Candidacy> candidacies;
 
     public Data() {
+        currentMode = EManagement.STUDENTS;
+        configuration = new ConfigurationManager();
         management = new HashMap<>();
         students = new HashSet<>();
         teachers = new HashSet<>();
         proposals = new HashSet<>();
-        candicies = new HashSet<>();
-        management.put(Student.class,students);
+        candidacies = new HashSet<>();
+        management.put(Student.class,candidacies);
         management.put(Teacher.class,teachers);
         management.put(Proposal.class,proposals);
+        management.put(Candidacy.class, candidacies);
         phasesLock = new boolean[5];
+    }
+
+    public EManagement getCurrentMode() {
+        return currentMode;
+    }
+
+    public void setCurrentMode(EManagement currentMode) {
+        this.currentMode = currentMode;
     }
 
     public boolean isPhaseLock(EState state){
@@ -37,8 +55,9 @@ public class Data {
         return phasesLock[state.ordinal()] = true;
     }
 
-    public <T> boolean insert(Object object, Class<T> typeClass){
-        Set set = management.get(Utils.getSuperClass(typeClass));
+    public boolean insert(Object object){
+        Set set = management.get(Utils.getSuperClass(object.getClass()));
+        Class typeClass = object.getClass();
 
         if (set.add(object)){
             Log.getInstance().addMessage(Utils.splitString(typeClass.getName(), "\\.") + " added");
@@ -48,54 +67,54 @@ public class Data {
         return false;
     }
 
-    public <T,K> boolean find(T entity,Class<K> typeClass){
+    public <T,K> K find(T entity,Class<K> typeClass){
         Set set = management.get(typeClass);
-        Class<?> type = Utils.getFirstField(typeClass).getType();
 
+        Class<?> type = Utils.getFirstField(typeClass).getType();
         String className = Utils.splitString(typeClass.getName(),"\\.");
 
         try{
             Method method = typeClass.getMethod("getFake" + className,type);
-            if (set.contains(method.invoke(null, entity))) {
-                return true;
+            Object object = method.invoke(null, entity);
+            for (var v : set){
+                if(v.hashCode() == object.hashCode()){
+                    return (K) v;
+                }
             }
+
             Log.getInstance().addMessage("The " + Utils.splitString(typeClass.getName(), "\\.") + " was not found");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public <T,K> void remove(T entity,Class<K> typeClass){
-        if (!find(entity,typeClass)){
-            return;
-        }
-
         Set set = management.get(typeClass);
-        Class<?> type = Utils.getFirstField(typeClass).getType();
-
-        String className = Utils.splitString(typeClass.getName(),"\\.");
-
-        try{
-            Method method = typeClass.getMethod("getFake" + className,type);
-            if (set.remove(method.invoke(null, entity))) {
+        Object object =  find(entity,typeClass);
+        if (object != null){
+            if (set.remove(object)) {
                 Log.getInstance().addMessage("The " + Utils.splitString(typeClass.getName(), "\\.") + " was successfully removed");
-            } else {
-                Log.getInstance().addMessage("The " + Utils.splitString(typeClass.getName(), "\\.") + " was not removed");
+                return;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            Log.getInstance().addMessage("The " + Utils.splitString(typeClass.getName(), "\\.") + " was not removed");
         }
     }
 
     public <T, K, A> void edit(T entity, K value, String label, Class<A> typeClass) {
-        if (!find(entity,typeClass)){
+        if (find(entity,typeClass) == null){
             return;
         }
 
         if (Student.class.isAssignableFrom(typeClass)){
             for (Student s : students){
                 if (s.getId() == (long) entity){
+                    changeAttribute(value,label,typeClass,s);
+                }
+            }
+        } else if(Teacher.class.isAssignableFrom(typeClass)){
+            for (Teacher s : teachers){
+                if (s.getEmail().equals(entity)){
                     changeAttribute(value,label,typeClass,s);
                 }
             }
@@ -124,4 +143,94 @@ public class Data {
        }
        return stringBuilder.toString();
     }
+
+    public boolean addProposal(long id,String idProposal){
+        for(Candidacy c : candidacies){
+            if(c.getStudentId() == id){
+                for (Proposal proposal : proposals){
+                    if (idProposal.equals(proposal.getId())){
+                        proposal.addCandicy();
+                        Log.getInstance().addMessage("The proposal was added to the candidacy");
+                        c.addProposal(idProposal);
+                        for (Student s : students){
+                            if (s.getId() == id){
+                                s.set_hasCandicy(true);
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+        Log.getInstance().addMessage("The proposal was not added to the candidacy");
+        return false;
+    }
+
+    public boolean removeProposal(long id, String value) {
+        for(Candidacy c : candidacies){
+            if (c.getStudentId() == id){
+                for (String p : c.getProposals()){
+                    if (p.equals(value)){
+                        c.getProposals().remove(p);
+                        for (Proposal pr : proposals){
+                            if (pr.getId().equals(value)){
+                                pr.subCandicy();
+                            }
+                        }
+                        Log.getInstance().addMessage("The proposal was remove from the candidacy");
+                        return true;
+                    }
+                }
+            }
+        }
+        Log.getInstance().addMessage("The proposal was not remove from the candidacy");
+        return false;
+    }
+
+    public String getListOfStudents(){
+        List<Long> withCandidacy = new ArrayList<>();
+        List<Long> withoutCandidacy = new ArrayList<>();
+        for (Student s : students){
+            if (s.hasCandicy()){
+                withCandidacy.add(s.getId());
+            } else{
+                withoutCandidacy.add(s.getId());
+            }
+        }
+        return "With candidacy" + "\n" + withCandidacy + "\n" + "Without candidacy" + "\n" + withoutCandidacy;
+    }
+
+    public String getListProposals(List<Integer> filters){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int f : filters){
+            if (f == 1){
+                for (Proposal p : proposals){
+                    if (p instanceof SelfProposal){
+                        stringBuilder.append(p).append("\n");
+                    }
+                }
+            } else if(f == 2){
+                for (Proposal p : proposals){
+                    if (p instanceof Project){
+                        stringBuilder.append(p).append("\n");
+                    }
+                }
+            } else if (f == 3){
+                for (Proposal p : proposals){
+                    if (p.get_hasCandidacy() > 0){
+                        stringBuilder.append(p).append("\n");
+                    }
+                }
+
+            } else if(f == 4){
+                for (Proposal p : proposals){
+                    if (p.get_hasCandidacy() == 0 && !(p instanceof SelfProposal)){
+                        stringBuilder.append(p).append("\n");
+                    }
+                }
+            }
+        }
+        return stringBuilder.toString();
+    }
+
 }

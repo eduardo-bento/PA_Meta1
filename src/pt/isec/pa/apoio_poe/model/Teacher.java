@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 

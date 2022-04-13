@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.data.Proposals;
+package pt.isec.pa.apoio_poe.model.Proposals;
 
 public class SelfProposal extends Proposal {
     private long student;
@@ -14,5 +14,12 @@ public class SelfProposal extends Proposal {
 
     public void setStudent(long student) {
         this.student = student;
+    }
+
+    @Override
+    public String toString() {
+        return "SelfProposal: " +
+                "id: " + id + "\n" +
+                "title: " + title + "\n";
     }
 }

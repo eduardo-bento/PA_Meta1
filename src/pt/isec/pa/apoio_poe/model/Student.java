@@ -1,9 +1,7 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 public class Student {
@@ -13,10 +11,8 @@ public class Student {
     private String acronymCurse;
     private String acronymBranch;
     private double classification;
-    private boolean project;
-
-
-
+    private boolean hasStage;
+    private boolean _hasCandicy;
 
     public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean haveProject_Stage) {
         this.id = id;
@@ -25,9 +21,7 @@ public class Student {
         this.acronymCurse = acronymCurse;
         this.acronymBranch = acronymBranch;
         this.classification = classification;
-        this.project = haveProject_Stage;
-
-        Flyweight.addStudentToBranch(acronymBranch);
+        this.hasStage = haveProject_Stage;
     }
 
     public static Student getFakeStudent(long id){
@@ -84,15 +78,23 @@ public class Student {
         this.classification = classification;
     }
 
-    public boolean isProject() {
-        return project;
+    public boolean isHasStage() {
+        return hasStage;
     }
 
-    public void setProject(boolean project) {
-        if (this.project == project){
-            Log.getInstance().addMessage("You tried to change the stage to" + project + "but the attribute already has that value");
+    public boolean hasCandicy() {
+        return _hasCandicy;
+    }
+
+    public void set_hasCandicy(boolean candidacy) {
+        this._hasCandicy = candidacy;
+    }
+
+    public void setHasStage(boolean hasStage) {
+        if (this.hasStage == hasStage){
+            Log.getInstance().addMessage("You tried to change the stage to" + hasStage + "but the attribute already has that value");
         }
-        this.project = project;
+        this.hasStage = hasStage;
     }
 
     @Override
@@ -111,11 +113,11 @@ public class Student {
     @Override
     public String toString() {
         return "\nStudent id :" + id + "\n" +
-                "-name: " + name + "\n" +
-                "-email: " + email + "\n" +
-                "-acronymCurse: " + acronymCurse + "\n" +
-                "-acronymBranch: " + acronymBranch + "\n" +
-                "-classification: " + classification + "\n" +
-                "-haveProject_Stage: " + project;
+                "-Name: " + name + "\n" +
+                "-Email: " + email + "\n" +
+                "-Curse: " + acronymCurse + "\n" +
+                "-Branch: " + acronymBranch + "\n" +
+                "-Classification: " + classification + "\n" +
+                "-Has project: " + hasStage;
     }
 }

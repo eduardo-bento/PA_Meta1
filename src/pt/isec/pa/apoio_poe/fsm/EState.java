@@ -12,7 +12,8 @@ public enum EState {
    public IState factory(Context context,Data data){
        return switch (this){
            case CONFIGURATION -> new ConfigurationState(context,data);
-           case CANDIDACY -> new CandicyState(context,data);
+           case CANDIDACY -> new CandidacyState(context,data);
+           case PROPOSALS -> new ProposalState(context,data);
            default -> null;
        };
     }
