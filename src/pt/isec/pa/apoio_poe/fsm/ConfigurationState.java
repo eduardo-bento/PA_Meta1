@@ -2,7 +2,6 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.model.Student;
 
 public class ConfigurationState extends ContextAdapter {
     public ConfigurationState(Context context, Data data) {
@@ -25,8 +24,8 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
-    public <T,K,A> boolean edit(T entity, K value, String label, Class<A> typeClass) {
-        data.edit(entity,value,label,typeClass);
+    public <T,K,A> boolean edit(T id, K value, String label, Class<A> type) {
+        data.edit(id,value,label, type);
         return true;
     }
     @Override

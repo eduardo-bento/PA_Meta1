@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface IState {
     boolean insert(Object object);
-    <T,K,A> boolean edit(T entity, K value, String label, Class<A> typeClass);
+    <T,K,A> boolean edit(T id, K value, String label, Class<A> type);
     <T,K> boolean remove(T id,Class<K> typeClass);
     <T> String querying(Class<T> typeClass);
     void forward();

@@ -24,7 +24,6 @@ public class Teacher {
         return new Teacher(email,"----",true);
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -88,5 +87,13 @@ public class Teacher {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher: " +
+                "email: " + email + "\n" +
+                "name: " + name + "\n" +
+                "advisor: " + advisor;
     }
 }

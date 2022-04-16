@@ -7,65 +7,88 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
-public class ProposalManager {
+public class ProposalManager extends Manager<Proposal>{
     private final Map<Class<?>, Set<Proposal>> listOfProposals;
-    private final Set<Proposal> proposals;
+    private Map<Class<?>, Method> handleInsert;
 
     public ProposalManager() {
-        proposals = new HashSet<>();
         listOfProposals = Map.of(
                 SelfProposal.class,new HashSet<>(),
                 Project.class,new HashSet<>(),
                 InterShip.class,new HashSet<>()
         );
+
+        try {
+            handleInsert = Map.of(
+                    InterShip.class,ProposalManager.class.getDeclaredMethod("insertInterShip", InterShip.class, Data.class),
+                    Project.class, ProposalManager.class.getDeclaredMethod("insertProject", Project.class, Data.class),
+                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("insertSelfProposal", Proposal.class, Data.class)
+            );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public Set<Proposal> getProposals() {
-        return proposals;
-    }
-
-    public Set<Proposal> get(Class<?> label){
+    public Set<Proposal> getSpecific(Class<?> label){
         return listOfProposals.get(label);
     }
 
-    public void addProposal(Class<?> label,Proposal proposal){
-         listOfProposals.get(label).add(proposal);
+    @Override
+    public boolean insert(Proposal item) {
+        super.insert(item);
+
+        Method method = handleInsert.get(item.getClass());
+        try {
+            if(!(boolean) method.invoke(this,item)){
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        listOfProposals.get(item.getClass()).add(item);
+        return true;
     }
 
-    public boolean removeProposal(Class<?> label,Proposal proposal){
-         return listOfProposals.get(label).remove(proposal);
+    @Override
+    public <K> boolean remove(K id, Class<?>... type) {
+        Proposal proposal = Proposal.getFakeProposal((String) id);
+        if(list.remove(proposal)){
+            listOfProposals.get(type[0]).remove(proposal);
+            return true;
+        }
+        return false;
     }
 
-    public boolean checkInterShip(Object proposal,Data data){
-        InterShip interShip = (InterShip) proposal;
+    private boolean insertInterShip(InterShip interShip, Data data){
         if (studentRegistered(interShip.getStudent(),data)){
-            Student student = data.find(interShip.getStudent(),Student.class);
+            Student student = find(interShip.getStudent(),Student.class);
             if (!student.isHasStage()){
                 return false;
             }
         }
-        addProposal(InterShip.class,interShip);
+        insert(interShip);
         return true;
     }
 
-    public boolean checkProject(Object proposal,Data data){
-        Project project = (Project) proposal;
-        if (data.find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent(),data)){
+    private boolean insertProject(Project project, Data data){
+        if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent(),data)){
             return false;
         }
-        addProposal(Project.class,project);
+        insert(project);
         return true;
     }
 
-    public boolean checkSelfProposal(Proposal proposal,Data data){
+    private boolean insertSelfProposal(Proposal proposal, Data data){
         return true;
     }
 
     private boolean studentRegistered(long studentId,Data data){
         if (studentId != -1){
-            return data.find(studentId,Student.class) != null;
+            return find(studentId,Student.class) != null;
         }
         return true;
     }
@@ -78,13 +101,13 @@ public class ProposalManager {
                 case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(listOfProposals.get(Teacher.class));
                 case 3 ->{
                     stringBuilder.append("Proposals with candidacy").append("\n");
-                    proposals.forEach( proposal ->{
+                    list.forEach( proposal ->{
                         if (proposal.get_hasCandidacy() > 0) stringBuilder.append(proposal).append("\n");
                     });
                 }
                 case 4 ->{
                     stringBuilder.append("Proposals without candidacy").append("\n");
-                    proposals.forEach( proposal ->{
+                    list.forEach( proposal ->{
                         if (proposal.get_hasCandidacy() == 0) stringBuilder.append(proposal).append("\n");
                     });
                 }

@@ -2,9 +2,7 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.Student;
 
 import java.util.List;
 
@@ -50,23 +48,13 @@ public class CandidacyState extends ContextAdapter{
     }
 
     @Override
-    public <T, K> boolean remove(T id, Class<K> typeClass) {
-        Candidacy candidacy = data.find(id,Candidacy.class);
-        Student student = data.find(candidacy.getStudentId(),Student.class);
-        if (student != null){
-            student.set_hasCandidacy(false);
-            data.remove(id,typeClass);
-            return true;
-        }
-        return false;
+    public <T, K> boolean remove(T id, Class<K> type) {
+        return data.remove(id,type);
     }
 
     @Override
-    public <T, K, A> boolean edit(T entity, K value, String label, Class<A> typeClass) {
-        if (label.equals("add")){
-            return data.addProposal((long) entity,(String) value);
-        }
-        return data.removeProposal((long) entity,(String) value);
+    public <T, K, A> boolean edit(T id, K value, String label, Class<A> type) {
+        return data.edit(id,value,label,type);
     }
 
     @Override

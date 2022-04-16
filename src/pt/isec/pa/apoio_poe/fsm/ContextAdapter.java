@@ -29,7 +29,7 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public <T,K,A> boolean edit(T entity, K value, String label, Class<A> typeClass) {
+    public <T,K,A> boolean edit(T id, K value, String label, Class<A> type) {
         return false;
     }
 
