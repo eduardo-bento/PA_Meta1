@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.model.Student;
 
 public class ConfigurationState extends ContextAdapter {
     public ConfigurationState(Context context, Data data) {
@@ -40,12 +41,18 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
+    public void readFromFile(String filePath, Class<?> typeClass) {
+        data.readCVS(filePath,typeClass);
+    }
+
+    @Override
     public <T> String querying(Class<T> typeClass) {
         return data.querying(typeClass);
     }
 
     @Override
     public void forward() {
+        data.setCurrentMode(EManagement.CANDIDACY);
         changeState(EState.CANDIDACY);
     }
 

@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.data.EManagement;
 import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Student;
@@ -16,6 +17,7 @@ public class CandidacyState extends ContextAdapter{
     @Override
     public boolean back() {
         if (!data.isPhaseLock(EState.CANDIDACY)){
+            data.setCurrentMode(EManagement.STUDENTS);
             changeState(EState.CONFIGURATION);
         }
         return true;
@@ -39,13 +41,7 @@ public class CandidacyState extends ContextAdapter{
 
     @Override
     public boolean insert(Object object) {
-        Candidacy candidacy = (Candidacy) object;
-        Student student = data.find(candidacy.getStudentId(),Student.class);
-        if (student != null){
-            student.set_hasCandidacy(true);
-            return data.insert(object);
-        }
-        return false;
+        return data.insert(object);
     }
 
     @Override
@@ -81,11 +77,6 @@ public class CandidacyState extends ContextAdapter{
     @Override
     public String getFilterList(List<Integer> filters) {
         return data.getListProposals(filters);
-    }
-
-    @Override
-    public void automaticAssignment() {
-
     }
 
     @Override

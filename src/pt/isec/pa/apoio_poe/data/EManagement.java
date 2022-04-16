@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.data;
 
+import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
 import pt.isec.pa.apoio_poe.model.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
@@ -12,28 +13,31 @@ import java.util.List;
 public enum EManagement {
     STUDENTS,
     TEACHER,
-    INTERSHIP,
+    INTER_SHIP,
     PROJECT,
-    SELFPROPOSAL;
+    SELF_PROPOSAL,
+    CANDIDACY;
 
     public static EManagement fromInteger(int x) {
         return switch(x) {
             case 0 -> STUDENTS;
             case 1 -> TEACHER;
-            case 2 -> INTERSHIP;
+            case 2 -> INTER_SHIP;
             case 3 -> PROJECT;
-            case 4 -> SELFPROPOSAL;
+            case 4 -> SELF_PROPOSAL;
+            case 5 -> CANDIDACY;
             default -> null;
         };
     }
 
-    public Class getDataClass(){
+    public Class<?> getDataClass(){
         return switch (this){
             case STUDENTS -> Student.class;
             case TEACHER -> Teacher.class;
-            case INTERSHIP -> InterShip.class;
+            case INTER_SHIP -> InterShip.class;
             case PROJECT -> Project.class;
-            case SELFPROPOSAL -> SelfProposal.class;
+            case SELF_PROPOSAL -> SelfProposal.class;
+            case CANDIDACY -> Candidacy.class;
         };
     }
 
@@ -45,10 +49,11 @@ public enum EManagement {
                         (String) data.get(4),(double) data.get(5),
                         (boolean) data.get(6));
             case TEACHER ->  new Teacher((String) data.get(0), (String) data.get(1), (Boolean) data.get(2));
-            case INTERSHIP -> new InterShip((String) data.get(0), (String) data.get(1),
+            case INTER_SHIP -> new InterShip((String) data.get(0), (String) data.get(1),
                     (String) data.get(2), (String) data.get(3), (Long) data.get(4));
             case PROJECT -> new Project((String) data.get(0),(String) data.get(1),(String) data.get(2),(String) data.get(3),(Long) data.get(4));
-            case SELFPROPOSAL -> new SelfProposal((String) data.get(0),(String) data.get(1),(Long) data.get(2));
+            case SELF_PROPOSAL -> new SelfProposal((String) data.get(0),(String) data.get(1),(Long) data.get(2));
+            case CANDIDACY -> new Candidacy((Long) data.get(0));
         };
     }
 
@@ -64,8 +69,10 @@ public enum EManagement {
         } if (Project.class == typeClass){
             return PROJECT;
         } if (InterShip.class == typeClass){
-            return INTERSHIP;
+            return INTER_SHIP;
+        } if (Candidacy.class == typeClass){
+            return CANDIDACY;
         }
-        return SELFPROPOSAL;
+        return SELF_PROPOSAL;
     }
 }

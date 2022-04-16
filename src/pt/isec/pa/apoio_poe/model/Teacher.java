@@ -1,8 +1,13 @@
 package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.data.EManagement;
 
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Teacher {
     private String email;
@@ -47,6 +52,29 @@ public class Teacher {
             Log.getInstance().addMessage("You tried to change the advisor to" + advisor + "but the attribute already has that value");
         }
         this.advisor = advisor;
+    }
+
+    public static List<Object> readFile(String filePath){
+        List<Object> data = new ArrayList<>();
+        List<Object> objects = new ArrayList<>();
+        try {
+            Scanner input = new Scanner(new FileReader(filePath));
+            while(input.hasNextLine()){
+                String line = input.nextLine();
+                String[] parameters = line.split(",");
+
+                data.add(parameters[0]);
+                data.add(parameters[1]);
+                data.add(Boolean.parseBoolean(parameters[2]));
+                EManagement management = EManagement.fromClass(Teacher.class);
+                objects.add(management.factory(data));
+                data.clear();
+            }
+            input.close();
+        }  catch (Exception e){
+            Log.getInstance().addMessage("The file does not exist");
+        }
+        return objects;
     }
 
     @Override

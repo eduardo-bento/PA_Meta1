@@ -53,6 +53,10 @@ public class Context {
         return state.back();
     }
 
+    public void readFromFile(String filePath,Class<?> typeClass){
+        state.readFromFile(filePath,typeClass);
+    }
+
     public String getListOfStudents() {
         return state.getListOfStudents();
     }

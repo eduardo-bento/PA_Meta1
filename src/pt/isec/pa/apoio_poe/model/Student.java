@@ -1,8 +1,12 @@
 package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.utils.Utils;
 
-import java.util.Objects;
+import java.io.FileReader;
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class Student {
     private long id;
@@ -95,6 +99,35 @@ public class Student {
             Log.getInstance().addMessage("You tried to change the stage to" + hasStage + "but the attribute already has that value");
         }
         this.hasStage = hasStage;
+    }
+
+
+    public static List<Object> readFile(String filePath){
+        List<Object> data = new ArrayList<>();
+        List<Object> students = new ArrayList<>();
+        try {
+            Scanner input = new Scanner(new FileReader(filePath));
+            while(input.hasNextLine()){
+                String line = input.nextLine();
+                String[] parameters = line.split(",");
+
+                data.add(Long.parseLong(parameters[0]));
+                data.add(parameters[1]);
+                data.add(parameters[2]);
+                data.add(parameters[3]);
+                data.add(parameters[4]);
+                data.add(Double.parseDouble(parameters[5]));
+                data.add(Boolean.parseBoolean(parameters[6]));
+
+                EManagement management = EManagement.fromClass(Student.class);
+                students.add(management.factory(data));
+                data.clear();
+            }
+            input.close();
+        }  catch (Exception e){
+            Log.getInstance().addMessage("The file does not exist");
+        }
+        return students;
     }
 
     @Override

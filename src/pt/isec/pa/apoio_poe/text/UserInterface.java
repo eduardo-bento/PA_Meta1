@@ -49,7 +49,7 @@ public class UserInterface {
 
         switch (Input.chooseOption("State - " + context.getState().toString().toLowerCase(Locale.ROOT) +
                         "\ncurrent mode: " + context.getManagementMode().toString().toLowerCase(Locale.ROOT),"Next State - Candidacy","Change Mode",
-                "ClosePhase","Insert","Edit","Remove","Querying")){
+                "ClosePhase","Insert","Edit","Remove","Querying","Read from file")){
             case 1 -> context.forward();
             case 2 -> {
                 int option = Input.chooseOption("Chose Mode",EManagement.getTypes()) - 1;
@@ -94,6 +94,7 @@ public class UserInterface {
                 context.remove(data.get(0),management.getDataClass());
             }
             case 7 -> System.out.println(context.querying(management.getDataClass()));
+            case 8 -> context.readFromFile(Input.readString("File name: ",true),management.getDataClass());
         }
     }
 

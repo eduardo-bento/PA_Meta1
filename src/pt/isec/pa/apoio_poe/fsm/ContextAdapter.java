@@ -49,7 +49,7 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public void automaticAssignment() {
+    public void readFromFile(String filePath, Class<?> typeClass) {
 
     }
 

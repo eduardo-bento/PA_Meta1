@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
 import pt.isec.pa.apoio_poe.model.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
@@ -17,25 +18,30 @@ import java.util.*;
 public class Data {
     private EManagement currentMode;
     private final boolean[] phasesLock;
-    private final Map<Class,Set> management;
-    private final ConfigurationManager configuration;
-    private final Set<Student> students;
-    private final Set<Teacher> teachers;
-    private final Set<Proposal> proposals;
-    private final Set<Candidacy> candidacies;
+    private final ProposalManager proposalManager;
+    private final Map<Class<?>,Set<?>> management;
+    private Map<Class<?>,Method> handleInsert;
 
     public Data() {
+        proposalManager = new ProposalManager();
         currentMode = EManagement.STUDENTS;
-        configuration = new ConfigurationManager();
-        management = new HashMap<>();
-        students = new HashSet<>();
-        teachers = new HashSet<>();
-        proposals = new HashSet<>();
-        candidacies = new HashSet<>();
-        management.put(Student.class,students);
-        management.put(Teacher.class,teachers);
-        management.put(Proposal.class,proposals);
-        management.put(Candidacy.class, candidacies);
+        management = Map.of(
+                Student.class,new HashSet<Student>(),
+                Teacher.class,new HashSet<Teacher>(),
+                Proposal.class,proposalManager.getProposals(),
+                Candidacy.class,new HashSet<Candidacy>()
+        );
+
+        try {
+            handleInsert = Map.of(
+                    InterShip.class,ProposalManager.class.getMethod("checkInterShip", Object.class,Data.class),
+                    Project.class, ProposalManager.class.getMethod("checkProject", Object.class, Data.class),
+                    SelfProposal.class, ProposalManager.class.getMethod("checkSelfProposal", Proposal.class, Data.class)
+                    );
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         phasesLock = new boolean[5];
     }
 
@@ -57,7 +63,18 @@ public class Data {
 
     public boolean insert(Object object){
         Set set = management.get(Utils.getSuperClass(object.getClass()));
-        Class typeClass = object.getClass();
+        Class<?> typeClass = object.getClass();
+
+        Method method = handleInsert.get(typeClass);
+        if (method != null){
+            try {
+                if(!(boolean) method.invoke(proposalManager,object,this)){
+                    return false;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
 
         if (set.add(object)){
             Log.getInstance().addMessage(Utils.splitString(typeClass.getName(), "\\.") + " added");
@@ -68,7 +85,7 @@ public class Data {
     }
 
     public <T,K> K find(T entity,Class<K> typeClass){
-        Set set = management.get(typeClass);
+        Set<?> set = management.get(typeClass);
 
         Class<?> type = Utils.getFirstField(typeClass).getType();
         String className = Utils.splitString(typeClass.getName(),"\\.");
@@ -90,9 +107,22 @@ public class Data {
     }
 
     public <T,K> void remove(T entity,Class<K> typeClass){
-        Set set = management.get(typeClass);
+        Set<?> set = management.get(typeClass);
         Object object =  find(entity,typeClass);
+
         if (object != null){
+
+            try {
+               Method method = ProposalManager.class.getMethod("removeProposal", Class.class, Proposal.class);
+                try {
+                    method.invoke(proposalManager,typeClass,object);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+
             if (set.remove(object)) {
                 Log.getInstance().addMessage("The " + Utils.splitString(typeClass.getName(), "\\.") + " was successfully removed");
                 return;
@@ -102,22 +132,9 @@ public class Data {
     }
 
     public <T, K, A> void edit(T entity, K value, String label, Class<A> typeClass) {
-        if (find(entity,typeClass) == null){
-            return;
-        }
-
-        if (Student.class.isAssignableFrom(typeClass)){
-            for (Student s : students){
-                if (s.getId() == (long) entity){
-                    changeAttribute(value,label,typeClass,s);
-                }
-            }
-        } else if(Teacher.class.isAssignableFrom(typeClass)){
-            for (Teacher s : teachers){
-                if (s.getEmail().equals(entity)){
-                    changeAttribute(value,label,typeClass,s);
-                }
-            }
+        A dataStructure = find(entity,typeClass);
+        if (dataStructure != null){
+            changeAttribute(value,label,typeClass,dataStructure);
         }
     }
 
@@ -135,7 +152,7 @@ public class Data {
     }
 
     public <T> String querying(Class<T> typeClass) {
-        Set set = management.get(Utils.getSuperClass(typeClass));
+        Set<?> set = management.get(Utils.getSuperClass(typeClass));
         StringBuilder stringBuilder = new StringBuilder();
 
        for (Object o : set){
@@ -144,14 +161,24 @@ public class Data {
        return stringBuilder.toString();
     }
 
+    public boolean checkCandidacy(Candidacy candidacy){
+        if (find(candidacy.getStudentId(),Candidacy.class) == null){
+            Student student = find(candidacy.getStudentId(),Student.class);
+            if (student != null){
+                student.set_hasCandidacy(true);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean addProposal(long id,String idProposal){
         Candidacy candidacy = find(id,Candidacy.class);
         if (candidacy != null && candidacy.addProposal(idProposal)){
-            for (Proposal proposal : proposals){
-                if (idProposal.equals(proposal.getId())){
-                    proposal.addCandicy();
-                }
-            }
+            Proposal proposal = find(idProposal,Proposal.class);
+            if (proposal == null) return false;
+
+            proposal.addCandidacy();
             Log.getInstance().addMessage("The proposal was added to the candidacy");
             return true;
         }
@@ -162,11 +189,10 @@ public class Data {
     public boolean removeProposal(long id, String idProposal) {
         Candidacy candidacy = find(id,Candidacy.class);
         if (candidacy != null && candidacy.removeProposal(idProposal)){
-            for (Proposal proposal : proposals){
-                if (idProposal.equals(proposal.getId())){
-                    proposal.subCandicy();
-                }
-            }
+            Proposal proposal = find(idProposal,Proposal.class);
+            if (proposal == null) return false;
+
+            proposal.subCandidacy();
             Log.getInstance().addMessage("The proposal was remove from the candidacy");
             return true;
         }
@@ -177,65 +203,36 @@ public class Data {
     public String getListOfStudents(){
         List<Long> withCandidacy = new ArrayList<>();
         List<Long> withoutCandidacy = new ArrayList<>();
+        List<Long> selfProposal = new ArrayList<>();
 
-        for (Student s : students){
+        for (Object object : management.get(Proposal.class)){
+            if (object instanceof SelfProposal){
+                selfProposal.add(((SelfProposal) object).getStudent());
+            }
+        }
+
+        for (Object object : management.get(Student.class)){
+            Student s = (Student) object;
             if (s.hasCandicy()){
                 withCandidacy.add(s.getId());
             } else{
                 withoutCandidacy.add(s.getId());
             }
         }
-        return "With candidacy" + "\n" + withCandidacy + "\n" + "Without candidacy" + "\n" + withoutCandidacy;
+        return "With candidacy" + "\n" + withCandidacy + "\n" + "Without candidacy" + "\n" + withoutCandidacy + "Self Proposal" + "\n" + selfProposal;
+    }
+
+    public void readCVS(String filePath,Class<?> typeClass){
+        List<Object> objects = null;
+        try {
+            objects = (List<Object>) typeClass.getMethod("readFile",String.class).invoke(null,filePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        objects.forEach(object -> insert(object));
     }
 
     public String getListProposals(List<Integer> filters){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int f : filters){
-            switch (f){
-                case 1 -> {
-                    stringBuilder.append("SelfProposals").append("\n");
-                    for (Proposal p : proposals){
-                        if (p instanceof SelfProposal){
-                            stringBuilder.append(p).append("\n");
-                        }
-                    }
-                }
-                case 2 ->{
-                    stringBuilder.append("Teacher Proposals").append("\n");
-                    for (Proposal p : proposals){
-                        if (p instanceof Project){
-                            stringBuilder.append(p).append("\n");
-                        }
-                    }
-                }
-                case 3 ->{
-                    stringBuilder.append("Proposals with candidacy").append("\n");
-                    for (Proposal p : proposals){
-                        if (p.get_hasCandidacy() > 0){
-                            stringBuilder.append(p).append("\n");
-                        }
-                    }
-                }
-                case 4 ->{
-                    stringBuilder.append("Proposals without candidacy").append("\n");
-                    for (Proposal p : proposals){
-                        if (p.get_hasCandidacy() == 0 && !(p instanceof SelfProposal)){
-                            stringBuilder.append(p).append("\n");
-                        }
-                    }
-                }
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    public void automaticAssignment(){
-       /* for (Proposal p : proposals){
-            if (p instanceof SelfProposal){
-                SelfProposal proposal = (SelfProposal) p;
-                Candidacy candidacy = new Candidacy(proposal.getStudent());
-                candidacy.addProposal(proposal.getId());
-            }
-        }*/
+       return proposalManager.getListOfProposals(filters);
     }
 }

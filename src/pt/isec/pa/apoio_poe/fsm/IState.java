@@ -19,7 +19,7 @@ public interface IState {
     String getListOfStudents();
     String getFilterList(List<Integer> filters);
 
-    void automaticAssignment();
+    void readFromFile(String filePath,Class<?> typeClass);
 
     EState getState();
 }

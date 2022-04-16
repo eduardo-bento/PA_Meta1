@@ -34,7 +34,7 @@ public class Log {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (String m : messages){
-            stringBuilder.append("-").append(m);
+            stringBuilder.append("-").append(m).append("\n");
         }
         stringBuilder.append("\n");
         return stringBuilder.toString();
