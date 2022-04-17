@@ -2,15 +2,13 @@ package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Commands;
-import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
-import pt.isec.pa.apoio_poe.utils.Tuple;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
-import javax.swing.text.Style;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;

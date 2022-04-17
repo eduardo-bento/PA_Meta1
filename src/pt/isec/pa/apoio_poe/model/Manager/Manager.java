@@ -1,6 +1,7 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model.Manager;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.lang.reflect.Field;
@@ -10,9 +11,11 @@ import java.util.Set;
 
 public class Manager<T> {
     protected final Set<T> list;
+    private final Data data;
 
-    public Manager() {
+    public Manager(Data data) {
         list = new HashSet<>();
+        this.data = data;
     }
 
     public Set<T> getList(){
@@ -34,7 +37,7 @@ public class Manager<T> {
         try{
             Method method = type.getMethod("getFake" + className,name);
             Object object = method.invoke(null, id);
-            for (var v : list){
+            for (var v : data.getManagement().get(type).getList()){
                 if(v.hashCode() == object.hashCode()){
                     return (K) v;
                 }
@@ -70,7 +73,6 @@ public class Manager<T> {
 
     public String querying() {
         StringBuilder stringBuilder = new StringBuilder();
-
         for (T o : list){
             stringBuilder.append(o.toString()).append("\n");
         }

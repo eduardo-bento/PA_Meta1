@@ -1,11 +1,11 @@
 package pt.isec.pa.apoio_poe.data;
 
-import pt.isec.pa.apoio_poe.model.Candidacy;
-import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.model.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.InterShip;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
 
 import java.util.Arrays;
 import java.util.List;

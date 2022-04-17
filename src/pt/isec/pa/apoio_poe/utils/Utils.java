@@ -1,17 +1,7 @@
 package pt.isec.pa.apoio_poe.utils;
 
-import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.model.Student;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
 
 public class Utils {
     public static String splitString(String string,String c){

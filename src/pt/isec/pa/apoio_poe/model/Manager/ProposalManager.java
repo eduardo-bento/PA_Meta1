@@ -1,20 +1,22 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model.Manager;
 
-import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.model.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.InterShip;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
 
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class ProposalManager extends Manager<Proposal>{
+public class ProposalManager extends Manager<Proposal> {
     private final Map<Class<?>, Set<Proposal>> listOfProposals;
     private Map<Class<?>, Method> handleInsert;
 
-    public ProposalManager() {
+    public ProposalManager(Data data) {
+        super(data);
         listOfProposals = Map.of(
                 SelfProposal.class,new HashSet<>(),
                 Project.class,new HashSet<>(),
@@ -23,9 +25,9 @@ public class ProposalManager extends Manager<Proposal>{
 
         try {
             handleInsert = Map.of(
-                    InterShip.class,ProposalManager.class.getDeclaredMethod("insertInterShip", InterShip.class, Data.class),
-                    Project.class, ProposalManager.class.getDeclaredMethod("insertProject", Project.class, Data.class),
-                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("insertSelfProposal", Proposal.class, Data.class)
+                    InterShip.class,ProposalManager.class.getDeclaredMethod("insertInterShip", InterShip.class),
+                    Project.class, ProposalManager.class.getDeclaredMethod("insertProject", Project.class),
+                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("insertSelfProposal", Proposal.class)
             );
         } catch (Exception e){
             e.printStackTrace();
@@ -63,8 +65,8 @@ public class ProposalManager extends Manager<Proposal>{
         return false;
     }
 
-    private boolean insertInterShip(InterShip interShip, Data data){
-        if (studentRegistered(interShip.getStudent(),data)){
+    private boolean insertInterShip(InterShip interShip){
+        if (studentRegistered(interShip.getStudent())){
             Student student = find(interShip.getStudent(),Student.class);
             if (!student.isHasStage()){
                 return false;
@@ -74,19 +76,19 @@ public class ProposalManager extends Manager<Proposal>{
         return true;
     }
 
-    private boolean insertProject(Project project, Data data){
-        if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent(),data)){
+    private boolean insertProject(Project project){
+        if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent())){
             return false;
         }
         insert(project);
         return true;
     }
 
-    private boolean insertSelfProposal(Proposal proposal, Data data){
+    private boolean insertSelfProposal(Proposal proposal){
         return true;
     }
 
-    private boolean studentRegistered(long studentId,Data data){
+    private boolean studentRegistered(long studentId){
         if (studentId != -1){
             return find(studentId,Student.class) != null;
         }

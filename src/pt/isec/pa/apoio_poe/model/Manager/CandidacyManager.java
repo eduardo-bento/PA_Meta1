@@ -1,12 +1,16 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model.Manager;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.model.Candidacy;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
 
+public class CandidacyManager extends Manager<Candidacy> {
+    public CandidacyManager(Data data) {
+        super(data);
+    }
 
-public class CandidacyManager extends Manager<Candidacy>{
     @Override
     public <Q, K, A> boolean edit(Q id, K value, String label, Class<A> type) {
         if (label.equals("add")){
@@ -24,7 +28,7 @@ public class CandidacyManager extends Manager<Candidacy>{
     }
 
     private boolean checkCandidacy(Candidacy item){
-        if (find(item.getStudentId(),Candidacy.class) == null){
+        if (find(item.getStudentId(),Candidacy.class) != null){
             Student student = find(item.getStudentId(),Student.class);
             if (student != null){
                 student.set_hasCandidacy(true);

@@ -1,11 +1,9 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.dataStrucutures;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.EManagement;
-import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.io.FileReader;
-import java.lang.reflect.Field;
 import java.util.*;
 
 public class Student {

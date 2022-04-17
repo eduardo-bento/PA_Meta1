@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.Proposals;
+package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
 
 public class SelfProposal extends Proposal {
     private long student;

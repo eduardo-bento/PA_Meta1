@@ -1,12 +1,17 @@
-package pt.isec.pa.apoio_poe.data;
+package pt.isec.pa.apoio_poe.model.Manager;
 
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
 
 import java.util.*;
 
 public class StudentManager extends Manager<Student> {
+    public StudentManager(Data data) {
+        super(data);
+    }
+
     public String getListOfStudents(Set<Proposal> proposals){
         List<Long> withCandidacy = new ArrayList<>();
         List<Long> withoutCandidacy = new ArrayList<>();

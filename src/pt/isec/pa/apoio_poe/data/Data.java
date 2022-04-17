@@ -1,11 +1,12 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Manager.*;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Candidacy;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.util.*;
@@ -15,18 +16,22 @@ import java.util.*;
 public class Data {
     private EManagement currentMode;
     private final boolean[] phasesLock;
-    private final Map<Class<?>,Manager> management;
+    private final Map<Class<?>, Manager> management;
 
     public Data() {
         currentMode = EManagement.STUDENTS;
         management = Map.of(
-                Student.class,new StudentManager(),
-                Teacher.class,new TeacherManager(),
-                Proposal.class,new ProposalManager(),
-                Candidacy.class,new CandidacyManager()
+                Student.class,new StudentManager(this),
+                Teacher.class,new TeacherManager(this),
+                Proposal.class,new ProposalManager(this),
+                Candidacy.class,new CandidacyManager(this)
         );
 
         phasesLock = new boolean[5];
+    }
+
+    public Map<Class<?>, Manager> getManagement() {
+        return management;
     }
 
     public EManagement getCurrentMode() {
@@ -95,6 +100,8 @@ public class Data {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        objects.forEach(object -> insert(object));
+
+        assert objects != null;
+        objects.forEach(this::insert);
     }
 }
