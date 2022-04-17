@@ -84,7 +84,7 @@ public class Student {
         return hasStage;
     }
 
-    public boolean hasCandicy() {
+    public boolean hasCandidacy() {
         return _hasCandidacy;
     }
 
@@ -129,6 +129,17 @@ public class Student {
     }
 
     @Override
+    public String toString() {
+        return "\nStudent id :" + id + "\n" +
+                "-Name: " + name + "\n" +
+                "-Email: " + email + "\n" +
+                "-Curse: " + curse + "\n" +
+                "-Branch: " + branch + "\n" +
+                "-Classification: " + classification + "\n" +
+                "-Has project: " + hasStage;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -139,16 +150,5 @@ public class Student {
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "\nStudent id :" + id + "\n" +
-                "-Name: " + name + "\n" +
-                "-Email: " + email + "\n" +
-                "-Curse: " + curse + "\n" +
-                "-Branch: " + branch + "\n" +
-                "-Classification: " + classification + "\n" +
-                "-Has project: " + hasStage;
     }
 }

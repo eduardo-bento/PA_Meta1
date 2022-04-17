@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Manager<T> {
+public abstract class Manager<T> {
     protected final Set<T> list;
     private final Data data;
 
@@ -27,6 +27,16 @@ public class Manager<T> {
     }
 
     public <K> boolean remove(K id,Class<?> ... type){
+        Class<?> name = Utils.getFirstField(type[0]).getType();
+        String className = Utils.splitString(type[0].getName(),"\\.");
+
+        try{
+            Method method = type[0].getMethod("getFake" + className,name);
+            T item = (T) method.invoke(null, id);
+            return list.remove(item);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

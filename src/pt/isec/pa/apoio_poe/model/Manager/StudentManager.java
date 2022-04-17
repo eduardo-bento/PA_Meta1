@@ -22,12 +22,20 @@ public class StudentManager extends Manager<Student> {
         });
 
         for (Student student : list){
-            if (student.hasCandicy()){
+            if (student.hasCandidacy()){
                 withCandidacy.add(student.getId());
             } else{
                 withoutCandidacy.add(student.getId());
             }
         }
         return "With candidacy" + "\n" + withCandidacy + "\n" + "Without candidacy" + "\n" + withoutCandidacy + "Self Proposal" + "\n" + selfProposal;
+    }
+
+    public int branchCount(String branch){
+        int count = 0;
+        for (Student item : list){
+            if(item.getBranch().equals(branch)) count++;
+        }
+        return count;
     }
 }

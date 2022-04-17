@@ -67,7 +67,7 @@ public class Data {
         return manager.edit(id,value,label,type);
     }
 
-    public <T,K> boolean remove(T id, Class<K> type){
+    public <T> boolean remove(T id, Class<?> type){
         Manager manager = management.get(type);
 
         if (manager.remove(id)) {
@@ -103,5 +103,10 @@ public class Data {
 
         assert objects != null;
         objects.forEach(this::insert);
+    }
+
+    public boolean lockConfigurationPhase(){
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return true;
     }
 }
