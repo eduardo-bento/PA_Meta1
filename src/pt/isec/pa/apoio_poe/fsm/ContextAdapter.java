@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.data.EManagement;
 
 import java.util.List;
 
@@ -14,8 +13,12 @@ abstract class ContextAdapter implements IState{
         this.data = data;
     }
 
-    public void changeState(EState state){
-        context.changeState(state.factory(context,data));
+    public void changeState(pt.isec.pa.apoio_poe.fsm.EState state){
+        context.changeState(state.stateFactory(context,data));
+    }
+
+    @Override
+    public void goToMode() {
     }
 
     @Override
@@ -24,7 +27,7 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public boolean insert(Object object) {
+    public boolean insert(Object item) {
         return false;
     }
 
@@ -34,23 +37,26 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public <T,K> boolean remove(T id,Class<K> typeClass) {
+    public <T> boolean remove(T id) {
         return false;
     }
 
     @Override
-    public <T> String querying(Class<T> typeClass) {
+    public String querying() {
         return null;
     }
 
     @Override
-    public void forward() {
-
-    }
+    public void forward() {}
 
     @Override
-    public void readFromFile(String filePath, Class<?> typeClass) {
+    public void manualProposalAttribution(String proposalID, long studentID) {}
 
+    @Override
+    public void manualProposalRemoveAttribution(String proposalID) {}
+
+    @Override
+    public void readFromFile(String filePath) {
     }
 
     @Override
@@ -69,10 +75,10 @@ abstract class ContextAdapter implements IState{
     }
 
     @Override
-    public void changeManagementMode(EManagement management){}
+    public void changeMode(EState management){}
 
     @Override
-    public EManagement getManagementMode() {
+    public EState getMode() {
         return null;
     }
 }

@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.data.EManagement;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ public class Context {
 
     public Context() {
         data = new Data();
-        state = EState.CONFIGURATION.factory(this,data);
+        state = pt.isec.pa.apoio_poe.fsm.EState.CONFIGURATION.stateFactory(this,data);
     }
 
     void changeState(IState state){
@@ -26,23 +25,28 @@ public class Context {
         return state.edit(entity,value,label,typeClass);
     }
 
-    public <T,K> boolean remove(T id,Class<K> typeClass) {
-        return state.remove(id,typeClass);
+    public <T> boolean remove(T id) {
+        return state.remove(id);
     }
 
-    public <T> String querying(Class<T> typeClass){
-        return state.querying(typeClass);
+    public String querying(){
+        return state.querying();
     }
 
-    public void changeManagementMode(EManagement management) {
-        state.changeManagementMode(management);
+    public void changeMode(EState management) {
+        state.changeMode(management);
     }
 
-    public EManagement getManagementMode(){
-        return state.getManagementMode();
+    public EState getMode(){
+        return state.getMode();
     }
+
     public boolean closePhase(){
         return state.closePhase();
+    }
+
+    public boolean isPhaseLock(){
+        return state.isPhaseLock();
     }
 
     public void forward() {
@@ -53,8 +57,16 @@ public class Context {
         return state.back();
     }
 
-    public void readFromFile(String filePath,Class<?> typeClass){
-        state.readFromFile(filePath,typeClass);
+    public void readFromFile(String filePath){
+        state.readFromFile(filePath);
+    }
+
+    public void manualProposalAttribution(String proposalID,long studentID){
+        state.manualProposalAttribution(proposalID,studentID);
+    }
+
+    public void manualProposalRemoveAttribution(String proposalID){
+
     }
 
     public String getListOfStudents() {
@@ -67,5 +79,9 @@ public class Context {
 
     public EState getState(){
         return state.getState();
+    }
+
+    public void goToMode() {
+        state.goToMode();
     }
 }

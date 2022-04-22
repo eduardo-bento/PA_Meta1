@@ -3,17 +3,15 @@ package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
 public class Project extends Proposal{
     private String teacher;
     private String destiny;
-    private long student;
 
-    public Project(String id, String title, String destiny, String teacher, long student) {
-        super(id, title);
+    public Project(String id, String title,long student,String destiny, String teacher) {
+        super(id, title,student);
         this.destiny = destiny;
         this.teacher = teacher;
-        this.student = student;
     }
 
-    public static Project getFakeProject(String id, String title, String destiny, String teacher, long student){
-        return new Project(id,title,destiny,teacher,student);
+    public static Project getFakeProject(String id, String title, long student, String destiny, String teacher){
+        return new Project(id,title,student,destiny,teacher);
     }
 
     public String getDestiny() {
@@ -26,14 +24,6 @@ public class Project extends Proposal{
 
     public void setTeacher(String teacher) {
         this.teacher = teacher;
-    }
-
-    public long getStudent() {
-        return student;
-    }
-
-    public void setStudent(long student) {
-        this.student = student;
     }
 
     public void setDestiny(String destiny) {

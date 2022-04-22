@@ -25,9 +25,9 @@ public class ProposalManager extends Manager<Proposal> {
 
         try {
             handleInsert = Map.of(
-                    InterShip.class,ProposalManager.class.getDeclaredMethod("insertInterShip", InterShip.class),
-                    Project.class, ProposalManager.class.getDeclaredMethod("insertProject", Project.class),
-                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("insertSelfProposal", Proposal.class)
+                    InterShip.class,ProposalManager.class.getDeclaredMethod("verifyInterShip", InterShip.class),
+                    Project.class, ProposalManager.class.getDeclaredMethod("verifyProject", Project.class),
+                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("verifySelfProposal", Proposal.class)
             );
         } catch (Exception e){
             e.printStackTrace();
@@ -40,8 +40,6 @@ public class ProposalManager extends Manager<Proposal> {
 
     @Override
     public boolean insert(Proposal item) {
-        super.insert(item);
-
         Method method = handleInsert.get(item.getClass());
         try {
             if(!(boolean) method.invoke(this,item)){
@@ -51,6 +49,7 @@ public class ProposalManager extends Manager<Proposal> {
             e.printStackTrace();
         }
 
+        super.insert(item);
         listOfProposals.get(item.getClass()).add(item);
         return true;
     }
@@ -65,26 +64,22 @@ public class ProposalManager extends Manager<Proposal> {
         return false;
     }
 
-    private boolean insertInterShip(InterShip interShip){
+    private boolean verifyInterShip(InterShip interShip){
         if (studentRegistered(interShip.getStudent())){
             Student student = find(interShip.getStudent(),Student.class);
-            if (!student.isHasStage()){
-                return false;
-            }
+            return !student.isHasStage();
         }
-        insert(interShip);
         return true;
     }
 
-    private boolean insertProject(Project project){
+    private boolean verifyProject(Project project){
         if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent())){
             return false;
         }
-        insert(project);
         return true;
     }
 
-    private boolean insertSelfProposal(Proposal proposal){
+    private boolean verifySelfProposal(Proposal proposal){
         return true;
     }
 
@@ -92,7 +87,7 @@ public class ProposalManager extends Manager<Proposal> {
         if (studentId != -1){
             return find(studentId,Student.class) != null;
         }
-        return true;
+        return false;
     }
 
     public String getListOfProposals(List<Integer> filters){
@@ -116,5 +111,38 @@ public class ProposalManager extends Manager<Proposal> {
             }
         }
         return stringBuilder.toString();
+    }
+
+    public int branchCount(String branch){
+        int count = 0;
+        for (Proposal item : listOfProposals.get(Project.class)){
+            Project project = (Project) item;
+            if(project.getDestiny().equals(branch)) count++;
+        }
+        for (Proposal item : listOfProposals.get(InterShip.class)){
+            InterShip interShip = (InterShip) item;
+            if(interShip.getDestiny().equals(branch)) count++;
+        }
+        return count;
+    }
+
+    public boolean manualAttribution(String proposalID,long studentID) {
+        Student student = find(studentID,Student.class);
+        Proposal proposal = find(proposalID,Proposal.class);
+        if (student == null || proposal == null) return false;
+
+        if (!student.getHasProposal()){
+           proposal.setStudent(studentID);
+        }
+        return true;
+    }
+
+    public boolean manuelRemove(String proposalID){
+        Proposal proposal = find(proposalID,Proposal.class);
+        if (proposal == null || proposal instanceof SelfProposal || proposal.getStudent() == -1) return false;
+
+        Student student = find(proposal.getStudent(),Student.class);
+        student.setHasProposal(false);
+        return true;
     }
 }

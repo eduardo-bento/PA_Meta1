@@ -1,9 +1,9 @@
 package pt.isec.pa.apoio_poe.model.dataStrucutures;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.fsm.EState;
 
-import java.io.FileReader;
+import java.io.File;
 import java.util.*;
 
 public class Student {
@@ -15,6 +15,7 @@ public class Student {
     private double classification;
     private boolean hasStage;
     private boolean _hasCandidacy;
+    private boolean _hasProposal;
 
     public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean hasStage) {
         this.id = id;
@@ -28,6 +29,14 @@ public class Student {
 
     public static Student getFakeStudent(long id){
         return new Student(id,"---","---","---","---",9999,true);
+    }
+
+    public boolean getHasProposal() {
+        return _hasProposal;
+    }
+
+    public void setHasProposal(boolean hasProposal) {
+        this._hasProposal = hasProposal;
     }
 
     public long getId() {
@@ -88,7 +97,7 @@ public class Student {
         return _hasCandidacy;
     }
 
-    public void set_hasCandidacy(boolean candidacy) {
+    public void hasCandidacy(boolean candidacy) {
         this._hasCandidacy = candidacy;
     }
 
@@ -99,33 +108,32 @@ public class Student {
         this.hasStage = hasStage;
     }
 
-
     public static List<Object> readFile(String filePath){
         List<Object> data = new ArrayList<>();
-        List<Object> students = new ArrayList<>();
-        try {
-            Scanner input = new Scanner(new FileReader(filePath));
-            while(input.hasNextLine()){
-                String line = input.nextLine();
-                String[] parameters = line.split(",");
+        List<Object> items = new ArrayList<>();
 
-                data.add(Long.parseLong(parameters[0]));
-                data.add(parameters[1]);
-                data.add(parameters[2]);
-                data.add(parameters[3]);
-                data.add(parameters[4]);
-                data.add(Double.parseDouble(parameters[5]));
-                data.add(Boolean.parseBoolean(parameters[6]));
+        try(Scanner input = new Scanner(new File(filePath))) {
+            input.useDelimiter(",\\s*|\r\n|\n");
+            input.useLocale(Locale.US);
+            while(input.hasNext()){
+                data.add(input.nextLong());
+                data.add(input.next());
+                data.add(input.next());
+                data.add(input.next());
+                data.add(input.next());
+                data.add(input.nextDouble());
 
-                EManagement management = EManagement.fromClass(Student.class);
-                students.add(management.factory(data));
+                String stageStr = input.next().toLowerCase(Locale.ROOT);
+                boolean stage = stageStr.equals("true");
+                data.add(stage);
+
+                items.add(EState.STUDENT.factory(data));
                 data.clear();
             }
-            input.close();
         }  catch (Exception e){
             Log.getInstance().addMessage("The file does not exist");
         }
-        return students;
+        return items;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.data;
 
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
 import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.InterShip;
 import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
@@ -57,6 +58,10 @@ public class Commands {
         infoSelfProposal.add("Write proposal id");
         infoSelfProposal.add("Write proposal title");
         infoSelfProposal.add("Write student");
+
+        commands.put(Candidacy.class,new ArrayList<>());
+        List<String> infoCandidacy = commands.get(Candidacy.class);
+        infoCandidacy.add("Student id: ");
     }
 
     public List<String> getInfo(Class typeClass){

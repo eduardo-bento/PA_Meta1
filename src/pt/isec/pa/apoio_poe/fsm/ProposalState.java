@@ -8,6 +8,21 @@ public class ProposalState extends ContextAdapter{
     }
 
     @Override
+    public boolean isPhaseLock() {
+        return data.isPhaseLock(EState.PROPOSALS);
+    }
+
+    @Override
+    public void manualProposalAttribution(String proposalID, long studentID) {
+        data.manualProposalAttribution(proposalID,studentID);
+    }
+
+    @Override
+    public void manualProposalRemoveAttribution(String proposalID) {
+        data.manualProposalRemoveAttribution(proposalID);
+    }
+
+    @Override
     public EState getState() {
         return EState.PROPOSALS;
     }

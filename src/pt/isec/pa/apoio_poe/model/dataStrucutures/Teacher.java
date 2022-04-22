@@ -1,13 +1,9 @@
 package pt.isec.pa.apoio_poe.model.dataStrucutures;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.data.EManagement;
 
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.File;
+import java.util.*;
 
 public class Teacher {
     private String email;
@@ -53,28 +49,33 @@ public class Teacher {
         this.advisor = advisor;
     }
 
-    public static List<Object> readFile(String filePath){
+/*    public static List<Object> readFile(String filePath){
         List<Object> data = new ArrayList<>();
-        List<Object> objects = new ArrayList<>();
-        try {
-            Scanner input = new Scanner(new FileReader(filePath));
-            while(input.hasNextLine()){
-                String line = input.nextLine();
-                String[] parameters = line.split(",");
+        List<Object> students = new ArrayList<>();
+        EDataStructure management = EDataStructure.fromClass(Teacher.class);
 
-                data.add(parameters[0]);
-                data.add(parameters[1]);
-                data.add(Boolean.parseBoolean(parameters[2]));
-                EManagement management = EManagement.fromClass(Teacher.class);
-                objects.add(management.factory(data));
+        try(Scanner input = new Scanner(new File(filePath))) {
+            input.useDelimiter(",\\s*|\r\n|\n");
+            input.useLocale(Locale.US);
+            while(input.hasNext()){
+                data.add(input.next());
+                data.add(input.next());
+
+                String stageStr = input.next().toLowerCase(Locale.ROOT);
+                boolean stage = switch (stageStr){
+                    case "true" -> true;
+                    default -> false;
+                };
+
+                data.add(stage);
+                students.add(management.factory(data));
                 data.clear();
             }
-            input.close();
         }  catch (Exception e){
             Log.getInstance().addMessage("The file does not exist");
         }
-        return objects;
-    }
+        return students;
+    }*/
 
     @Override
     public boolean equals(Object o) {

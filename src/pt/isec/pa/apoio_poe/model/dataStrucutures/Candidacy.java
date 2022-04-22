@@ -1,5 +1,10 @@
 package pt.isec.pa.apoio_poe.model.dataStrucutures;
 
+import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.fsm.EState;
+
+import javax.swing.text.Style;
+import java.io.File;
 import java.util.*;
 
 public class Candidacy {
@@ -9,6 +14,11 @@ public class Candidacy {
     public Candidacy(long studentId) {
         this.studentId = studentId;
         proposals = new HashSet<>();
+    }
+
+    public Candidacy(long studentId,Set<String> proposals){
+        this.studentId = studentId;
+        this.proposals = proposals;
     }
 
     public static Candidacy getFakeCandidacy(long id){
@@ -33,6 +43,27 @@ public class Candidacy {
 
     public Set<String> getProposals() {
         return proposals;
+    }
+
+    public static List<Object> readFile(String filePath){
+        Set<String> data = new HashSet<>();
+        List<Object> items = new ArrayList<>();
+
+        try(Scanner input = new Scanner(new File(filePath))) {
+            input.useDelimiter(",\\s*|\r\n|\n");
+            input.useLocale(Locale.US);
+            while(input.hasNext()){
+                long studentID = input.nextLong();
+                while(!input.hasNextLong()){
+                    data.add(input.next());
+                }
+                items.add(new Candidacy(studentID,data));
+                data.clear();
+            }
+        }  catch (Exception e){
+            Log.getInstance().addMessage("The file does not exist");
+        }
+        return items;
     }
 
     @Override

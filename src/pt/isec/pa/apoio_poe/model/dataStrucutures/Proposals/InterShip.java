@@ -5,17 +5,15 @@ package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
 public class InterShip extends Proposal{
     private String entity;
     private String destiny;
-    private long student;
-
-    public InterShip(String id, String title, String destiny, String entity, long student) {
-        super(id, title);
+    public InterShip(String id, String title,long student,String destiny, String entity) {
+        super(id, title,student);
         this.destiny = destiny;
         this.entity = entity;
-        this.student = student;
+
     }
 
-    public static InterShip getFakeInterShip(String id, String title, String destiny, String entity, long student){
-        return new InterShip(id,title,destiny,entity,student);
+    public static InterShip getFakeInterShip(String id, String title,long student,String destiny, String entity){
+        return new InterShip(id,title,student,destiny,entity);
     }
 
     public String getEntity() {
@@ -24,14 +22,6 @@ public class InterShip extends Proposal{
 
     public void setEntity(String entity) {
         this.entity = entity;
-    }
-
-    public long getStudent() {
-        return student;
-    }
-
-    public void setStudent(long student) {
-        this.student = student;
     }
 
     public String getDestiny() {

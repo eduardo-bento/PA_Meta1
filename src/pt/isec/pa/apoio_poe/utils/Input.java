@@ -1,8 +1,10 @@
 package pt.isec.pa.apoio_poe.utils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import pt.isec.pa.apoio_poe.data.Commands;
+import pt.isec.pa.apoio_poe.fsm.EState;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 public final class Input {
     private Input() {}
@@ -156,5 +158,32 @@ public final class Input {
         return option;
     }
 
+    public static Object readClass(EState state,Integer ... type){
+        Commands commands = new Commands();
+        List<Object> data = new ArrayList<>();
+        Field[] myClass;
+        Field[] superClassFields;
 
+        if (type.length != 0){
+            myClass = EState.ProposalTypes.getStructureClass(type[0]).getDeclaredFields();
+            superClassFields = EState.ProposalTypes.getStructureClass(type[0]).getSuperclass().getDeclaredFields();
+
+        } else{
+            myClass = state.getStructureClass().getDeclaredFields();
+            superClassFields = state.getStructureClass().getSuperclass().getDeclaredFields();
+        }
+
+        List<Field> fields = new ArrayList<>(myClass.length + superClassFields.length);
+        Collections.addAll(fields,superClassFields);
+        Collections.addAll(fields,myClass);
+
+        List<String> info = commands.getInfo(state.getStructureClass());
+        for (int i = 0,j = 0; i < info.size() ;i++,j++){
+            if (fields.get(j).getName().charAt(0) == '_') j++;
+
+            String typeName = Utils.splitString(fields.get(j).getType().getName(),"\\.");
+            data.add(Utils.invokeMethod(typeName,typeName + " " + info.get(i),Input.class));
+        }
+        return state.factory(data);
+    }
 }

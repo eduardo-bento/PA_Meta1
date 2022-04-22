@@ -11,7 +11,7 @@ import java.util.Set;
 
 public abstract class Manager<T> {
     protected final Set<T> list;
-    private final Data data;
+    protected final Data data;
 
     public Manager(Data data) {
         list = new HashSet<>();
@@ -52,7 +52,7 @@ public abstract class Manager<T> {
                     return (K) v;
                 }
             }
-            Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
+            //Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
         } catch (Exception e) {
             e.printStackTrace();
         }

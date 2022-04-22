@@ -1,7 +1,9 @@
 package pt.isec.pa.apoio_poe.fsm;
 
+import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.EDataStructure;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
 
 public class ConfigurationState extends ContextAdapter {
     public ConfigurationState(Context context, Data data) {
@@ -9,49 +11,41 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
-    public void changeManagementMode(EManagement management) {
+    public void changeMode(EState management) {
         data.setCurrentMode(management);
     }
 
     @Override
-    public EManagement getManagementMode() {
+    public EState getMode() {
         return data.getCurrentMode();
     }
 
     @Override
-    public boolean insert(Object object) {
-       return data.insert(object);
+    public void goToMode() {
+        changeState(data.getCurrentMode());
     }
 
     @Override
-    public <T,K,A> boolean edit(T id, K value, String label, Class<A> type) {
-        data.edit(id,value,label, type);
-        return true;
+    public boolean isPhaseLock() {
+        return data.isPhaseLock(EState.CONFIGURATION);
     }
+
     @Override
     public boolean closePhase() {
-        return data.lockPhase(getState());
+        if (data.lockConfigurationPhase()){
+            Log.getInstance().addMessage("Configuration Phase locked");
+            return data.lockPhase(getState());
+        }
+        return false;
     }
 
     @Override
-    public <T,K> boolean remove(T entity,Class<K> typeClass) {
-        data.remove(entity,typeClass);
-        return true;
-    }
-
-    @Override
-    public void readFromFile(String filePath, Class<?> typeClass) {
-        data.readCVS(filePath,typeClass);
-    }
-
-    @Override
-    public <T> String querying(Class<T> typeClass) {
-        return data.querying(typeClass);
+    public String querying() {
+        return null;
     }
 
     @Override
     public void forward() {
-        data.setCurrentMode(EManagement.CANDIDACY);
         changeState(EState.CANDIDACY);
     }
 

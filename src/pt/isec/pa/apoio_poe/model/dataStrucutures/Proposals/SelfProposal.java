@@ -1,23 +1,12 @@
 package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
 
 public class SelfProposal extends Proposal {
-    private long student;
-
     public SelfProposal(String id, String title, long student) {
-        super(id, title);
-        this.student = student;
+        super(id, title,student);
     }
 
     public static SelfProposal getFakeSelfProposal(String id, String title, long student){
         return new SelfProposal(id,title,student);
-    }
-
-    public long getStudent() {
-        return student;
-    }
-
-    public void setStudent(long student) {
-        this.student = student;
     }
 
     @Override

@@ -1,9 +1,10 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.data.EManagement;
+import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
 
+import java.net.CacheRequest;
 import java.util.List;
 
 public class CandidacyState extends ContextAdapter{
@@ -15,10 +16,14 @@ public class CandidacyState extends ContextAdapter{
     @Override
     public boolean back() {
         if (!data.isPhaseLock(EState.CANDIDACY)){
-            data.setCurrentMode(EManagement.STUDENTS);
             changeState(EState.CONFIGURATION);
         }
         return true;
+    }
+
+    @Override
+    public boolean isPhaseLock() {
+        return data.isPhaseLock(EState.CANDIDACY);
     }
 
     @Override
@@ -33,23 +38,29 @@ public class CandidacyState extends ContextAdapter{
     }
 
     @Override
+    public void readFromFile(String filePath) {
+        data.readCVS(filePath,Candidacy.class);
+    }
+
+    @Override
     public void forward() {
+        data.automaticAssignment();
         changeState(EState.PROPOSALS);
     }
 
     @Override
-    public boolean insert(Object object) {
-        return data.insert(object);
+    public boolean insert(Object item) {
+        return data.insert(item);
     }
 
     @Override
-    public <T> String querying(Class<T> typeClass) {
-        return data.querying(typeClass);
+    public String querying() {
+        return data.querying(Candidacy.class);
     }
 
     @Override
-    public <T, K> boolean remove(T id, Class<K> type) {
-        return data.remove(id,type);
+    public <T> boolean remove(T id) {
+        return data.remove(id, Candidacy.class);
     }
 
     @Override
@@ -69,6 +80,6 @@ public class CandidacyState extends ContextAdapter{
 
     @Override
     public EState getState() {
-        return EState.CANDIDACY;
+        return pt.isec.pa.apoio_poe.fsm.EState.CANDIDACY;
     }
 }
