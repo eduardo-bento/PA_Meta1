@@ -2,47 +2,43 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
+import pt.isec.pa.apoio_poe.fsm.states.*;
+import pt.isec.pa.apoio_poe.fsm.states.phase1.*;
+import pt.isec.pa.apoio_poe.fsm.states.ProposalsState;
+import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyState;
+import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyStateLock;
+import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
+import pt.isec.pa.apoio_poe.model.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Teacher;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum EState {
-    CONFIGURATION,
-    STUDENT,
-    TEACHER,
-    PROPOSAL,
-    PROPOSALS,
-    CANDIDACY,
-    ADVISORS,
-    CONSULTATION;
-
-    public enum ProposalTypes{
-        PROJECT,
-        INTER_SHIP,
-        SELF_PROPOSAL;
-
-        public static Class<?> getStructureClass(int type){
-            return switch (type){
-                case 1 -> Project.class;
-                case 2 -> InterShip.class;
-                default -> SelfProposal.class;
-            };
-        }
-    }
+    CONFIGURATION_PHASE,STUDENT,TEACHER,INTER_SHIP,PROJECT,SELF_PROPOSAL,CONFIGURATION_PHASE_LOCK,
+    PROPOSALS_PHASE,
+    CANDIDACY,CANDIDACY_PHASE_LOCK,
+    TEACHER_ATTRIBUTION_PHASE,
+    QUERYING_PHASE;
 
    public IState stateFactory(Context context, Data data){
        return switch (this){
-           case CONFIGURATION -> new ConfigurationState(context,data);
+           case CONFIGURATION_PHASE -> new ConfigurationState(context,data);
+           case CONFIGURATION_PHASE_LOCK -> new ConfigurationStateLock(context,data);
            case STUDENT -> new StudentState(context,data);
+           case TEACHER -> new TeacherState(context,data);
+           case INTER_SHIP -> new InterShipState(context,data);
+           case PROJECT -> new ProjectState(context,data);
+           case SELF_PROPOSAL -> new SelfProposalState(context,data);
            case CANDIDACY -> new CandidacyState(context,data);
-           case PROPOSALS -> new ProposalState(context,data);
-           default -> null;
+           case CANDIDACY_PHASE_LOCK -> new CandidacyStateLock(context,data);
+           case PROPOSALS_PHASE -> new ProposalsState(context,data);
+           case TEACHER_ATTRIBUTION_PHASE -> new TeacherAttributionState(context,data);
+           case QUERYING_PHASE -> new Querying(context,data);
        };
     }
 
@@ -51,7 +47,7 @@ public enum EState {
             case STUDENT -> Student.class;
             case TEACHER -> Teacher.class;
             case CANDIDACY -> Candidacy.class;
-            default -> null;
+            default -> Proposal.class;
         };
     }
 
@@ -59,6 +55,11 @@ public enum EState {
         return switch (this){
             case STUDENT -> createStudent(data);
             case TEACHER ->  new Teacher((String) data.get(0), (String) data.get(1), (Boolean) data.get(2));
+            case INTER_SHIP -> new InterShip((String) data.get(0), (String) data.get(1),
+                    (Long) data.get(2), (String) data.get(3), (String) data.get(4));
+            case PROJECT -> new Project((String) data.get(0),(String) data.get(1),(Long) data.get(2),(String) data.get(3),(String) data.get(4));
+            case SELF_PROPOSAL -> new SelfProposal((String) data.get(0),(String) data.get(1),(Long) data.get(2));
+            case CANDIDACY -> new Candidacy((Long) data.get(0));
             default -> null;
         };
     }
@@ -87,6 +88,6 @@ public enum EState {
     }
 
     public static EState getMode(int mode){
-        return EState.values()[mode + 1];
+        return EState.values()[mode];
     }
 }

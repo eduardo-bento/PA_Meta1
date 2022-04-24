@@ -1,15 +1,14 @@
-package pt.isec.pa.apoio_poe.model.dataStrucutures;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.fsm.EState;
 
-import javax.swing.text.Style;
 import java.io.File;
 import java.util.*;
 
 public class Candidacy {
     private long studentId;
     private final Set<String> proposals;
+    private String proposal;
 
     public Candidacy(long studentId) {
         this.studentId = studentId;
@@ -18,7 +17,8 @@ public class Candidacy {
 
     public Candidacy(long studentId,Set<String> proposals){
         this.studentId = studentId;
-        this.proposals = proposals;
+        this.proposals = new HashSet<>();
+        this.proposals.addAll(proposals);
     }
 
     public static Candidacy getFakeCandidacy(long id){
@@ -55,6 +55,7 @@ public class Candidacy {
             while(input.hasNext()){
                 long studentID = input.nextLong();
                 while(!input.hasNextLong()){
+                    if (!input.hasNext()) break;
                     data.add(input.next());
                 }
                 items.add(new Candidacy(studentID,data));

@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.dataStrucutures;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.fsm.EState;

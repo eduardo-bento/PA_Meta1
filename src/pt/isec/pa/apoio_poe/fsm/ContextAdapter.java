@@ -4,7 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 
 import java.util.List;
 
-abstract class ContextAdapter implements IState{
+public abstract class ContextAdapter implements IState{
     protected Context context;
     protected Data data;
 
@@ -50,14 +50,15 @@ abstract class ContextAdapter implements IState{
     public void forward() {}
 
     @Override
-    public void manualProposalAttribution(String proposalID, long studentID) {}
+    public void automaticAttributionWithoutAssociation() {}
 
     @Override
-    public void manualProposalRemoveAttribution(String proposalID) {}
+    public void automaticAttributionForProposalsWithStudent() {
 
-    @Override
-    public void readFromFile(String filePath) {
     }
+
+    @Override
+    public void readFromFile(String filePath) {}
 
     @Override
     public boolean back() {

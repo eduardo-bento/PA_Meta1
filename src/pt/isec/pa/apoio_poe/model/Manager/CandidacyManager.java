@@ -2,10 +2,10 @@ package pt.isec.pa.apoio_poe.model.Manager;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Student;
 
 import java.util.*;
 
@@ -45,6 +45,18 @@ public class CandidacyManager extends Manager<Candidacy> {
     private boolean verifyCandidacy(Candidacy item){
         if (find(item.getStudentId(),Candidacy.class) == null){
             Student student = find(item.getStudentId(),Student.class);
+            for (String id : item.getProposals()){
+                Proposal proposal = find(id,Proposal.class);
+                if(proposal == null){
+                    Log.getInstance().addMessage("The proposal of id " + id + " does not exist");
+                    return false;
+                }
+                if (proposal.hasCandidacy()){
+                    Log.getInstance().addMessage("The proposal of id " + id + " is already assigned to a candidacy");
+                    return false;
+                }
+            }
+
             if (student != null){
                 student.hasCandidacy(true);
                 return true;
@@ -53,12 +65,13 @@ public class CandidacyManager extends Manager<Candidacy> {
         return false;
     }
 
+
     public boolean addProposal(long id,String idProposal){
         Candidacy candidacy = find(id,Candidacy.class);
         if (candidacy != null && candidacy.addProposal(idProposal)){
             Proposal proposal = find(idProposal,Proposal.class);
             if (proposal == null) return false;
-            proposal.addCandidacy();
+            proposal.set_hasCandidacy(true);
             Log.getInstance().addMessage("The proposal was added to the candidacy");
             return true;
         }
@@ -71,7 +84,7 @@ public class CandidacyManager extends Manager<Candidacy> {
         if (candidacy != null && candidacy.removeProposal(idProposal)){
             Proposal proposal = find(idProposal,Proposal.class);
             if (proposal == null) return false;
-            proposal.subCandidacy();
+            proposal.set_hasCandidacy(false);
             Log.getInstance().addMessage("The proposal was remove from the candidacy");
             return true;
         }

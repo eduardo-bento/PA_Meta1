@@ -1,9 +1,10 @@
-package pt.isec.pa.apoio_poe.fsm;
+package pt.isec.pa.apoio_poe.fsm.states.phase1;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.EDataStructure;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.fsm.Context;
+import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
+import pt.isec.pa.apoio_poe.fsm.EState;
 
 public class ConfigurationState extends ContextAdapter {
     public ConfigurationState(Context context, Data data) {
@@ -26,22 +27,24 @@ public class ConfigurationState extends ContextAdapter {
     }
 
     @Override
-    public boolean isPhaseLock() {
-        return data.isPhaseLock(EState.CONFIGURATION);
-    }
-
-    @Override
     public boolean closePhase() {
         if (data.lockConfigurationPhase()){
             Log.getInstance().addMessage("Configuration Phase locked");
-            return data.lockPhase(getState());
+            data.lockPhase(0);
+            changeState(EState.CONFIGURATION_PHASE_LOCK);
+            return true;
         }
         return false;
     }
 
     @Override
     public String querying() {
-        return null;
+        return data.querying(data.getCurrentMode().getStructureClass());
+    }
+
+    @Override
+    public void readFromFile(String filePath) {
+        data.readCSV(filePath,data.getCurrentMode().getStructureClass());
     }
 
     @Override
@@ -51,6 +54,6 @@ public class ConfigurationState extends ContextAdapter {
 
     @Override
     public EState getState() {
-        return EState.CONFIGURATION;
+        return EState.CONFIGURATION_PHASE;
     }
 }

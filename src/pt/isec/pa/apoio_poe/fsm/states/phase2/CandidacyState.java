@@ -1,22 +1,23 @@
-package pt.isec.pa.apoio_poe.fsm;
+package pt.isec.pa.apoio_poe.fsm.states.phase2;
 
-import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
+import pt.isec.pa.apoio_poe.fsm.Context;
+import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
+import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
 
-import java.net.CacheRequest;
 import java.util.List;
 
-public class CandidacyState extends ContextAdapter{
+public class CandidacyState extends ContextAdapter {
     public CandidacyState(Context context, Data data) {
         super(context, data);
     }
 
 
-    @Override
+   /* @Override
     public boolean back() {
         if (!data.isPhaseLock(EState.CANDIDACY)){
-            changeState(EState.CONFIGURATION);
+            changeState(EState.CONFIGURATION_PHASE);
         }
         return true;
     }
@@ -28,24 +29,23 @@ public class CandidacyState extends ContextAdapter{
 
     @Override
     public boolean closePhase() {
-        if (data.isPhaseLock(EState.CONFIGURATION)){
+        if (data.isPhaseLock(EState.CONFIGURATION_PHASE)){
             data.lockPhase(EState.CANDIDACY);
-            changeState(EState.PROPOSALS);
+            changeState(EState.PROPOSALS_PHASE);
             return true;
         }
         Log.getInstance().addMessage("Could not close because configuration state is not close");
         return false;
-    }
+    }*/
 
     @Override
     public void readFromFile(String filePath) {
-        data.readCVS(filePath,Candidacy.class);
+        data.readCSV(filePath,Candidacy.class);
     }
 
     @Override
     public void forward() {
-        data.automaticAssignment();
-        changeState(EState.PROPOSALS);
+        changeState(EState.PROPOSALS_PHASE);
     }
 
     @Override
@@ -70,16 +70,16 @@ public class CandidacyState extends ContextAdapter{
 
     @Override
     public String getListOfStudents() {
-        return data.getListOfStudents();
+        return data.getListOfStudents_CandidacyPhase();
     }
 
     @Override
     public String getFilterList(List<Integer> filters) {
-        return data.getListProposals(filters);
+        return data.getListProposals_CandidacyPhase(filters);
     }
 
     @Override
     public EState getState() {
-        return pt.isec.pa.apoio_poe.fsm.EState.CANDIDACY;
+        return EState.CANDIDACY;
     }
 }

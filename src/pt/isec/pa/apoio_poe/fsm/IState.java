@@ -14,13 +14,12 @@ public interface IState {
     EState getMode();
     void goToMode();
     boolean closePhase();
-    boolean isPhaseLock();
 
     String getListOfStudents();
     String getFilterList(List<Integer> filters);
 
-    void manualProposalAttribution(String proposalID, long studentID);
-    void manualProposalRemoveAttribution(String proposalID);
+    void automaticAttributionWithoutAssociation();
+    void automaticAttributionForProposalsWithStudent();
 
     void readFromFile(String filePath);
 

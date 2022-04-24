@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
+package pt.isec.pa.apoio_poe.model.Proposals;
 
 
 

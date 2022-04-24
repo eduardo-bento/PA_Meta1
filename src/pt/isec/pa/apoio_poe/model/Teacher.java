@@ -1,6 +1,7 @@
-package pt.isec.pa.apoio_poe.model.dataStrucutures;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.fsm.EState;
 
 import java.io.File;
 import java.util.*;
@@ -49,33 +50,22 @@ public class Teacher {
         this.advisor = advisor;
     }
 
-/*    public static List<Object> readFile(String filePath){
-        List<Object> data = new ArrayList<>();
-        List<Object> students = new ArrayList<>();
-        EDataStructure management = EDataStructure.fromClass(Teacher.class);
+    public static List<Object> readFile(String filePath){
+        List<Object> items = new ArrayList<>();
 
         try(Scanner input = new Scanner(new File(filePath))) {
             input.useDelimiter(",\\s*|\r\n|\n");
             input.useLocale(Locale.US);
             while(input.hasNext()){
-                data.add(input.next());
-                data.add(input.next());
-
-                String stageStr = input.next().toLowerCase(Locale.ROOT);
-                boolean stage = switch (stageStr){
-                    case "true" -> true;
-                    default -> false;
-                };
-
-                data.add(stage);
-                students.add(management.factory(data));
-                data.clear();
+                String name = input.next();
+                String email = input.next();
+                items.add(EState.TEACHER.factory(List.of(email,name,false)));
             }
         }  catch (Exception e){
             Log.getInstance().addMessage("The file does not exist");
         }
-        return students;
-    }*/
+        return items;
+    }
 
     @Override
     public boolean equals(Object o) {

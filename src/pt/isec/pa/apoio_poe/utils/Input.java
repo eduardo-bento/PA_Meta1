@@ -158,32 +158,26 @@ public final class Input {
         return option;
     }
 
-    public static Object readClass(EState state,Integer ... type){
+    public static Object readClass(EState state){
         Commands commands = new Commands();
         List<Object> data = new ArrayList<>();
+        List<String> info;
         Field[] myClass;
         Field[] superClassFields;
 
-        if (type.length != 0){
-            myClass = EState.ProposalTypes.getStructureClass(type[0]).getDeclaredFields();
-            superClassFields = EState.ProposalTypes.getStructureClass(type[0]).getSuperclass().getDeclaredFields();
-
-        } else{
-            myClass = state.getStructureClass().getDeclaredFields();
-            superClassFields = state.getStructureClass().getSuperclass().getDeclaredFields();
-        }
+        myClass = state.getStructureClass().getDeclaredFields();
+        superClassFields = state.getStructureClass().getSuperclass().getDeclaredFields();
+        info = commands.getInfo(state.getStructureClass());
 
         List<Field> fields = new ArrayList<>(myClass.length + superClassFields.length);
         Collections.addAll(fields,superClassFields);
         Collections.addAll(fields,myClass);
-
-        List<String> info = commands.getInfo(state.getStructureClass());
         for (int i = 0,j = 0; i < info.size() ;i++,j++){
             if (fields.get(j).getName().charAt(0) == '_') j++;
-
             String typeName = Utils.splitString(fields.get(j).getType().getName(),"\\.");
             data.add(Utils.invokeMethod(typeName,typeName + " " + info.get(i),Input.class));
         }
+
         return state.factory(data);
     }
 }

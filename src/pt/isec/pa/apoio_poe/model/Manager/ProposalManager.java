@@ -1,12 +1,12 @@
 package pt.isec.pa.apoio_poe.model.Manager;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
+import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
+import pt.isec.pa.apoio_poe.model.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Teacher;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -38,6 +38,40 @@ public class ProposalManager extends Manager<Proposal> {
         return listOfProposals.get(label);
     }
 
+    public String getSelfProposalList(){
+        StringBuilder stringBuilder = new StringBuilder();
+        listOfProposals.get(SelfProposal.class).forEach(selfProposal -> stringBuilder.append(selfProposal).append("\n"));
+        return stringBuilder.toString();
+    }
+
+    public String getProjectList(){
+        StringBuilder stringBuilder = new StringBuilder();
+        listOfProposals.get(Project.class).forEach(selfProposal -> stringBuilder.append(selfProposal).append("\n"));
+        return stringBuilder.toString();
+    }
+
+    public String getProposalsWithCandidacy(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Proposal proposal : list){
+           if(proposal.hasCandidacy()){
+               stringBuilder.append(proposal).append("\n");
+           }
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getProposalsWithoutCandidacy(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Proposal proposal : list){
+            if(!proposal.hasCandidacy()){
+                stringBuilder.append(proposal).append("\n");
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+
+
     @Override
     public boolean insert(Proposal item) {
         Method method = handleInsert.get(item.getClass());
@@ -64,48 +98,20 @@ public class ProposalManager extends Manager<Proposal> {
         return false;
     }
 
-    private boolean verifyInterShip(InterShip interShip){
-        if (studentRegistered(interShip.getStudent())){
-            Student student = find(interShip.getStudent(),Student.class);
-            return !student.isHasStage();
-        }
-        return true;
-    }
-
-    private boolean verifyProject(Project project){
-        if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent())){
-            return false;
-        }
-        return true;
-    }
-
-    private boolean verifySelfProposal(Proposal proposal){
-        return true;
-    }
-
-    private boolean studentRegistered(long studentId){
-        if (studentId != -1){
-            return find(studentId,Student.class) != null;
-        }
-        return false;
-    }
-
     public String getListOfProposals(List<Integer> filters){
         StringBuilder stringBuilder = new StringBuilder();
         for (int f : filters){
             switch (f){
                 case 1 -> stringBuilder.append("SelfProposals").append("\n").append(listOfProposals.get(SelfProposal.class));
-                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(listOfProposals.get(Teacher.class));
+                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(listOfProposals.get(Project.class));
                 case 3 ->{
                     stringBuilder.append("Proposals with candidacy").append("\n");
-                    list.forEach( proposal ->{
-                        if (proposal.get_hasCandidacy() > 0) stringBuilder.append(proposal).append("\n");
-                    });
+
                 }
                 case 4 ->{
                     stringBuilder.append("Proposals without candidacy").append("\n");
                     list.forEach( proposal ->{
-                        if (proposal.get_hasCandidacy() == 0) stringBuilder.append(proposal).append("\n");
+                        if (!proposal.hasCandidacy()) stringBuilder.append(proposal).append("\n");
                     });
                 }
             }
@@ -145,4 +151,33 @@ public class ProposalManager extends Manager<Proposal> {
         student.setHasProposal(false);
         return true;
     }
+
+    private boolean verifyInterShip(InterShip interShip){
+        if (studentRegistered(interShip.getStudent())){
+            Student student = find(interShip.getStudent(),Student.class);
+            if (student != null){
+                return !student.isHasStage();
+            }
+        }
+        return true;
+    }
+
+    private boolean verifyProject(Project project){
+        if (find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent())){
+            return false;
+        }
+        return true;
+    }
+
+    private boolean verifySelfProposal(Proposal proposal){
+        return true;
+    }
+
+    private boolean studentRegistered(long studentId){
+        if (studentId != -1){
+            return find(studentId,Student.class) != null;
+        }
+        return true;
+    }
+
 }

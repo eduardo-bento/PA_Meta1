@@ -1,9 +1,9 @@
 package pt.isec.pa.apoio_poe.model.Manager;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Student;
 
 import java.util.*;
 
@@ -12,23 +12,28 @@ public class StudentManager extends Manager<Student> {
         super(data);
     }
 
-    public String getListOfStudents(Set<Proposal> proposals){
-        List<Long> withCandidacy = new ArrayList<>();
-        List<Long> withoutCandidacy = new ArrayList<>();
-        List<Long> selfProposal = new ArrayList<>();
-
-        proposals.forEach(proposal -> {if (proposal instanceof SelfProposal){
-            selfProposal.add(((SelfProposal) proposal).getStudent());}
-        });
-
+    public String getStudentsCandidacy(boolean label){
+        StringBuilder stringBuilder = new StringBuilder();
         for (Student student : list){
-            if (student.hasCandidacy()){
-                withCandidacy.add(student.getId());
-            } else{
-                withoutCandidacy.add(student.getId());
+            if (student.hasCandidacy() && label){
+                stringBuilder.append(student).append("\n");
+            } else if(!student.hasCandidacy() && !label){
+                stringBuilder.append(student).append("\n");
             }
         }
-        return "With candidacy" + "\n" + withCandidacy + "\n" + "Without candidacy" + "\n" + withoutCandidacy + "Self Proposal" + "\n" + selfProposal;
+        return stringBuilder.toString();
+    }
+
+    public String getStudentWithSelfProposal(){
+        StringBuilder stringBuilder = new StringBuilder();
+        Set<Proposal> proposals = data.getSelfProposalSet();
+        for (Proposal proposal : proposals){
+            Student student = find(proposal.getId(),Student.class);
+            if(student != null){
+                stringBuilder.append(student).append("\n");
+            }
+        }
+        return stringBuilder.toString();
     }
 
     public int branchCount(String branch){

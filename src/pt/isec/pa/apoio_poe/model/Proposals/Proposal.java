@@ -1,10 +1,18 @@
-package pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals;
+package pt.isec.pa.apoio_poe.model.Proposals;
+
+import pt.isec.pa.apoio_poe.Log;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Proposal {
     protected String id;
     protected String title;
     protected long student;
-    private int _hasCandidacy;
+    private boolean _hasCandidacy;
 
     protected Proposal(String id, String title,long studentID) {
         this.id = id;
@@ -40,68 +48,58 @@ public class Proposal {
         this.title = title;
     }
 
-    public int get_hasCandidacy() {
+    public boolean hasCandidacy() {
         return _hasCandidacy;
     }
 
-    public void addCandidacy() {
-        _hasCandidacy++;
+    public void set_hasCandidacy(boolean candidacy){
+        this._hasCandidacy = candidacy;
     }
 
-    public void subCandidacy() {
-        _hasCandidacy--;
-    }
-
-   /* public static List<Object> readFile(String filePath){
-        List<Object> data = new ArrayList<>();
-        List<Object> proposals = new ArrayList<>();
+    public static List<Object> readFile(String filePath){
+        List<Object> items = new ArrayList<>();
 
         try(Scanner input = new Scanner(new File(filePath))) {
             input.useDelimiter(",\\s*|\r\n|\n");
             input.useLocale(Locale.US);
             while(input.hasNext()){
-                String type = input.next();
-                data.add(input.next());
-                switch (type){
-                    case "T1"-> {
-                        String branch = input.next();
+                switch (input.next()){
+                    case "T1" -> {
+                        String id = input.next();
+                        String destiny = input.next();
                         String title = input.next();
                         String entity = input.next();
-                        data.add(title);
-                        data.add(entity);
-                        data.add(branch);
-                        data.add(-1L);
-                        proposals.add(EDataStructure.INTER_SHIP.factory(data));
-                    }
-                    case "T2"-> {
-                        String branch = input.next();
-                        String title = input.next();
-                        String email = input.next();
-
-                        data.add(title);
-                        data.add(email);
-                        data.add(branch);
-                        try {
-                            int student = input.nextInt();
-                            data.add(student);
-                        } catch (InputMismatchException e){
-                            data.add(-1);
+                        long studentId = -1;
+                        if (input.hasNextLong()){
+                            studentId = input.nextLong();
                         }
-                        proposals.add(EDataStructure.PROJECT.factory(data));
+                        items.add(new InterShip(id,title,studentId,destiny,entity));
                     }
-                    case "T3"-> {
-                        data.add(input.next());
-                        data.add(input.nextLong());;
-                        proposals.add(EDataStructure.SELF_PROPOSAL.factory(data));
+                    case "T2" -> {
+                        String id = input.next();
+                        String destiny = input.next();
+                        String title = input.next();
+                        String teacher = input.next();
+                        long studentId = -1;
+                        if (input.hasNextLong()){
+                            studentId = input.nextLong();
+                        }
+                        items.add(new Project(id,title,studentId,destiny,teacher));
+                    }
+                    case "T3" -> {
+                        String id = input.next();
+                        String title = input.next();
+                        long studentId = input.nextLong();
+
+                        items.add(new SelfProposal(id,title,studentId));
                     }
                 }
-                data.clear();
             }
         }  catch (Exception e){
             Log.getInstance().addMessage("The file does not exist");
         }
-        return proposals;
-    }*/
+        return items;
+    }
 
     @Override
     public boolean equals(Object o) {

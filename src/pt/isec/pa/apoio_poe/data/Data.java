@@ -2,11 +2,13 @@ package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Manager.*;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Candidacy;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Student;
-import pt.isec.pa.apoio_poe.model.dataStrucutures.Teacher;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -18,21 +20,28 @@ public class Data {
     private EState currentMode;
     private final boolean[] phasesLock;
     private final Map<Class<?>, Manager> management;
-
     public Data() {
         currentMode = EState.STUDENT;
         management = Map.of(
                 Student.class,new StudentManager(this),
                 Teacher.class,new TeacherManager(this),
                 Proposal.class,new ProposalManager(this),
-                Candidacy.class,new CandidacyManager(this)
+                Candidacy.class,new CandidacyManager(this),
+                FinalProposal.class,new FinalProposalManager(this)
         );
-
         phasesLock = new boolean[5];
     }
 
     public Map<Class<?>, Manager> getManagement() {
         return management;
+    }
+
+    public <K> Set<K> getList (Class<K> type){
+        return management.get(type).getList();
+    }
+
+    public Set<Proposal> getSelfProposalSet(){
+        return ((ProposalManager)management.get(Proposal.class)).getSpecific(SelfProposal.class);
     }
 
     public EState getCurrentMode() {
@@ -43,12 +52,12 @@ public class Data {
         this.currentMode = currentMode;
     }
 
-    public boolean isPhaseLock(EState state){
-        return phasesLock[state.ordinal() - 1];
+    public boolean isPhaseLock(int type){
+        return phasesLock[type];
     }
 
-    public boolean lockPhase(pt.isec.pa.apoio_poe.fsm.EState state){
-        return phasesLock[state.ordinal()] = true;
+    public boolean lockPhase(int type){
+        return phasesLock[type] = true;
     }
 
     public boolean insert(Object item){
@@ -85,17 +94,28 @@ public class Data {
         return manager.querying();
     }
 
-    public String getListOfStudents(){
-        StudentManager studentManager = (StudentManager) management.get(Student.class);
-        return studentManager.getListOfStudents(management.get(Proposal.class).getList());
+    public String getListOfStudents_CandidacyPhase(){
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return "With candidacy" + "\n" + manager.getStudentsCandidacy(true) + "\n" +
+                "Without candidacy" + "\n" + manager.getStudentsCandidacy(false) +
+                "Self Proposal" + "\n" + manager.getStudentWithSelfProposal();
     }
 
-    public String getListProposals(List<Integer> filters){
+    public String getListProposals_CandidacyPhase(List<Integer> filters){
         ProposalManager manager = (ProposalManager) management.get(Proposal.class);
-        return manager.getListOfProposals(filters);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int f : filters){
+            switch (f){
+                case 1 -> stringBuilder.append("SelfProposals").append("\n").append(manager.getSelfProposalList());
+                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(manager.getProjectList());
+                case 3 -> stringBuilder.append("Proposals with candidacy").append("\n").append(manager.getProposalsWithCandidacy());
+                case 4 -> stringBuilder.append("Proposals without candidacy").append("\n").append(manager.getProposalsWithoutCandidacy());
+                }
+            }
+        return stringBuilder.toString();
     }
 
-    public void readCVS(String filePath,Class<?> type){
+    public void readCSV(String filePath, Class<?> type){
         try {
             List<Object> objects = (List<Object>) Utils.getSuperClass(type).getMethod("readFile",String.class).invoke(null,filePath);
             objects.forEach(this::insert);
@@ -128,8 +148,36 @@ public class Data {
         }
     }
 
-    public void automaticAssignment(){
-        CandidacyManager candidacy = (CandidacyManager) management.get(Candidacy.class);
-        candidacy.automaticAssignment();
+    public void automaticAttribution(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        manager.automaticAttribution();
+    }
+
+    public void automaticAttributionForProposalsWithStudent() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        manager.automaticProposals();
+    }
+
+    public String getListOfStudentsFinal(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getListOfStudents();
+    }
+
+    public String getListProposalsFinal(List<Integer> filters){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getListOfProposals(filters);
+    }
+
+    public boolean lockProposalPhase(){
+        int count = 0;
+        List<Candidacy> candidacies = new ArrayList<>(management.get(Candidacy.class).getList());
+        List<FinalProposal> proposals = new ArrayList<>(management.get(FinalProposal.class).getList());
+
+        for (Candidacy candidacy : candidacies){
+            if(proposals.contains(FinalProposal.getFakeFinalProposal(candidacy.getStudentId())))
+                count++;
+        }
+
+        return candidacies.size() == count;
     }
 }

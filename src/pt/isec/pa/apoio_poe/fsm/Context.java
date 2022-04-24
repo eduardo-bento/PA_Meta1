@@ -10,7 +10,7 @@ public class Context {
 
     public Context() {
         data = new Data();
-        state = pt.isec.pa.apoio_poe.fsm.EState.CONFIGURATION.stateFactory(this,data);
+        state = pt.isec.pa.apoio_poe.fsm.EState.CONFIGURATION_PHASE.stateFactory(this,data);
     }
 
     void changeState(IState state){
@@ -45,10 +45,6 @@ public class Context {
         return state.closePhase();
     }
 
-    public boolean isPhaseLock(){
-        return state.isPhaseLock();
-    }
-
     public void forward() {
         state.forward();
     }
@@ -61,12 +57,12 @@ public class Context {
         state.readFromFile(filePath);
     }
 
-    public void manualProposalAttribution(String proposalID,long studentID){
-        state.manualProposalAttribution(proposalID,studentID);
+    public void automaticAttribution(){
+        state.automaticAttributionWithoutAssociation();
     }
 
-    public void manualProposalRemoveAttribution(String proposalID){
-
+    public void automaticAttributionForProposalsWithStudent(){
+        state.automaticAttributionForProposalsWithStudent();
     }
 
     public String getListOfStudents() {
