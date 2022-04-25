@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Candidacy;
 
+import java.util.List;
+
 public class CandidacyStateLock extends ContextAdapter {
     public CandidacyStateLock(Context context, Data data) {
         super(context, data);
@@ -24,6 +26,17 @@ public class CandidacyStateLock extends ContextAdapter {
         changeState(EState.CONFIGURATION_PHASE);
         return true;
     }
+
+    @Override
+    public String getListOfStudents() {
+        return data.getListOfStudents_CandidacyPhase();
+    }
+
+    @Override
+    public String getFilterList(List<Integer> filters) {
+        return data.getListProposals_CandidacyPhase(filters);
+    }
+
 
     @Override
     public String querying() {

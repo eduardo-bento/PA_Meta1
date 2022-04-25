@@ -8,10 +8,11 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class ProposalManager extends Manager<Proposal> {
+public class ProposalManager extends Manager<Proposal> implements Serializable {
     private final Map<Class<?>, Set<Proposal>> listOfProposals;
     private Map<Class<?>, Method> handleInsert;
 
@@ -130,26 +131,6 @@ public class ProposalManager extends Manager<Proposal> {
             if(interShip.getDestiny().equals(branch)) count++;
         }
         return count;
-    }
-
-    public boolean manualAttribution(String proposalID,long studentID) {
-        Student student = find(studentID,Student.class);
-        Proposal proposal = find(proposalID,Proposal.class);
-        if (student == null || proposal == null) return false;
-
-        if (!student.getHasProposal()){
-           proposal.setStudent(studentID);
-        }
-        return true;
-    }
-
-    public boolean manuelRemove(String proposalID){
-        Proposal proposal = find(proposalID,Proposal.class);
-        if (proposal == null || proposal instanceof SelfProposal || proposal.getStudent() == -1) return false;
-
-        Student student = find(proposal.getStudent(),Student.class);
-        student.setHasProposal(false);
-        return true;
     }
 
     private boolean verifyInterShip(InterShip interShip){

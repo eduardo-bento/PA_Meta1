@@ -5,18 +5,23 @@ import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 
-public class Querying extends ContextAdapter {
-    public Querying(Context context, Data data) {
+public class T extends ContextAdapter {
+    public T(Context context, Data data) {
         super(context, data);
     }
 
     @Override
-    public String getData() {
-        return data.getData();
+    public void attributeATeacher(String proposalID, String teacherID) {
+        data.attributeATeacher(proposalID,teacherID);
+    }
+
+    @Override
+    public String querying() {
+        return super.querying();
     }
 
     @Override
     public EState getState() {
-        return EState.QUERYING_PHASE;
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm.states.phase2;
 
+import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
@@ -14,29 +15,26 @@ public class CandidacyState extends ContextAdapter {
     }
 
 
-   /* @Override
+    @Override
     public boolean back() {
-        if (!data.isPhaseLock(EState.CANDIDACY)){
-            changeState(EState.CONFIGURATION_PHASE);
+        if (data.isPhaseLock(0)){
+            changeState(EState.CONFIGURATION_PHASE_LOCK);
         }
+        changeState(EState.CONFIGURATION_PHASE);
         return true;
     }
 
     @Override
-    public boolean isPhaseLock() {
-        return data.isPhaseLock(EState.CANDIDACY);
-    }
-
-    @Override
     public boolean closePhase() {
-        if (data.isPhaseLock(EState.CONFIGURATION_PHASE)){
-            data.lockPhase(EState.CANDIDACY);
-            changeState(EState.PROPOSALS_PHASE);
+        if (data.isPhaseLock(0)){
+            data.lockPhase(1);
+            Log.getInstance().addMessage("The Candidacy phase is now locked");
+            forward();
             return true;
         }
-        Log.getInstance().addMessage("Could not close because configuration state is not close");
+        Log.getInstance().addMessage("The Candidacy phase could not be locked");
         return false;
-    }*/
+    }
 
     @Override
     public void readFromFile(String filePath) {

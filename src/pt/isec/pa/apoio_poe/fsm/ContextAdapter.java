@@ -53,9 +53,13 @@ public abstract class ContextAdapter implements IState{
     public void automaticAttributionWithoutAssociation() {}
 
     @Override
-    public void automaticAttributionForProposalsWithStudent() {
+    public void automaticAttributionForProposalsWithStudent() {}
 
-    }
+    @Override
+    public void manualAttribution(String proposalID, long studentID) {}
+
+    @Override
+    public void manualRemove(String proposalID) {}
 
     @Override
     public void readFromFile(String filePath) {}
@@ -64,6 +68,22 @@ public abstract class ContextAdapter implements IState{
     public boolean back() {
         return false;
     }
+
+    @Override
+    public String getAttributionTeacherData() {
+        return null;
+    }
+
+    @Override
+    public void automaticTeacherAttribution() {}
+
+    @Override
+    public String getData() {
+        return null;
+    }
+
+    @Override
+    public void attributeATeacher(String proposalID, String teacherID) {}
 
     @Override
     public String getListOfStudents() {

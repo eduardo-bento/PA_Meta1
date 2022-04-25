@@ -4,12 +4,14 @@ import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.fsm.EState;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class Teacher {
+public class Teacher implements Serializable {
     private String email;
     private String name;
     private boolean advisor;
+    private int _amount;
 
     public Teacher(String email, String name,boolean advisor) {
         this.email = email;
@@ -48,6 +50,14 @@ public class Teacher {
             Log.getInstance().addMessage("You tried to change the advisor to" + advisor + "but the attribute already has that value");
         }
         this.advisor = advisor;
+    }
+
+    public int getAmount() {
+        return _amount;
+    }
+
+    public void addToAmount() {
+        _amount++;
     }
 
     public static List<Object> readFile(String filePath){

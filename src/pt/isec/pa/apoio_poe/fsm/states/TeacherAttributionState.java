@@ -11,6 +11,37 @@ public class TeacherAttributionState extends ContextAdapter {
     }
 
     @Override
+    public String getAttributionTeacherData() {
+        return data.getAttributionTeacherData();
+    }
+
+    @Override
+    public boolean closePhase() {
+        data.lockPhase(3);
+        changeState(EState.QUERYING_PHASE);
+        return true;
+    }
+
+    @Override
+    public boolean back() {
+        if (!data.isPhaseLock(2)){
+            changeState(EState.PROPOSALS_PHASE);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void forward() {
+        changeState(EState.QUERYING_PHASE);
+    }
+
+    @Override
+    public void automaticTeacherAttribution() {
+        data.automaticTeacherAttribution();
+    }
+
+    @Override
     public EState getState() {
         return EState.TEACHER_ATTRIBUTION_PHASE;
     }

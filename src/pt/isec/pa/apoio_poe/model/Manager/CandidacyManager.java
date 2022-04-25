@@ -65,7 +65,6 @@ public class CandidacyManager extends Manager<Candidacy> {
         return false;
     }
 
-
     public boolean addProposal(long id,String idProposal){
         Candidacy candidacy = find(id,Candidacy.class);
         if (candidacy != null && candidacy.addProposal(idProposal)){

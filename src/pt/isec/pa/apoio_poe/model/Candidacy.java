@@ -3,9 +3,10 @@ package pt.isec.pa.apoio_poe.model;
 import pt.isec.pa.apoio_poe.Log;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class Candidacy {
+public class Candidacy implements Serializable {
     private long studentId;
     private final Set<String> proposals;
     private String proposal;

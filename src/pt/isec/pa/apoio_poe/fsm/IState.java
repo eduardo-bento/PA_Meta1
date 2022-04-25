@@ -20,6 +20,14 @@ public interface IState {
 
     void automaticAttributionWithoutAssociation();
     void automaticAttributionForProposalsWithStudent();
+    void manualAttribution(String proposalID, long studentID);
+    void manualRemove(String proposalID);
+
+    String getAttributionTeacherData();
+    void automaticTeacherAttribution();
+    void attributeATeacher(String proposalID, String teacherID);
+
+    String getData();
 
     void readFromFile(String filePath);
 

@@ -23,6 +23,16 @@ public class ProposalsState extends ContextAdapter {
     }
 
     @Override
+    public void manualAttribution(String proposalID, long studentID) {
+        data.manualProposalAttribution(proposalID,studentID);
+    }
+
+    @Override
+    public void manualRemove(String proposalID) {
+        data.manualProposalRemoveAttribution(proposalID);
+    }
+
+    @Override
     public String getListOfStudents() {
         return data.getListOfStudentsFinal();
     }

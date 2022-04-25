@@ -1,6 +1,8 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.Memento.IMemento;
+import pt.isec.pa.apoio_poe.Memento.IOriginator;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Manager.*;
@@ -11,12 +13,13 @@ import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
+import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 
-public class Data {
+public class Data implements Serializable {
     private EState currentMode;
     private final boolean[] phasesLock;
     private final Map<Class<?>, Manager> management;
@@ -135,14 +138,14 @@ public class Data {
     }
 
     public void manualProposalAttribution(String proposalID,long studentID){
-        ProposalManager proposals = (ProposalManager) management.get(Proposal.class);
-        if(!proposals.manualAttribution(proposalID,studentID)){
+        FinalProposalManager proposal = (FinalProposalManager) management.get(FinalProposal.class);
+        if(!proposal.manualAttribution(proposalID,studentID)){
             Log.getInstance().addMessage("The proposal id or the student does not exit");
         }
     }
 
     public void manualProposalRemoveAttribution(String proposalID) {
-        ProposalManager proposals = (ProposalManager) management.get(Proposal.class);
+        FinalProposalManager proposals = (FinalProposalManager) management.get(FinalProposal.class);
         if(!proposals.manuelRemove(proposalID)){
             Log.getInstance().addMessage("The proposal id or the student does not exit");
         }
@@ -174,10 +177,38 @@ public class Data {
         List<FinalProposal> proposals = new ArrayList<>(management.get(FinalProposal.class).getList());
 
         for (Candidacy candidacy : candidacies){
-            if(proposals.contains(FinalProposal.getFakeFinalProposal(candidacy.getStudentId())))
+            if(proposals.contains(FinalProposal.getFakeFinalproposal(candidacy.getStudentId())))
                 count++;
         }
 
         return candidacies.size() == count;
+    }
+
+    public String getAttributionTeacherData() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return "List of students with teacher associated\n" + manager.getProposalTeacher(true) +
+                "List of students without teacher associated\n" + manager.getProposalTeacher(false) +
+                "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
+    }
+
+    public void automaticTeacherAttribution() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        manager.automaticTeacherAttribution();
+    }
+
+    public String getData() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return "List of students with attributed proposal\n" + manager.listOfStudentsWithFinalProposal() +
+                "List of students without attributed proposal but with candidacy options\n" + manager.listOfStudentsWithoutFinalProposalAndWithCandidacy() +
+                "Available Proposals\n" + manager.listOfAvailableProposals() +
+                "Proposals Attributed\n" + manager.listOfFinalProposals() +
+                "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
+    }
+
+    public void attributeATeacher(String proposalID, String teacherID) {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        manager.attributeATeacher(proposalID,teacherID);
     }
 }

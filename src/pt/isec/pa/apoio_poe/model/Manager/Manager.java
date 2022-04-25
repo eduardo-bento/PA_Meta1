@@ -4,12 +4,13 @@ import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class Manager<T> {
+public abstract class Manager<T> implements Serializable {
     protected final Set<T> list;
     protected final Data data;
 

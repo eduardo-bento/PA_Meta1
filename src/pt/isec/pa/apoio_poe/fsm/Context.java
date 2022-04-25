@@ -2,9 +2,11 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 
+import java.io.*;
 import java.util.List;
 
-public class Context {
+public class Context implements Serializable {
+    static final String FILENAME = "d.data";
     IState state;
     Data data;
 
@@ -65,6 +67,26 @@ public class Context {
         state.automaticAttributionForProposalsWithStudent();
     }
 
+    public void manualAttribution(String proposalID,long studentID){
+        state.manualAttribution(proposalID,studentID);
+    }
+
+    public String getAttributionTeacherData(){
+        return state.getAttributionTeacherData();
+    }
+
+    public void automaticTeacherAttribution(){
+        state.automaticTeacherAttribution();
+    }
+
+    public String getData(){
+        return state.getData();
+    }
+
+    public void manualRemove(String proposalID){
+        state.manualRemove(proposalID);
+    }
+
     public String getListOfStudents() {
         return state.getListOfStudents();
     }
@@ -80,4 +102,23 @@ public class Context {
     public void goToMode() {
         state.goToMode();
     }
+
+    public void save() {
+        try(ObjectOutputStream object = new ObjectOutputStream(
+                new FileOutputStream(FILENAME))) {
+            object.writeObject(data);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public void load() {
+        try(ObjectInputStream object = new ObjectInputStream(
+                new FileInputStream(FILENAME))) {
+            data = (Data) object.readObject();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

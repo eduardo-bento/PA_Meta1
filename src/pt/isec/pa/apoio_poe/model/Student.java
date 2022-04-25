@@ -4,9 +4,10 @@ import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.fsm.EState;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.*;
 
-public class Student {
+public class Student implements Serializable {
     private long id;
     private String name;
     private String email;

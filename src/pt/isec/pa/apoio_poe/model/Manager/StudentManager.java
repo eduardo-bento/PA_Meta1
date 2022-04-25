@@ -5,6 +5,7 @@ import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class StudentManager extends Manager<Student> {
