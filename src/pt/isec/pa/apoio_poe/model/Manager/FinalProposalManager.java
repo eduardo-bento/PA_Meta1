@@ -10,6 +10,7 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

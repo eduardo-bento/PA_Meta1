@@ -8,14 +8,10 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
-import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.*;
 
-public class ProposalManager extends Manager<Proposal> implements Serializable {
+public class ProposalManager extends Manager<Proposal> {
     private final Map<Class<?>, Set<Proposal>> listOfProposals;
-    private Map<Class<?>, Method> handleInsert;
-
     public ProposalManager(Data data) {
         super(data);
         listOfProposals = Map.of(
@@ -23,16 +19,6 @@ public class ProposalManager extends Manager<Proposal> implements Serializable {
                 Project.class,new HashSet<>(),
                 InterShip.class,new HashSet<>()
         );
-
-        try {
-            handleInsert = Map.of(
-                    InterShip.class,ProposalManager.class.getDeclaredMethod("verifyInterShip", InterShip.class),
-                    Project.class, ProposalManager.class.getDeclaredMethod("verifyProject", Project.class),
-                    SelfProposal.class, ProposalManager.class.getDeclaredMethod("verifySelfProposal", Proposal.class)
-            );
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     public Set<Proposal> getSpecific(Class<?> label){
@@ -75,14 +61,16 @@ public class ProposalManager extends Manager<Proposal> implements Serializable {
 
     @Override
     public boolean insert(Proposal item) {
-        Method method = handleInsert.get(item.getClass());
-        try {
-            if(!(boolean) method.invoke(this,item)){
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        boolean add = true;
+        if (item instanceof Project){
+            add = verifyProject((Project)item);
+        } else if (item instanceof InterShip){
+            add = verifyInterShip((InterShip) item);
+        } else if(item instanceof SelfProposal){
+            add = verifySelfProposal(item);
         }
+
+        if (!add) return false;
 
         super.insert(item);
         listOfProposals.get(item.getClass()).add(item);

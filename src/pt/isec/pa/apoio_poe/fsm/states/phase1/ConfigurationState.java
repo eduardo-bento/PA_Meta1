@@ -5,8 +5,11 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.Student;
 
-public class ConfigurationState extends ContextAdapter {
+import java.io.Serializable;
+
+public class ConfigurationState extends ContextAdapter implements Serializable {
     public ConfigurationState(Context context, Data data) {
         super(context, data);
     }
@@ -39,7 +42,7 @@ public class ConfigurationState extends ContextAdapter {
 
     @Override
     public String querying() {
-        return data.querying(data.getCurrentMode().getStructureClass());
+        return data.querying(Student.class);
     }
 
     @Override

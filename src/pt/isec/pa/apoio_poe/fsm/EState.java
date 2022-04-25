@@ -15,10 +15,11 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-public enum EState {
+public enum EState implements Serializable {
     CONFIGURATION_PHASE,STUDENT,TEACHER,INTER_SHIP,PROJECT,SELF_PROPOSAL,CONFIGURATION_PHASE_LOCK,
     PROPOSALS_PHASE,
     CANDIDACY,CANDIDACY_PHASE_LOCK,

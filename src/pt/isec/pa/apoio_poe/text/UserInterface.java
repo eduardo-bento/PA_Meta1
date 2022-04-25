@@ -11,14 +11,14 @@ import java.util.List;
 
 public class UserInterface {
     private final Context context;
-    private boolean isRunning;
+    private boolean isRunning = true;
 
     public UserInterface(Context context) {
         this.context = context;
     }
 
     public void start() {
-        while (true) {
+        while (isRunning) {
             Log.getInstance().reset();
             switch (context.getState()) {
                 case CONFIGURATION_PHASE -> configuration();
@@ -43,7 +43,9 @@ public class UserInterface {
             case 5 -> context.closePhase();
             case 6 -> context.forward();
             case 7 -> context.save();
-            case 8 -> context.load();
+            case 8 -> {
+                context.load();
+            }
         }
     }
 

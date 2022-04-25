@@ -3,12 +3,14 @@ package pt.isec.pa.apoio_poe.model.Proposals;
 import pt.isec.pa.apoio_poe.Log;
 
 import java.io.File;
+import java.io.Serializable;
+import java.security.SecureRandomParameters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-public class Proposal {
+public class Proposal implements Serializable {
     protected String id;
     protected String title;
     protected long student;

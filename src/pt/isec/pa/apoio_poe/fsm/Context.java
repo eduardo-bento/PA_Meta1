@@ -1,18 +1,20 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Student;
 
+import java.awt.*;
 import java.io.*;
 import java.util.List;
 
-public class Context implements Serializable {
+public class Context {
     static final String FILENAME = "d.data";
-    IState state;
-    Data data;
+    private IState state;
+    private Data data;
 
     public Context() {
         data = new Data();
-        state = pt.isec.pa.apoio_poe.fsm.EState.CONFIGURATION_PHASE.stateFactory(this,data);
+        state = EState.CONFIGURATION_PHASE.stateFactory(this,data);
     }
 
     void changeState(IState state){
@@ -107,6 +109,7 @@ public class Context implements Serializable {
         try(ObjectOutputStream object = new ObjectOutputStream(
                 new FileOutputStream(FILENAME))) {
             object.writeObject(data);
+            object.writeObject(state.getState());
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -116,6 +119,8 @@ public class Context implements Serializable {
         try(ObjectInputStream object = new ObjectInputStream(
                 new FileInputStream(FILENAME))) {
             data = (Data) object.readObject();
+            EState state = (EState) object.readObject();
+            changeState(state.stateFactory(this,data));
         } catch (Exception e){
             e.printStackTrace();
         }

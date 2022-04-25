@@ -1,8 +1,6 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.Memento.IMemento;
-import pt.isec.pa.apoio_poe.Memento.IOriginator;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Manager.*;

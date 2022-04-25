@@ -7,6 +7,7 @@ import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 
+import java.io.Serializable;
 import java.util.*;
 
 public class CandidacyManager extends Manager<Candidacy> {

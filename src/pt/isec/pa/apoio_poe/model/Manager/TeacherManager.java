@@ -4,6 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Teacher;
 import pt.isec.pa.apoio_poe.model.TeacherOrder;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
