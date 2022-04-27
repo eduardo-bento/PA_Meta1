@@ -59,8 +59,8 @@ public class Context {
         state.automaticAttributionForProposalsWithStudent();
     }
 
-    public void manualAttribution(String proposalID,long studentID){
-        state.manualAttribution(proposalID,studentID);
+    public void manualTeacherAttribution(String proposalID, String teacherID){
+        state.manualTeacherAttribution(proposalID,teacherID);
     }
 
     public String getAttributionTeacherData(){
@@ -97,6 +97,10 @@ public class Context {
 
     public void exportFile(String filePath) {
         state.exportFile(filePath);
+    }
+
+    public boolean manualTeacherRemove(String proposalID){
+       return state.manualTeacherRemove(proposalID);
     }
 
     public void save() {

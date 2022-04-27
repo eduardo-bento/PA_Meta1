@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
@@ -38,18 +39,6 @@ public class CandidacyManager extends Manager<Candidacy> {
         items.forEach(this::insert);
     }
 
-    public void automaticAssignment(){
-        ProposalManager manager = (ProposalManager) data.getManagement().get(Proposal.class);
-        Set<Proposal> proposals = manager.getSpecific(SelfProposal.class);
-        Set<Candidacy> candidacies = new HashSet<>();
-        for (Proposal proposal : proposals){
-            if(proposal.getStudent() != -1){
-                candidacies.add(new Candidacy(proposal.getStudent(), Set.of(proposal.getId())));
-            }
-        }
-        candidacies.forEach(this::insert);
-    }
-
     @Override
     public <Q, K, A> boolean edit(Q id, K value, String label, Class<A> type) {
         if (label.equals("add")){
@@ -60,30 +49,57 @@ public class CandidacyManager extends Manager<Candidacy> {
 
     @Override
     public boolean insert(Candidacy item) {
-        if(verifyCandidacy(item)){
+        if(verify(item)){
             return super.insert(item);
         }
         return false;
     }
 
-    private boolean verifyCandidacy(Candidacy item){
-        if (find(item.getStudentId(),Candidacy.class) == null){
-            Student student = find(item.getStudentId(),Student.class);
-            for (String id : item.getProposals()){
-                Proposal proposal = find(id,Proposal.class);
-                if(proposal == null){
-                    Log.getInstance().addMessage("The proposal of id " + id + " does not exist");
-                    return false;
-                }
-                if (proposal.hasCandidacy()){
-                    Log.getInstance().addMessage("The proposal of id " + id + " is already assigned to a candidacy");
-                    return false;
-                }
-            }
+    private boolean verify(Candidacy item){
+        if(studentIsAssignedToASelfProposalOrProject(item.getStudentId())){
+            return false;
+        }
+        if (find(item.getStudentId(),Candidacy.class) != null){
+            return false;
+        }
 
-            if (student != null){
-                student.hasCandidacy(true);
-                return true;
+        if (item.getProposals().isEmpty()){
+            Log.getInstance().addMessage("There are no proposals");
+            return false;
+        }
+
+        for (String id : item.getProposals()){
+            Proposal proposal = find(id,Proposal.class);
+            if(proposal == null){
+                Log.getInstance().addMessage("The proposal of id " + id + " does not exist");
+                return false;
+            }
+            if (proposal.getStudent() != -1){
+                return false;
+            }
+        }
+
+        Student student = find(item.getStudentId(),Student.class);
+        if (student != null){
+            for (String id : item.getProposals()) {
+                Proposal proposal = find(id, Proposal.class);
+                proposal.setCandidacy(true);
+            }
+            student.setCandidacy(true);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean studentIsAssignedToASelfProposalOrProject(long studentID){
+        if (studentID == -1) return false;
+        List<Proposal> proposals = data.getList(Proposal.class);
+        for (Proposal proposal : proposals){
+            if (proposal instanceof Project || proposal instanceof SelfProposal){
+                if (studentID == proposal.getStudent()){
+                    Log.getInstance().addMessage("The student is already assigned to a InterShip or a Project");
+                    return true;
+                }
             }
         }
         return false;
@@ -94,7 +110,7 @@ public class CandidacyManager extends Manager<Candidacy> {
         if (candidacy != null && candidacy.addProposal(idProposal)){
             Proposal proposal = find(idProposal,Proposal.class);
             if (proposal == null) return false;
-            proposal.set_hasCandidacy(true);
+            proposal.setCandidacy(true);
             Log.getInstance().addMessage("The proposal was added to the candidacy");
             return true;
         }
@@ -107,7 +123,7 @@ public class CandidacyManager extends Manager<Candidacy> {
         if (candidacy != null && candidacy.removeProposal(idProposal)){
             Proposal proposal = find(idProposal,Proposal.class);
             if (proposal == null) return false;
-            proposal.set_hasCandidacy(false);
+            proposal.setCandidacy(false);
             Log.getInstance().addMessage("The proposal was remove from the candidacy");
             return true;
         }

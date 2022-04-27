@@ -24,42 +24,6 @@ public class ProposalManager extends Manager<Proposal> {
         );
     }
 
-    public Set<Proposal> getSpecific(Class<?> label){
-        return listOfProposals.get(label);
-    }
-
-    public String getSelfProposalList(){
-        StringBuilder stringBuilder = new StringBuilder();
-        listOfProposals.get(SelfProposal.class).forEach(selfProposal -> stringBuilder.append(selfProposal).append("\n"));
-        return stringBuilder.toString();
-    }
-
-    public String getProjectList(){
-        StringBuilder stringBuilder = new StringBuilder();
-        listOfProposals.get(Project.class).forEach(selfProposal -> stringBuilder.append(selfProposal).append("\n"));
-        return stringBuilder.toString();
-    }
-
-    public String getProposalsWithCandidacy(){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Proposal proposal : list){
-           if(proposal.hasCandidacy()){
-               stringBuilder.append(proposal).append("\n");
-           }
-        }
-        return stringBuilder.toString();
-    }
-
-    public String getProposalsWithoutCandidacy(){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Proposal proposal : list){
-            if(!proposal.hasCandidacy()){
-                stringBuilder.append(proposal).append("\n");
-            }
-        }
-        return stringBuilder.toString();
-    }
-
     @Override
     public void readFile(String filePath){
         List<Proposal> items = new ArrayList<>();
@@ -112,7 +76,7 @@ public class ProposalManager extends Manager<Proposal> {
         } else if (item instanceof InterShip){
             add = verifyInterShip((InterShip) item);
         } else if(item instanceof SelfProposal){
-            add = verifySelfProposal(item);
+            add = verifySelfProposal((SelfProposal) item);
         }
         if (!add) return false;
         if(super.insert(item)){
@@ -122,28 +86,45 @@ public class ProposalManager extends Manager<Proposal> {
     }
 
     private boolean verifyInterShip(InterShip interShip){
-        if (studentRegistered(interShip.getStudent())){
-            Student student = find(interShip.getStudent(),Student.class);
-            if (student != null && equal(interShip.getDestiny(),branches)){
-                return !student.hasStage();
-            }
+        if (!equal(interShip.getDestiny(),branches)){
+            Log.getInstance().addMessage(interShip.getDestiny() + " is not a valid branch");
+            return false;
         }
-        return equal(interShip.getDestiny(),branches);
+        if (interShip.getStudent() != -1){
+            return find(interShip.getStudent(),Student.class) != null;
+        }
+        return true;
     }
 
     private boolean verifyProject(Project project){
-        return find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent()) || !equal(project.getDestiny(),branches);
-    }
-
-    private boolean verifySelfProposal(Proposal proposal){
-        return true;
-    }
-
-    private boolean studentRegistered(long studentId){
-        if (studentId != -1){
-            return find(studentId,Student.class) != null;
+        if (!equal(project.getDestiny(),branches)){
+            Log.getInstance().addMessage(project.getDestiny() + " is not a valid branch");
+            return false;
         }
-        return true;
+        if (project.getStudent() != -1){
+            if(find(project.getStudent(), Student.class) == null){
+                return false;
+            }
+        }
+        return find(project.getTeacher(), Teacher.class) != null;
+    }
+
+    private boolean verifySelfProposal(SelfProposal selfProposal){
+        Student student = find(selfProposal.getStudent(),Student.class);
+        if (student != null){
+            return !findStudentInProposal(student.getId());
+        }
+        return false;
+    }
+
+    private boolean findStudentInProposal(long studentID){
+        for (Proposal proposal : list){
+            if (proposal.getStudent() == studentID){
+                Log.getInstance().addMessage("That student: " + proposal.getStudent() + " is already assigned to a proposal");
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -156,24 +137,58 @@ public class ProposalManager extends Manager<Proposal> {
         return false;
     }
 
-    public String getListOfProposals(List<Integer> filters){
+    public Set<Proposal> getSpecific(Class<?> label){
+        return listOfProposals.get(label);
+    }
+
+    public String getSelfProposalList(){
+        StringBuilder builder = new StringBuilder();
+        listOfProposals.get(SelfProposal.class).forEach(selfProposal -> builder.append(selfProposal).append("\n"));
+        return builder.toString();
+    }
+
+    public String getProjectList(){
+        StringBuilder builder = new StringBuilder();
+        listOfProposals.get(Project.class).forEach(selfProposal -> builder.append(selfProposal).append("\n"));
+        return builder.toString();
+    }
+
+    public String getProposalsWithCandidacy(){
         StringBuilder stringBuilder = new StringBuilder();
-        for (int f : filters){
-            switch (f){
-                case 1 -> stringBuilder.append("SelfProposals").append("\n").append(listOfProposals.get(SelfProposal.class));
-                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(listOfProposals.get(Project.class));
-                case 3 ->{
-                    stringBuilder.append("Proposals with candidacy").append("\n");
-                }
-                case 4 ->{
-                    stringBuilder.append("Proposals without candidacy").append("\n");
-                    list.forEach( proposal ->{
-                        if (!proposal.hasCandidacy()) stringBuilder.append(proposal).append("\n");
-                    });
-                }
+        for (Proposal proposal : list){
+           if(proposal.hasCandidacy()){
+               stringBuilder.append(proposal).append("\n");
+           }
+        }
+        return stringBuilder.toString();
+    }
+
+    public String getProposalsWithoutCandidacy(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Proposal proposal : list){
+            if(!proposal.hasCandidacy()){
+                stringBuilder.append(proposal).append("\n");
             }
         }
         return stringBuilder.toString();
+    }
+
+    public String getProposalsAvailable(){
+        StringBuilder builder = new StringBuilder();
+        for (Proposal proposal : list){
+            if (!proposal.isAssigned())
+                builder.append(proposal).append("\n");
+        }
+        return builder.toString();
+    }
+
+    public String getProposalsAttributed(){
+        StringBuilder builder = new StringBuilder();
+        for (Proposal proposal : list){
+            if (proposal.isAssigned())
+                builder.append(proposal).append("\n");
+        }
+        return builder.toString();
     }
 
     public int branchCount(String branch){

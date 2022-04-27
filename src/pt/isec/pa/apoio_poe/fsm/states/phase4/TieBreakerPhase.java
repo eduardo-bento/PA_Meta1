@@ -11,11 +11,6 @@ public class TieBreakerPhase extends ContextAdapter {
     }
 
     @Override
-    public void attributeATeacher(String proposalID, String teacherID) {
-        data.attributeATeacher(proposalID,teacherID);
-    }
-
-    @Override
     public String querying() {
         return super.querying();
     }

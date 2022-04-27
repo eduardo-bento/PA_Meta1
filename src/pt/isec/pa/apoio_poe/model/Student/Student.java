@@ -14,7 +14,7 @@ public class Student implements Serializable {
     private double classification;
     private boolean hasStage;
     private boolean _hasCandidacy;
-    private boolean _hasProposal;
+    private boolean _hasAssignedProposal;
 
     public Student(long id, String name, String email, String acronymCurse, String acronymBranch, double classification, boolean hasStage) {
         this.id = id;
@@ -30,12 +30,12 @@ public class Student implements Serializable {
         return new Student(id,"---","---","---","---",9999,true);
     }
 
-    public boolean getHasProposal() {
-        return _hasProposal;
+    public boolean hasAssignedProposal() {
+        return _hasAssignedProposal;
     }
 
-    public void setHasProposal(boolean hasProposal) {
-        this._hasProposal = hasProposal;
+    public void setAssignedProposal(boolean hasProposal) {
+        this._hasAssignedProposal = hasProposal;
     }
 
     public long getId() {
@@ -96,7 +96,7 @@ public class Student implements Serializable {
         return _hasCandidacy;
     }
 
-    public void hasCandidacy(boolean candidacy) {
+    public void setCandidacy(boolean candidacy) {
         this._hasCandidacy = candidacy;
     }
 

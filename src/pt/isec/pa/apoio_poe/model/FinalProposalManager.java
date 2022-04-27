@@ -10,54 +10,27 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student.Student;
 import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class FinalProposalManager extends Manager<FinalProposal> {
     public FinalProposalManager(Data data) {
         super(data);
     }
 
-    public String getListOfStudents() {
-        StringBuilder stringBuilder = new StringBuilder();
-        ProposalManager proposalManager = (ProposalManager) data.getManagement().get(Proposal.class);
-        stringBuilder.append("\nWith SelfProposal\n").append("\n");
-        proposalManager.getSpecific(SelfProposal.class).forEach(proposal -> stringBuilder.append(find(proposal.getStudent(),Student.class)));
-
-
-        stringBuilder.append("\nWith candidacy\n");
-        for (Student student : (Set<Student>) data.getManagement().get(Student.class).getList()){
-            if (student.hasCandidacy()){
-                stringBuilder.append(student).append("\n");
-            }
-        }
-
-        stringBuilder.append("\nWith no proposals\n");
-        for (Student student : (Set<Student>) data.getManagement().get(Student.class).getList()){
-            if(!list.contains(FinalProposal.getFakeFinalproposal(student.getId()))){
-                stringBuilder.append(student).append("\n");
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    public void automaticProposals(){
+    public void automaticAssignmentForProjectAndInterShip(){
         List<Proposal> proposals = data.getList(Proposal.class);
         for (Proposal p : proposals){
             if ((p instanceof SelfProposal || p instanceof Project) && p.getStudent() != -1){
-                list.add(new FinalProposal(p.getStudent(),p.getId(),-1));
+                list.add(new FinalProposal(p.getStudent(),p.getId(),1));
             }
         }
     }
 
     public boolean automaticAttribution(){
-        List<Student> students = new ArrayList<>(data.getManagement().get(Student.class).getList());
-
+        List<Student> students = data.getList(Student.class);
         Collections.sort(students,new StudentClassification());
         Collections.reverse(students);
-
         for (Student student : students){
             if(!list.contains(FinalProposal.getFakeFinalproposal(student.getId()))){
                 Candidacy candidacy = find(student.getId(),Candidacy.class);
@@ -65,6 +38,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
                     List<String> proposals = candidacy.getProposals();
                     for (int i = 0;  i < proposals.size(); i++){
                         if (!findProposal(proposals.get(i))){
+                            linkToStudent(student.getId());
                             list.add(new FinalProposal(student.getId(), proposals.get(i),i + 1));
                             break;
                         }
@@ -83,28 +57,8 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return false;
     }
 
-    public String getListOfProposals(List<Integer> filters) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int f : filters){
-            switch (f){
-                case 1 -> stringBuilder.append("SelfProposals").append("\n").append(((ProposalManager) data.getManagement().get(Proposal.class)).getSpecific(SelfProposal.class));
-                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(((ProposalManager) data.getManagement().get(Proposal.class)).getSpecific(Teacher.class));
-                case 3 ->{
-                    stringBuilder.append("Available proposals").append("\n");
-                    List<Proposal> proposals = new ArrayList<>(data.getManagement().get(Proposal.class).getList());
-                    for (Proposal proposal : proposals){
-                        if (!list.contains(FinalProposal.getFakeFinalproposal(proposal.getStudent()))){
-                            stringBuilder.append(proposal).append("\n");
-                        }
-                    }
-                }
-                case 4 -> {
-                    stringBuilder.append("Proposals already attributed").append("\n");
-                    list.forEach(print -> stringBuilder.append(print).append("\n"));
-                }
-            }
-        }
-        return stringBuilder.toString();
+    private void linkToStudent(long studentId){
+        find(studentId,Student.class).setAssignedProposal(true);
     }
 
     public boolean manualAttribution(String proposalID,long studentID) {
@@ -117,9 +71,9 @@ public class FinalProposalManager extends Manager<FinalProposal> {
            list.add(new FinalProposal(studentID,proposalID,-1));
         }
 
-        if (!student.getHasProposal()){
-            proposal.setStudent(studentID);
-        }
+        proposal.setAssigned(true);
+        student.setAssignedProposal(true);
+
         return true;
     }
 
@@ -129,19 +83,9 @@ public class FinalProposalManager extends Manager<FinalProposal> {
 
         Student student = find(proposal.getStudent(),Student.class);
         list.remove(FinalProposal.getFakeFinalproposal(proposal.getStudent()));
-        student.setHasProposal(false);
+        student.setAssignedProposal(false);
+        proposal.setAssigned(false);
         return true;
-    }
-
-    public String getProposalTeacher(boolean label){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (FinalProposal proposal : list){
-            if (proposal.getTeacher().isEmpty() && !label)
-                stringBuilder.append(proposal).append("\n");
-            else if(!proposal.getTeacher().isEmpty() && label)
-                stringBuilder.append(proposal).append("\n");
-        }
-        return stringBuilder.toString();
     }
 
     public void automaticTeacherAttribution(){
@@ -155,59 +99,54 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         }
     }
 
-    public void attributeATeacher(String proposalID, String teacherID) {
+    public boolean manualTeacherAttribution(String proposalID, String teacherID) {
         Teacher teacher = find(teacherID,Teacher.class);
         if (find(teacherID,Teacher.class) != null){
             FinalProposal proposal = find(proposalID,FinalProposal.class);
             if (proposal != null){
                 proposal.setTeacher(teacherID);
                 teacher.addToAmount();
+                return true;
             }
         }
+        return false;
     }
 
-    public String listOfStudentsWithFinalProposal(){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (FinalProposal finalProposal : list){
-            stringBuilder.append(finalProposal.getStudentId()).append("\n");
+    public boolean manualTeacherRemove(String proposalID){
+        FinalProposal proposal = find(proposalID,FinalProposal.class);
+        if (proposal != null){
+            Teacher teacher = find(proposal.getTeacher(),Teacher.class);
+            proposal.setTeacher("");
+            teacher.subToAmount();
+            return true;
         }
-        return stringBuilder.toString();
+        return false;
     }
 
-    public String listOfStudentsWithoutFinalProposalAndWithCandidacy(){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (FinalProposal finalProposal : list){
-            Student student = find(finalProposal.getStudentId(),Student.class);
-            if (student.hasCandidacy()){
-                stringBuilder.append(finalProposal.getStudentId()).append("\n");
-            }
+    public String getFinalProposalWithTeacher(){
+        StringBuilder builder = new StringBuilder();
+        for (FinalProposal proposal : list){
+            if (!proposal.getTeacher().isEmpty())
+                builder.append(proposal).append("\n");
         }
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
-    public String listOfAvailableProposals(){
-        StringBuilder stringBuilder = new StringBuilder();
-        boolean add = true;
-        List<Proposal> proposals = data.getList(Proposal.class);
-        for (Proposal proposal : proposals){
-            for (FinalProposal finalProposal : list){
-                if (proposal.getId().equals(finalProposal.getProposal())){
-                    add = false;
-                }
+    public String getFinalProposalWithoutTeacher(){
+        StringBuilder builder = new StringBuilder();
+        for (FinalProposal proposal : list){
+            if (proposal.getTeacher().isEmpty()) {
+                builder.append(proposal).append("\n");
             }
-            if(add){
-                stringBuilder.append(proposal.getId()).append("\n");
-            }
-            add = true;
         }
-        return stringBuilder.toString();
+        return builder.toString();
     }
 
     public String listOfFinalProposals(){
-        StringBuilder stringBuilder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (FinalProposal finalProposal : list){
-            stringBuilder.append(finalProposal.getProposal()).append("\n");
+            builder.append(finalProposal.getProposal()).append("\n");
         }
-        return stringBuilder.toString();
+        return builder.toString();
     }
 }

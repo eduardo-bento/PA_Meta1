@@ -37,8 +37,8 @@ public class Data implements Serializable {
         return new ArrayList<>(management.get(type).getList());
     }
 
-    public Set<Proposal> getSelfProposalSet(){
-        return ((ProposalManager)management.get(Proposal.class)).getSpecific(SelfProposal.class);
+    public List<Proposal> getSelfProposalList(){
+        return new ArrayList<>(((ProposalManager)management.get(Proposal.class)).getSpecific(SelfProposal.class));
     }
 
     public boolean isPhaseLock(int type){
@@ -85,9 +85,9 @@ public class Data implements Serializable {
 
     public String getListOfStudents_CandidacyPhase(){
         StudentManager manager = (StudentManager) management.get(Student.class);
-        return "With candidacy" + "\n" + manager.getStudentsCandidacy(true) + "\n" +
-                "Without candidacy" + "\n" + manager.getStudentsCandidacy(false) +
-                "Self Proposal" + "\n" + manager.getStudentWithSelfProposal();
+        return "With candidacy" + "\n" + manager.getStudentsWithCandidacy() + "\n" +
+                "Without candidacy" + "\n" + manager.getStudentsWithoutCandidacy() +
+                "Self Proposal" + "\n" + manager.getStudentsWithSelfProposal();
     }
 
     public String getListProposals_CandidacyPhase(List<Integer> filters){
@@ -106,22 +106,6 @@ public class Data implements Serializable {
 
     public void readCSV(String filePath, Class<?> type){
         management.get(type).readFile(filePath);
-    }
-
-    public void exportPhase3(String filePath){
-        List<Student> students = getList(Student.class);
-        CandidacyManager manager = (CandidacyManager) management.get(Candidacy.class);
-        try(PrintWriter printWriter = new PrintWriter(filePath)) {
-            for (Student student : students){
-                printWriter.println(student.exportCSV());
-                Candidacy candidacy = manager.find(student.getId(),Candidacy.class);
-                printWriter.println(candidacy != null ? candidacy.exportCSV() : "non");
-                FinalProposal finalProposal = manager.find(student.getId(),FinalProposal.class);
-                printWriter.println(finalProposal != null ? finalProposal.exportPhase3() : "non");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 
     public void exportPhase4(String filePath){
@@ -148,6 +132,28 @@ public class Data implements Serializable {
                 student.branchCount("DA") >= proposal.branchCount("DA");
     }
 
+    //Phase 3
+    public String getListOfStudentsFinal(){
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return "With candidacy " + manager.getStudentsWithCandidacy() +
+                "With SelfProposal" + manager.getStudentsWithSelfProposal() +
+                "With no proposal " + manager.getStudentsWithNoProposal();
+    }
+
+    public String getListProposalsFinal(List<Integer> filters){
+        StringBuilder builder = new StringBuilder();
+        ProposalManager manager = (ProposalManager) management.get(ProposalManager.class);
+        for (int i : filters){
+            switch (i){
+                case 1 -> builder.append("SelfProposal\n").append("-".repeat(20)).append(manager.getSelfProposalList());
+                case 2 -> builder.append("Project\n").append("-".repeat(20)).append(manager.getProjectList());
+                case 3 -> builder.append("Available").append("-".repeat(20)).append(manager.getProposalsAvailable());
+                case 4 -> builder.append("Attributed").append("-".repeat(20)).append(manager.getProposalsAttributed());
+            }
+        }
+        return builder.toString();
+    }
+
     public void manualProposalAttribution(String proposalID,long studentID){
         FinalProposalManager proposal = (FinalProposalManager) management.get(FinalProposal.class);
         if(!proposal.manualAttribution(proposalID,studentID)){
@@ -169,17 +175,23 @@ public class Data implements Serializable {
 
     public void automaticAttributionForProposalsWithStudent() {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        manager.automaticProposals();
+        manager.automaticAssignmentForProjectAndInterShip();
     }
 
-    public String getListOfStudentsFinal(){
-        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        return manager.getListOfStudents();
-    }
-
-    public String getListProposalsFinal(List<Integer> filters){
-        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        return manager.getListOfProposals(filters);
+    public void exportPhase3(String filePath){
+        List<Student> students = getList(Student.class);
+        CandidacyManager manager = (CandidacyManager) management.get(Candidacy.class);
+        try(PrintWriter printWriter = new PrintWriter(filePath)) {
+            for (Student student : students){
+                printWriter.println(student.exportCSV());
+                Candidacy candidacy = manager.find(student.getId(),Candidacy.class);
+                printWriter.println(candidacy != null ? candidacy.exportCSV() : "non");
+                FinalProposal finalProposal = manager.find(student.getId(),FinalProposal.class);
+                printWriter.println(finalProposal != null ? finalProposal.exportPhase3() : "non");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean lockProposalPhase(){
@@ -198,8 +210,8 @@ public class Data implements Serializable {
     public String getAttributionTeacherData() {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
-        return "List of students with teacher associated\n" + manager.getProposalTeacher(true) +
-                "List of students without teacher associated\n" + manager.getProposalTeacher(false) +
+        return "List of students with teacher associated\n" + manager.getFinalProposalWithTeacher() +
+                "List of students without teacher associated\n" + manager.getFinalProposalWithoutTeacher() +
                 "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
     }
 
@@ -209,17 +221,30 @@ public class Data implements Serializable {
     }
 
     public String getData() {
-        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        FinalProposalManager finalManager = (FinalProposalManager) management.get(FinalProposal.class);
+        StudentManager studentManager = (StudentManager) management.get(Student.class);
         TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
-        return "List of students with attributed proposal\n" + manager.listOfStudentsWithFinalProposal() +
-                "List of students without attributed proposal but with candidacy options\n" + manager.listOfStudentsWithoutFinalProposalAndWithCandidacy() +
-                "Available Proposals\n" + manager.listOfAvailableProposals() +
-                "Proposals Attributed\n" + manager.listOfFinalProposals() +
+        ProposalManager proposalManager = (ProposalManager) management.get(Proposal.class);
+        return "List of students with attributed proposal\n" + studentManager.getStudentsWithAssignedProposal() +
+                "List of students without attributed proposal but with candidacy options\n" + studentManager.getStudentsWithoutFinalProposalAndWithCandidacy() +
+                "Available Proposals\n" + proposalManager.getProposalsAvailable() +
+                "Proposals Attributed\n" + finalManager.listOfFinalProposals() +
                 "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
     }
 
-    public void attributeATeacher(String proposalID, String teacherID) {
+    //Phase 4
+    public boolean manualTeacherAttribution(String proposalID, String teacherID) {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        manager.attributeATeacher(proposalID,teacherID);
+        return manager.manualTeacherAttribution(proposalID,teacherID);
+    }
+
+    public String teacherQuerying(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getFinalProposalWithTeacher();
+    }
+
+    public boolean manualTeacherRemove(String proposalID) {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.manualTeacherRemove(proposalID);
     }
 }

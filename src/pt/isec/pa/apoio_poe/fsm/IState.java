@@ -19,12 +19,12 @@ public interface IState {
     void exportFile(String filePath);
     void automaticAttributionWithoutAssociation();
     void automaticAttributionForProposalsWithStudent();
-    void manualAttribution(String proposalID, long studentID);
     void manualRemove(String proposalID);
 
     String getAttributionTeacherData();
     void automaticTeacherAttribution();
-    void attributeATeacher(String proposalID, String teacherID);
+    void manualTeacherAttribution(String proposalID, String teacherID);
+    boolean manualTeacherRemove(String proposalID);
 
     String getData();
 

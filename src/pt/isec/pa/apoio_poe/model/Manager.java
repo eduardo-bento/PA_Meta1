@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model;
 
+import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
@@ -14,10 +15,10 @@ public abstract class Manager<T> implements Serializable {
     protected final Set<T> list;
     protected final Data data;
     protected List<String> branches = List.of(
-            "DA | RAS | SI", "RAS | DA | SI", "SI | DA | RAS",
-            "DA | SI | RAS", "RAS | SI | DA", "SI | RAS | DA",
-            "DA","SI","RAS","DA | SI","DA | RAS","SI | DA",
-            "SI | RAS", "RAS | DA","RAS | SI");
+            "DA|RAS|SI", "RAS|DA|SI", "SI|DA|RAS",
+            "DA|SI|RAS", "RAS|SI|DA", "SI|RAS|DA",
+            "DA","SI","RAS","DA|SI","DA|RAS","SI|DA",
+            "SI|RAS", "RAS|DA","RAS|SI");
     protected List<String> curses = List.of("LEI","LEI-PL");
 
     public Manager(Data data) {
@@ -56,7 +57,7 @@ public abstract class Manager<T> implements Serializable {
         return false;
     }
 
-    public  <Q,K> K find(Q id,Class<K> type){
+    public <Q,K> K find(Q id,Class<K> type){
         Class<?> name = Utils.getFirstField(type).getType();
         String className = Utils.splitString(type.getName(),"\\.");
 
@@ -68,7 +69,7 @@ public abstract class Manager<T> implements Serializable {
                     return (K) v;
                 }
             }
-            //Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
+            Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
         } catch (Exception e) {
             e.printStackTrace();
         }

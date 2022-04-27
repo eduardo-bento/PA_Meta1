@@ -65,13 +65,13 @@ public class StudentManager extends Manager<Student> {
     @Override
     public boolean insert(Student item) {
         boolean classification = item.getClassification() > 0 && item.getClassification() < 1;
-        if (validateData(item, classification)){
+        if (validate(item, classification)){
             return super.insert(item);
         }
         return false;
     }
 
-    private boolean validateData(Student item, boolean classification) {
+    private boolean validate(Student item, boolean classification) {
         if (!classification){
             Log.getInstance().addMessage(item.getClassification() + " needs to be between [0,1]");
             return false;
@@ -91,29 +91,7 @@ public class StudentManager extends Manager<Student> {
         return true;
     }
 
-    public String getStudentsCandidacy(boolean label){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (Student student : list){
-            if (student.hasCandidacy() && label){
-                stringBuilder.append(student).append("\n");
-            } else if(!student.hasCandidacy() && !label){
-                stringBuilder.append(student).append("\n");
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    public String getStudentWithSelfProposal(){
-        StringBuilder stringBuilder = new StringBuilder();
-        Set<Proposal> proposals = data.getSelfProposalSet();
-        for (Proposal proposal : proposals){
-            Student student = find(proposal.getStudent(),Student.class);
-            if(student != null){
-                stringBuilder.append(student).append("\n");
-            }
-        }
-        return stringBuilder.toString();
-    }
+    //phase 1
 
     public int branchCount(String branch){
         int count = 0;
@@ -121,5 +99,62 @@ public class StudentManager extends Manager<Student> {
             if(item.getBranch().contains(branch)) count++;
         }
         return count;
+    }
+
+    //Phase 3
+    public String getStudentsWithCandidacy(){
+        StringBuilder builder = new StringBuilder();
+        for (Student student : list){
+            if (student.hasCandidacy())
+                builder.append(student).append("\n");
+        }
+        return builder.toString();
+    }
+
+    public String getStudentsWithoutCandidacy(){
+        StringBuilder builder = new StringBuilder();
+        for (Student student : list){
+            if (!student.hasCandidacy())
+                builder.append(student).append("\n");
+        }
+        return builder.toString();
+    }
+
+    public String getStudentsWithNoProposal(){
+        StringBuilder builder = new StringBuilder();
+        for (Student student : list){
+            if (!student.hasAssignedProposal())
+                builder.append(student).append("\n");
+        }
+        return builder.toString();
+    }
+
+    public String getStudentsWithSelfProposal(){
+        StringBuilder builder = new StringBuilder();
+        List<Proposal> proposals = data.getSelfProposalList();
+        for (Proposal proposal : proposals){
+            builder.append(find(proposal.getStudent(),Student.class)).append("\n");
+        }
+        return builder.toString();
+    }
+
+    //Phase 5
+    public String getStudentsWithoutFinalProposalAndWithCandidacy(){
+        StringBuilder builder = new StringBuilder();
+        for (Student student : list){
+           if (student.hasCandidacy() && student.hasAssignedProposal()){
+               builder.append(student).append("\n");
+           }
+        }
+        return builder.toString();
+    }
+
+    public String getStudentsWithAssignedProposal(){
+        StringBuilder builder = new StringBuilder();
+        for (Student student : list){
+            if (student.hasAssignedProposal())
+                builder.append(student).append("\n");
+        }
+        return builder.toString();
     }
 }

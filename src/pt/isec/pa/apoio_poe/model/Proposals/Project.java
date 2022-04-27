@@ -37,8 +37,6 @@ public class Project extends Proposal{
         return "Project:\n" +
                 super.toString() +
                 "destiny: " + destiny + "\n" +
-                "id: " + id + "\n" +
-                "title: " + title + "\n" +
                 "-".repeat(20) + "\n";
     }
 }

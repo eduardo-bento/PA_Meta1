@@ -17,7 +17,6 @@ public class TeacherManager extends Manager<Teacher> {
     @Override
     public void readFile(String filePath) {
         List<Teacher> items = new ArrayList<>();
-
             try(Scanner input = new Scanner(new File(filePath))) {
                 input.useDelimiter(",\\s*|\r\n|\n");
                 input.useLocale(Locale.US);

@@ -21,6 +21,16 @@ public class TeacherAttributionState extends ContextAdapter {
     }
 
     @Override
+    public boolean manualTeacherRemove(String proposalID) {
+       return data.manualTeacherRemove(proposalID);
+    }
+
+    @Override
+    public void manualTeacherAttribution(String proposalID, String teacherID) {
+        data.manualTeacherAttribution(proposalID,teacherID);
+    }
+
+    @Override
     public boolean closePhase() {
         data.lockPhase(3);
         changeState(EState.QUERYING_PHASE);
@@ -34,6 +44,11 @@ public class TeacherAttributionState extends ContextAdapter {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public String querying() {
+        return data.teacherQuerying();
     }
 
     @Override

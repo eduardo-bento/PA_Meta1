@@ -115,7 +115,7 @@ public class UserInterface {
                         "Proposals already attributed");
                 System.out.println(context.getFilterList(filters));
             }
-            case 5 -> context.manualAttribution(Input.readString("Proposal id", true), Input.readLong("Student id"));
+            case 5 -> {}//context.manualAttribution(Input.readString("Proposal id", true), Input.readLong("Student id"));
             case 6 -> context.manualRemove(Input.readString("Proposal id:", true));
             case 7 -> context.closePhase();
             case 8 -> context.exportFile(Input.readString("file path: ",true));
@@ -124,19 +124,21 @@ public class UserInterface {
     }
 
     private void teacher() {
-        switch (Input.chooseOption("Teacher Attribution Phase", "Automatic attribution", "Data", "Close Phase", "Back","Export to file","Next State")) {
+        switch (Input.chooseOption("Teacher Attribution Phase", "Automatic attribution", "Data", "Close Phase", "Back","Export to file","Next State",
+                "Manual Attribution","Manual Remove","Querying")) {
             case 1 -> context.automaticTeacherAttribution();
             case 2 -> System.out.println(context.getAttributionTeacherData());
             case 3 -> context.closePhase();
             case 4 -> context.back();
             case 5 -> context.exportFile(Input.readString("file path: ",true));
             case 6 -> context.forward();
+            case 7 -> context.manualTeacherAttribution(Input.readString("Proposal id",true),Input.readString("Teacher id",true));
+            case 8 -> context.manualTeacherRemove(Input.readString("Proposal id",true));
+            case 9 -> context.querying();
         }
     }
 
-    private void teacherLock(){
-
-    }
+    private void teacherLock(){}
 
     private void querying() {
         switch (Input.chooseOption("Querying Phase", "Data","Export to file","Exit")) {

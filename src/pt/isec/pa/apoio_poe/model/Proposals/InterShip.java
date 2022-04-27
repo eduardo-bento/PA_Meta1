@@ -39,8 +39,6 @@ public class InterShip extends Proposal{
         return "InterShip:\n" +
                 super.toString() +
                 "destiny: " + destiny + "\n" +
-                "id: " + id + "\n" +
-                "title: " + title + "\n" +
                 "-".repeat(20) + "\n";
     }
 }

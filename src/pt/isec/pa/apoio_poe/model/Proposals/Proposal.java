@@ -1,20 +1,13 @@
 package pt.isec.pa.apoio_poe.model.Proposals;
 
-import pt.isec.pa.apoio_poe.Log;
-
-import java.io.File;
 import java.io.Serializable;
-import java.security.SecureRandomParameters;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class Proposal implements Serializable {
     protected String id;
     protected String title;
     protected long student;
     private boolean _hasCandidacy;
+    private boolean assigned;
 
     protected Proposal(String id, String title,long studentID) {
         this.id = id;
@@ -54,14 +47,22 @@ public class Proposal implements Serializable {
         return _hasCandidacy;
     }
 
-    public void set_hasCandidacy(boolean candidacy){
+    public void setCandidacy(boolean candidacy){
         this._hasCandidacy = candidacy;
+    }
+
+    public boolean isAssigned() {
+        return assigned;
+    }
+
+    public void setAssigned(boolean assigned) {
+        this.assigned = assigned;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Proposal)) return false;
 
         Proposal proposal = (Proposal) o;
 

@@ -57,7 +57,7 @@ public abstract class ContextAdapter implements IState, Serializable {
     public void automaticAttributionForProposalsWithStudent() {}
 
     @Override
-    public void manualAttribution(String proposalID, long studentID) {}
+    public void manualTeacherAttribution(String proposalID, String teacherID) {}
 
     @Override
     public void manualRemove(String proposalID) {}
@@ -84,7 +84,9 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
-    public void attributeATeacher(String proposalID, String teacherID) {}
+    public boolean manualTeacherRemove(String proposalID) {
+        return false;
+    }
 
     @Override
     public String getListOfStudents() {

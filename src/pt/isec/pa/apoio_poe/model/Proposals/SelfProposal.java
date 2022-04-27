@@ -13,8 +13,6 @@ public class SelfProposal extends Proposal {
     public String toString() {
         return "SelfProposal:\n" +
                 super.toString() +
-                "id: " + id + "\n" +
-                "title: " + title + "\n" +
                 "-".repeat(20) + "\n";
     }
 }

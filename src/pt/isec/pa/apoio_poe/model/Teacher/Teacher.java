@@ -58,6 +58,8 @@ public class Teacher implements Serializable {
         _amount++;
     }
 
+    public void subToAmount(){_amount--;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
