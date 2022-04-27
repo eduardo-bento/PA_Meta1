@@ -92,6 +92,9 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
+    public void exportFile(String filePath) {}
+
+    @Override
     public String getFilterList(List<Integer> filters) {
         return null;
     }

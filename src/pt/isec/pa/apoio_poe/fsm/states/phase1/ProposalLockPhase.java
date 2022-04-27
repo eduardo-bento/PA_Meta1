@@ -4,7 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 
 public class ProposalLockPhase extends ContextAdapter {
     public ProposalLockPhase(Context context, Data data) {
@@ -13,7 +13,7 @@ public class ProposalLockPhase extends ContextAdapter {
 
     @Override
     public String querying() {
-        return data.querying(Student.class);
+        return data.querying(Proposal.class);
     }
 
     @Override

@@ -1,24 +1,20 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.Candidacy;
 
-import pt.isec.pa.apoio_poe.Log;
-
-import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
 public class Candidacy implements Serializable {
     private long studentId;
-    private final Set<String> proposals;
-    private String proposal;
+    private final List<String> proposals;
 
     public Candidacy(long studentId) {
         this.studentId = studentId;
-        proposals = new HashSet<>();
+        proposals = new ArrayList<>();
     }
 
     public Candidacy(long studentId,Set<String> proposals){
         this.studentId = studentId;
-        this.proposals = new HashSet<>();
+        this.proposals = new ArrayList<>();
         this.proposals.addAll(proposals);
     }
 
@@ -42,7 +38,7 @@ public class Candidacy implements Serializable {
         this.studentId = studentId;
     }
 
-    public Set<String> getProposals() {
+    public List<String> getProposals() {
         return proposals;
     }
 
@@ -57,6 +53,14 @@ public class Candidacy implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(studentId);
+    }
+
+    public String exportCSV(){
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String proposal : proposals){
+            stringBuilder.append(proposal).append(",");
+        }
+        return stringBuilder.toString();
     }
 
     @Override

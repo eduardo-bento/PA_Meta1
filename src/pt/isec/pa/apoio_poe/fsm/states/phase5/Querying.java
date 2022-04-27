@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.fsm.states;
+package pt.isec.pa.apoio_poe.fsm.states.phase5;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;

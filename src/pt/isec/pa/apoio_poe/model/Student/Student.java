@@ -1,9 +1,7 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.Student;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.fsm.EState;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
@@ -90,7 +88,7 @@ public class Student implements Serializable {
         this.classification = classification;
     }
 
-    public boolean isHasStage() {
+    public boolean hasStage() {
         return hasStage;
     }
 
@@ -107,6 +105,12 @@ public class Student implements Serializable {
             Log.getInstance().addMessage("You tried to change the stage to" + hasStage + "but the attribute already has that value");
         }
         this.hasStage = hasStage;
+    }
+
+    public String exportCSV(){
+        return id + "," + name + "," + email + "," +
+                curse + "," + branch + "," + classification + "," +
+                hasStage;
     }
 
     @Override

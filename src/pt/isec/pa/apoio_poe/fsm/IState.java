@@ -16,6 +16,7 @@ public interface IState {
     String getListOfStudents();
     String getFilterList(List<Integer> filters);
 
+    void exportFile(String filePath);
     void automaticAttributionWithoutAssociation();
     void automaticAttributionForProposalsWithStudent();
     void manualAttribution(String proposalID, long studentID);

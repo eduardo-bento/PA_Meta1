@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.FinalProposal;
 
 import java.io.Serializable;
 
@@ -6,11 +6,13 @@ public class FinalProposal implements Serializable {
     private long studentId;
     private String teacher;
     private String proposal;
+    private int order;
 
-    public FinalProposal(long studentId, String proposal) {
+    public FinalProposal(long studentId, String proposal,int order) {
         this.studentId = studentId;
         this.proposal = proposal;
         teacher = "";
+        this.order = order;
     }
 
     public FinalProposal(long studentId, String proposal,String teacher) {
@@ -23,7 +25,7 @@ public class FinalProposal implements Serializable {
     }
 
     public static FinalProposal getFakeFinalproposal(long studentId){
-        return new FinalProposal(studentId,".....");
+        return new FinalProposal(studentId,".....",0);
     }
 
     public void setStudentId(long studentId) {
@@ -61,9 +63,18 @@ public class FinalProposal implements Serializable {
         return (int) (studentId ^ (studentId >>> 32));
     }
 
+    public String exportPhase3(){
+        return proposal + "," + order + ",";
+    }
+
+    public String exportPhase4(){
+        return proposal + "," + order + "," + teacher;
+    }
+
     @Override
     public String toString() {
         return "student id: " + studentId + "\n" +
-                "Proposal: " + proposal;
+                "Proposal: " + proposal + "\n" +
+                "Order: " + order + "\n";
     }
 }

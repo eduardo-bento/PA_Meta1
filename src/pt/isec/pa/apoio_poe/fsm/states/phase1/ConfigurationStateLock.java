@@ -20,11 +20,6 @@ public class ConfigurationStateLock extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
-        return data.querying(data.getCurrentMode().getClass());
-    }
-
-    @Override
     public void forward() {
         changeState(EState.CANDIDACY);
     }

@@ -4,21 +4,11 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
 public class TeacherState extends ContextAdapter {
     public TeacherState(Context context, Data data) {
         super(context, data);
-    }
-
-    @Override
-    public boolean insert(Object item) {
-        return data.insert(item);
-    }
-
-    @Override
-    public <T> boolean remove(T id) {
-        return data.remove(id, Teacher.class);
     }
 
     @Override
@@ -27,8 +17,14 @@ public class TeacherState extends ContextAdapter {
     }
 
     @Override
-    public <T, K, A> boolean edit(T id, K value, String label, Class<A> type) {
-        return data.edit(id,value,label,Teacher.class);
+    public String querying() {
+        return data.querying(Teacher.class);
+    }
+
+    @Override
+    public boolean back() {
+        changeState(EState.CONFIGURATION_PHASE);
+        return true;
     }
 
     @Override

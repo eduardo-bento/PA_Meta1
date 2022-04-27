@@ -1,14 +1,12 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Teacher;
-import pt.isec.pa.apoio_poe.model.TeacherOrder;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Teacher.TeacherOrder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.*;
 
 public class TeacherManager extends Manager<Teacher> {
@@ -32,6 +30,15 @@ public class TeacherManager extends Manager<Teacher> {
                 Log.getInstance().addMessage("The file does not exist");
             }
         items.forEach(this::insert);
+    }
+
+    @Override
+    public boolean insert(Teacher item) {
+        if (!item.getEmail().contains("@isec.pt")){
+            Log.getInstance().addMessage(item.getEmail() + " is not a valid email because is not from isec");
+            return false;
+        }
+        return super.insert(item);
     }
 
     public float average(){

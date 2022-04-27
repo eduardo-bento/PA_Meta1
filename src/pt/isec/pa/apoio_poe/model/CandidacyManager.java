@@ -1,14 +1,13 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Student.Student;
 
 import java.io.File;
-import java.io.Serializable;
 import java.util.*;
 
 public class CandidacyManager extends Manager<Candidacy> {

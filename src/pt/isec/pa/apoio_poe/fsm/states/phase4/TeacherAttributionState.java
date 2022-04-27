@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.fsm.states;
+package pt.isec.pa.apoio_poe.fsm.states.phase4;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
@@ -13,6 +13,11 @@ public class TeacherAttributionState extends ContextAdapter {
     @Override
     public String getAttributionTeacherData() {
         return data.getAttributionTeacherData();
+    }
+
+    @Override
+    public void exportFile(String filePath) {
+        data.exportPhase4(filePath);
     }
 
     @Override

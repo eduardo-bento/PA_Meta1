@@ -1,9 +1,7 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.Teacher;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.fsm.EState;
 
-import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
@@ -71,6 +69,10 @@ public class Teacher implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(email);
+    }
+
+    public String exportCSV(){
+        return email + "," + name;
     }
 
     @Override

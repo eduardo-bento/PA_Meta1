@@ -1,28 +1,24 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.FinalProposal;
-import pt.isec.pa.apoio_poe.model.Manager.*;
+import pt.isec.pa.apoio_poe.model.*;
+import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.Student.Student;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
+import java.io.*;
 import java.util.*;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 
 public class Data implements Serializable {
-    private EState currentMode;
     private final boolean[] phasesLock;
     private final Map<Class<?>, Manager> management;
     public Data() {
-        currentMode = EState.STUDENT;
         management = Map.of(
                 Student.class,new StudentManager(this),
                 Teacher.class,new TeacherManager(this),
@@ -37,20 +33,12 @@ public class Data implements Serializable {
         return management;
     }
 
-    public <K> Set<K> getList (Class<K> type){
-        return management.get(type).getList();
+    public <K> List<K> getList (Class<K> type){
+        return new ArrayList<>(management.get(type).getList());
     }
 
     public Set<Proposal> getSelfProposalSet(){
         return ((ProposalManager)management.get(Proposal.class)).getSpecific(SelfProposal.class);
-    }
-
-    public EState getCurrentMode() {
-        return currentMode;
-    }
-
-    public void setCurrentMode(EState currentMode) {
-        this.currentMode = currentMode;
     }
 
     public boolean isPhaseLock(int type){
@@ -118,6 +106,38 @@ public class Data implements Serializable {
 
     public void readCSV(String filePath, Class<?> type){
         management.get(type).readFile(filePath);
+    }
+
+    public void exportPhase3(String filePath){
+        List<Student> students = getList(Student.class);
+        CandidacyManager manager = (CandidacyManager) management.get(Candidacy.class);
+        try(PrintWriter printWriter = new PrintWriter(filePath)) {
+            for (Student student : students){
+                printWriter.println(student.exportCSV());
+                Candidacy candidacy = manager.find(student.getId(),Candidacy.class);
+                printWriter.println(candidacy != null ? candidacy.exportCSV() : "non");
+                FinalProposal finalProposal = manager.find(student.getId(),FinalProposal.class);
+                printWriter.println(finalProposal != null ? finalProposal.exportPhase3() : "non");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void exportPhase4(String filePath){
+        List<Student> students = getList(Student.class);
+        CandidacyManager manager = (CandidacyManager) management.get(Candidacy.class);
+        try(PrintWriter printWriter = new PrintWriter(filePath)) {
+            for (Student student : students){
+                printWriter.println(student.exportCSV());
+                Candidacy candidacy = manager.find(student.getId(),Candidacy.class);
+                printWriter.println(candidacy != null ? candidacy.exportCSV() : "non");
+                FinalProposal finalProposal = manager.find(student.getId(),FinalProposal.class);
+                printWriter.println(finalProposal != null ? finalProposal.exportPhase4() : "non");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean lockConfigurationPhase(){

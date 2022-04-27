@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.fsm.states;
+package pt.isec.pa.apoio_poe.fsm.states.phase3;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
@@ -64,6 +64,11 @@ public class ProposalAttributionState extends ContextAdapter {
         }
         changeState(EState.PROPOSALS_PHASE);
         return false;
+    }
+
+    @Override
+    public void exportFile(String filePath) {
+        data.exportPhase3(filePath);
     }
 
     @Override

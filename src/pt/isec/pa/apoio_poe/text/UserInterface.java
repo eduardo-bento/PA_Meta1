@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
 
@@ -65,17 +64,14 @@ public class UserInterface {
         }
     }
 
-
     private void candidacy() {
-        switch (Input.chooseOption("Candidacy State\n", "Back to configuration", "Insert", "Remove", "Querying", "Read CVS", "List of Students",
+        switch (Input.chooseOption("Candidacy State\n", "Back to configuration", "Querying", "Read CVS", "List of Students",
                 "List of proposals", "Close phase", "Next state - Proposals")) {
             case 1 -> context.back();
-            case 2 -> context.insert(Input.readClass(context.getState()));
-            case 3 -> context.remove(new Candidacy(Input.readLong("Student id: ")));
-            case 4 -> System.out.println(context.querying());
-            case 5 -> context.readFromFile(Input.readString("File path: ", true));
-            case 6 -> System.out.println(context.getListOfStudents());
-            case 7 -> {
+            case 2 -> System.out.println(context.querying());
+            case 3 -> context.readFromFile(Input.readString("file path: ", true));
+            case 4 -> System.out.println(context.getListOfStudents());
+            case 5 -> {
                 List<Integer> filters = Input.chooseMultipleOptions("Candidacy",
                         "SelfProposals",
                         "Teacher proposals",
@@ -83,8 +79,8 @@ public class UserInterface {
                         "Proposals without candidacy");
                 System.out.println(context.getFilterList(filters));
             }
-            case 8 -> context.closePhase();
-            case 9 -> context.forward();
+            case 6 -> context.closePhase();
+            case 7 -> context.forward();
         }
     }
 
@@ -108,7 +104,7 @@ public class UserInterface {
     private void proposals() {
         switch (Input.chooseOption("Proposals", "Automatic attribution for proposals with student",
                 "Automatic attribution for students without defined attribution",
-                "List of students", "List of proposals", "Manual attribution", "Manual Remove", "Close phase", "Next phase")) {
+                "List of students", "List of proposals", "Manual attribution", "Manual Remove", "Close phase","Export file", "Next phase")) {
             case 1 -> context.automaticAttributionForProposalsWithStudent();
             case 2 -> context.automaticAttribution();
             case 3 -> System.out.println(context.getListOfStudents());
@@ -122,24 +118,31 @@ public class UserInterface {
             case 5 -> context.manualAttribution(Input.readString("Proposal id", true), Input.readLong("Student id"));
             case 6 -> context.manualRemove(Input.readString("Proposal id:", true));
             case 7 -> context.closePhase();
-            case 8 -> context.forward();
+            case 8 -> context.exportFile(Input.readString("file path: ",true));
+            case 9 -> context.forward();
         }
     }
 
     private void teacher() {
-        switch (Input.chooseOption("Teacher Attribution Phase", "Automatic attribution", "Data", "Close Phase", "Back","Next State")) {
+        switch (Input.chooseOption("Teacher Attribution Phase", "Automatic attribution", "Data", "Close Phase", "Back","Export to file","Next State")) {
             case 1 -> context.automaticTeacherAttribution();
             case 2 -> System.out.println(context.getAttributionTeacherData());
             case 3 -> context.closePhase();
             case 4 -> context.back();
-            case 5 -> context.forward();
+            case 5 -> context.exportFile(Input.readString("file path: ",true));
+            case 6 -> context.forward();
         }
     }
 
+    private void teacherLock(){
+
+    }
+
     private void querying() {
-        switch (Input.chooseOption("Querying Phase", "Data", "Exit")) {
+        switch (Input.chooseOption("Querying Phase", "Data","Export to file","Exit")) {
             case 1 -> System.out.println(context.getData());
-            case 2 -> isRunning = false;
+            case 2 -> context.exportFile(Input.readString("file path: ",true));
+            case 3 -> isRunning = false;
         }
     }
 }

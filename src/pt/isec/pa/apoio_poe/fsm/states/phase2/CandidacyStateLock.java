@@ -4,7 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Candidacy;
+import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class CandidacyStateLock extends ContextAdapter {
     public boolean back() {
         if (data.isPhaseLock(0)){
             changeState(EState.CONFIGURATION_PHASE_LOCK);
+            return true;
         }
         changeState(EState.CONFIGURATION_PHASE);
         return true;
@@ -36,7 +37,6 @@ public class CandidacyStateLock extends ContextAdapter {
     public String getFilterList(List<Integer> filters) {
         return data.getListProposals_CandidacyPhase(filters);
     }
-
 
     @Override
     public String querying() {

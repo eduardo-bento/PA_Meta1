@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
@@ -6,8 +6,8 @@ import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
 import pt.isec.pa.apoio_poe.model.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.Student.Student;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -68,9 +68,10 @@ public class ProposalManager extends Manager<Proposal> {
             input.useDelimiter(",\\s*|\r\n|\n");
             input.useLocale(Locale.US);
             while(input.hasNext()){
-                switch (input.next()){
+                String label = input.next();
+                String id = input.next();
+                switch (label){
                     case "T1" -> {
-                        String id = input.next();
                         String destiny = input.next();
                         String title = input.next();
                         String entity = input.next();
@@ -81,7 +82,6 @@ public class ProposalManager extends Manager<Proposal> {
                         items.add(new InterShip(id,title,studentId,destiny,entity));
                     }
                     case "T2" -> {
-                        String id = input.next();
                         String destiny = input.next();
                         String title = input.next();
                         String teacher = input.next();
@@ -92,7 +92,6 @@ public class ProposalManager extends Manager<Proposal> {
                         items.add(new Project(id,title,studentId,destiny,teacher));
                     }
                     case "T3" -> {
-                        String id = input.next();
                         String title = input.next();
                         long studentId = input.nextLong();
                         items.add(new SelfProposal(id,title,studentId));
@@ -116,8 +115,34 @@ public class ProposalManager extends Manager<Proposal> {
             add = verifySelfProposal(item);
         }
         if (!add) return false;
-        super.insert(item);
-        listOfProposals.get(item.getClass()).add(item);
+        if(super.insert(item)){
+            listOfProposals.get(item.getClass()).add(item);
+        }
+        return true;
+    }
+
+    private boolean verifyInterShip(InterShip interShip){
+        if (studentRegistered(interShip.getStudent())){
+            Student student = find(interShip.getStudent(),Student.class);
+            if (student != null && equal(interShip.getDestiny(),branches)){
+                return !student.hasStage();
+            }
+        }
+        return equal(interShip.getDestiny(),branches);
+    }
+
+    private boolean verifyProject(Project project){
+        return find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent()) || !equal(project.getDestiny(),branches);
+    }
+
+    private boolean verifySelfProposal(Proposal proposal){
+        return true;
+    }
+
+    private boolean studentRegistered(long studentId){
+        if (studentId != -1){
+            return find(studentId,Student.class) != null;
+        }
         return true;
     }
 
@@ -155,37 +180,12 @@ public class ProposalManager extends Manager<Proposal> {
         int count = 0;
         for (Proposal item : listOfProposals.get(Project.class)){
             Project project = (Project) item;
-            if(project.getDestiny().equals(branch)) count++;
+            if(project.getDestiny().contains(branch)) count++;
         }
         for (Proposal item : listOfProposals.get(InterShip.class)){
             InterShip interShip = (InterShip) item;
-            if(interShip.getDestiny().equals(branch)) count++;
+            if(interShip.getDestiny().contains(branch)) count++;
         }
         return count;
-    }
-
-    private boolean verifyInterShip(InterShip interShip){
-        if (studentRegistered(interShip.getStudent())){
-            Student student = find(interShip.getStudent(),Student.class);
-            if (student != null && equal(interShip.getDestiny(),branches)){
-                return !student.isHasStage();
-            }
-        }
-        return equal(interShip.getDestiny(),branches);
-    }
-
-    private boolean verifyProject(Project project){
-       return find(project.getTeacher(), Teacher.class) == null || !studentRegistered(project.getStudent()) || !equal(project.getDestiny(),branches);
-    }
-
-    private boolean verifySelfProposal(Proposal proposal){
-        return true;
-    }
-
-    private boolean studentRegistered(long studentId){
-        if (studentId != -1){
-            return find(studentId,Student.class) != null;
-        }
-        return true;
     }
 }

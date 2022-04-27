@@ -1,9 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.Student;
 
-import java.awt.*;
 import java.io.*;
 import java.util.List;
 
@@ -97,6 +95,10 @@ public class Context {
         state.goToMode(option);
     }
 
+    public void exportFile(String filePath) {
+        state.exportFile(filePath);
+    }
+
     public void save() {
         try(ObjectOutputStream object = new ObjectOutputStream(
                 new FileOutputStream(FILENAME))) {
@@ -117,5 +119,4 @@ public class Context {
             e.printStackTrace();
         }
     }
-
 }

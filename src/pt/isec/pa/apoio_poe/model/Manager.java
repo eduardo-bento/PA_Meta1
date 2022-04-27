@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.utils.Utils;
@@ -56,7 +56,7 @@ public abstract class Manager<T> implements Serializable {
         return false;
     }
 
-    protected <Q,K> K find(Q id,Class<K> type){
+    public  <Q,K> K find(Q id,Class<K> type){
         Class<?> name = Utils.getFirstField(type).getType();
         String className = Utils.splitString(type.getName(),"\\.");
 

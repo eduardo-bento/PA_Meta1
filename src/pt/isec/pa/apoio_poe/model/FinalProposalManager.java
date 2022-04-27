@@ -1,14 +1,14 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.data.Data;
-import pt.isec.pa.apoio_poe.model.StudentClassification;
-import pt.isec.pa.apoio_poe.model.Candidacy;
-import pt.isec.pa.apoio_poe.model.FinalProposal;
+import pt.isec.pa.apoio_poe.model.Student.StudentClassification;
+import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Proposals.Project;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student;
-import pt.isec.pa.apoio_poe.model.Teacher;
+import pt.isec.pa.apoio_poe.model.Student.Student;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,6 @@ public class FinalProposalManager extends Manager<FinalProposal> {
                 stringBuilder.append(student).append("\n");
             }
         }
-        //todo: tem proposta atribuida
 
         stringBuilder.append("\nWith no proposals\n");
         for (Student student : (Set<Student>) data.getManagement().get(Student.class).getList()){
@@ -45,10 +44,10 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     }
 
     public void automaticProposals(){
-        Set<Proposal> proposals = data.getList(Proposal.class);
+        List<Proposal> proposals = data.getList(Proposal.class);
         for (Proposal p : proposals){
             if ((p instanceof SelfProposal || p instanceof Project) && p.getStudent() != -1){
-                list.add(new FinalProposal(p.getStudent(),p.getId()));
+                list.add(new FinalProposal(p.getStudent(),p.getId(),-1));
             }
         }
     }
@@ -63,9 +62,10 @@ public class FinalProposalManager extends Manager<FinalProposal> {
             if(!list.contains(FinalProposal.getFakeFinalproposal(student.getId()))){
                 Candidacy candidacy = find(student.getId(),Candidacy.class);
                 if (candidacy != null){
-                    for (String proposal : candidacy.getProposals()){
-                        if (!findProposal(proposal)){
-                            list.add(new FinalProposal(student.getId(),proposal));
+                    List<String> proposals = candidacy.getProposals();
+                    for (int i = 0;  i < proposals.size(); i++){
+                        if (!findProposal(proposals.get(i))){
+                            list.add(new FinalProposal(student.getId(), proposals.get(i),i + 1));
                             break;
                         }
                     }
@@ -114,7 +114,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
 
         FinalProposal finalProposal = find(studentID,FinalProposal.class);
         if (finalProposal == null){
-           list.add(new FinalProposal(studentID,proposalID));
+           list.add(new FinalProposal(studentID,proposalID,-1));
         }
 
         if (!student.getHasProposal()){
@@ -188,7 +188,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     public String listOfAvailableProposals(){
         StringBuilder stringBuilder = new StringBuilder();
         boolean add = true;
-        Set<Proposal> proposals = data.getList(Proposal.class);
+        List<Proposal> proposals = data.getList(Proposal.class);
         for (Proposal proposal : proposals){
             for (FinalProposal finalProposal : list){
                 if (proposal.getId().equals(finalProposal.getProposal())){

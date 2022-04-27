@@ -1,9 +1,9 @@
-package pt.isec.pa.apoio_poe.model.Manager;
+package pt.isec.pa.apoio_poe.model;
 
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Student;
+import pt.isec.pa.apoio_poe.model.Student.Student;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,15 +22,36 @@ public class StudentManager extends Manager<Student> {
             input.useDelimiter(",\\s*|\r\n|\n");
             input.useLocale(Locale.US);
             while(input.hasNext()){
-                long id = input.nextLong();
+                long id = 0;
+                if (input.hasNextLong()) {
+                    id = input.nextLong();
+                } else {
+                    Log.getInstance().addMessage(input.next() + " is not an id");
+                    input.nextLine();
+                    continue;
+                }
+
                 String name = input.next();
                 String email = input.next();
                 String curse = input.next();
                 String branch = input.next();
-                double classification = input.nextDouble();
-                String hasStage = input.next().toLowerCase(Locale.ROOT);
-                boolean stage = hasStage.equals("true");
+                double classification = 0;
+                if (input.hasNextDouble()){
+                    classification = input.nextDouble();
+                } else{
+                    Log.getInstance().addMessage("the classification is not a double");
+                    input.nextLine();
+                    continue;
+                }
 
+                String hasStage = input.next().toLowerCase(Locale.ROOT);
+                boolean stage;
+                if (hasStage.equals("true") || hasStage.equals("false")){
+                    stage = hasStage.equals("true");
+                } else{
+                    Log.getInstance().addMessage(hasStage + " is not a boolean");
+                    continue;
+                }
                 items.add(new Student(id,name,email,curse,branch,classification,stage));
             }
         }  catch (FileNotFoundException e){
@@ -44,10 +65,30 @@ public class StudentManager extends Manager<Student> {
     @Override
     public boolean insert(Student item) {
         boolean classification = item.getClassification() > 0 && item.getClassification() < 1;
-        if (classification && equal(item.getBranch(),branches) && equal(item.getCurse(),curses)){
+        if (validateData(item, classification)){
             return super.insert(item);
         }
         return false;
+    }
+
+    private boolean validateData(Student item, boolean classification) {
+        if (!classification){
+            Log.getInstance().addMessage(item.getClassification() + " needs to be between [0,1]");
+            return false;
+        }
+        if (!equal(item.getBranch(),branches)){
+            Log.getInstance().addMessage(item.getBranch() + " is not a valid branch");
+            return false;
+        }
+        if (!item.getEmail().contains("@isec.pt")){
+            Log.getInstance().addMessage(item.getEmail() + " is not a valid email because is not from isec");
+            return false;
+        }
+        if (!equal(item.getCurse(),curses)){
+            Log.getInstance().addMessage(item.getCurse() + " is not a valid curse");
+            return false;
+        }
+        return true;
     }
 
     public String getStudentsCandidacy(boolean label){
@@ -66,7 +107,7 @@ public class StudentManager extends Manager<Student> {
         StringBuilder stringBuilder = new StringBuilder();
         Set<Proposal> proposals = data.getSelfProposalSet();
         for (Proposal proposal : proposals){
-            Student student = find(proposal.getId(),Student.class);
+            Student student = find(proposal.getStudent(),Student.class);
             if(student != null){
                 stringBuilder.append(student).append("\n");
             }
@@ -77,7 +118,7 @@ public class StudentManager extends Manager<Student> {
     public int branchCount(String branch){
         int count = 0;
         for (Student item : list){
-            if(item.getBranch().equals(branch)) count++;
+            if(item.getBranch().contains(branch)) count++;
         }
         return count;
     }
