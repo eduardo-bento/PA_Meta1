@@ -1,8 +1,6 @@
 package pt.isec.pa.apoio_poe.text;
 
 import pt.isec.pa.apoio_poe.Log;
-import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.fsm.states.TeacherAttributionState;
 import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.utils.Input;
@@ -22,48 +20,51 @@ public class UserInterface {
             Log.getInstance().reset();
             switch (context.getState()) {
                 case CONFIGURATION_PHASE -> configuration();
-                case CONFIGURATION_PHASE_LOCK -> configurationLockPhase();
+                case CONFIGURATION_PHASE_LOCK -> configurationLock();
+                case STUDENT,TEACHER,PROPOSAL ->  mode();
+                case STUDENT_LOCK,TEACHER_LOCK,PROPOSAL_LOCK -> modeLock();
                 case CANDIDACY -> candidacy();
                 case CANDIDACY_PHASE_LOCK -> candidacyLockPhase();
                 case PROPOSALS_PHASE -> proposals();
                 case TEACHER_ATTRIBUTION_PHASE -> teacher();
                 case QUERYING_PHASE -> querying();
-                default -> mode();
             }
             System.out.println(Log.getInstance().toString());
         }
     }
 
     private void configuration() {
-        switch (Input.chooseOption("Configuration State\n", "Change Mode", "Go to mode: " + context.getMode(), "querying", "Read cvs", "Close phase", "Go to next state","save","load")) {
-            case 1 -> context.changeMode(EState.getMode(Input.chooseOption("Modes: ", "Student", "Teacher", "Project", "SelfProposal", "InterShip")));
-            case 2 -> context.goToMode();
-            case 3 -> System.out.println(context.querying());
-            case 4 -> context.readFromFile(Input.readString("File Path: ", true));
-            case 5 -> context.closePhase();
-            case 6 -> context.forward();
-            case 7 -> context.save();
-            case 8 -> {
-                context.load();
-            }
+        switch (Input.chooseOption("Configuration State\n", "Chose mode","Close phase","Go to next state","save","load")) {
+            case 1 -> context.goToMode(Input.chooseOption("Mode: ","Student","Teacher","Proposal"));
+            case 2 -> context.closePhase();
+            case 3 -> context.forward();
+            case 4 -> context.save();
+            case 5 -> context.load();
         }
     }
 
-    private void configurationLockPhase() {
-        switch (Input.chooseOption("Configuration State\n", "Change Mode", "Querying", "Go to next state")) {
-            case 1 -> context.changeMode(EState.getMode(Input.chooseOption("Modes: ", "Student", "Teacher", "Project", "SelfProposal", "InterShip")));
-            case 2 -> System.out.println(context.querying());
-            case 3 -> context.forward();
+    private void configurationLock() {
+        switch (Input.chooseOption("Configuration State\n", "Change Mode", "Go to next state")) {
+            case 1 -> context.goToMode(Input.chooseOption("Mode: ","Student","Teacher","Proposal"));
+            case 2 -> context.forward();
         }
     }
 
     private void mode() {
-        switch (Input.chooseOption(context.getState() + " mode\n", "Back to configuration", "Insert", "Remove")) {
+        switch (Input.chooseOption("Mode: ", "Back to configuration", "Read from file", "Querying")) {
             case 1 -> context.back();
-            case 2 -> context.insert(Input.readClass(context.getState()));
-            case 3 -> context.remove(null);
+            case 2 -> context.readFromFile(Input.readString("file path: ",true));
+            case 3 -> System.out.println(context.querying());
         }
     }
+
+    private void modeLock() {
+        switch (Input.chooseOption("Mode: ", "Back to configuration", "Querying")) {
+            case 1 -> context.back();
+            case 2 -> System.out.println(context.querying());
+        }
+    }
+
 
     private void candidacy() {
         switch (Input.chooseOption("Candidacy State\n", "Back to configuration", "Insert", "Remove", "Querying", "Read CVS", "List of Students",
@@ -75,7 +76,8 @@ public class UserInterface {
             case 5 -> context.readFromFile(Input.readString("File path: ", true));
             case 6 -> System.out.println(context.getListOfStudents());
             case 7 -> {
-                List<Integer> filters = Input.chooseMultipleOptions("Candidacy", "SelfProposals",
+                List<Integer> filters = Input.chooseMultipleOptions("Candidacy",
+                        "SelfProposals",
                         "Teacher proposals",
                         "Proposals with candidacy",
                         "Proposals without candidacy");

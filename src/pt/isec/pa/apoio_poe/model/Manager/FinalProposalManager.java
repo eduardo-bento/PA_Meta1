@@ -10,7 +10,6 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 import pt.isec.pa.apoio_poe.model.Teacher;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,15 +18,6 @@ import java.util.Set;
 public class FinalProposalManager extends Manager<FinalProposal> {
     public FinalProposalManager(Data data) {
         super(data);
-    }
-
-    public void automaticProposals(){
-        List<Proposal> proposals = new ArrayList<>(data.getManagement().get(Proposal.class).getList());
-        for (Proposal p : proposals){
-            if ((p instanceof SelfProposal || p instanceof Project) && p.getStudent() != -1){
-                list.add(new FinalProposal(p.getStudent(),p.getId()));
-            }
-        }
     }
 
     public String getListOfStudents() {
@@ -54,7 +44,16 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return stringBuilder.toString();
     }
 
-    public void automaticAttribution(){
+    public void automaticProposals(){
+        Set<Proposal> proposals = data.getList(Proposal.class);
+        for (Proposal p : proposals){
+            if ((p instanceof SelfProposal || p instanceof Project) && p.getStudent() != -1){
+                list.add(new FinalProposal(p.getStudent(),p.getId()));
+            }
+        }
+    }
+
+    public boolean automaticAttribution(){
         List<Student> students = new ArrayList<>(data.getManagement().get(Student.class).getList());
 
         Collections.sort(students,new StudentClassification());
@@ -73,6 +72,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
                 }
             }
         }
+        return true;
     }
 
     private boolean findProposal(String proposal){

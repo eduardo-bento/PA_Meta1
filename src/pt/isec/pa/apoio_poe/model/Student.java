@@ -109,43 +109,17 @@ public class Student implements Serializable {
         this.hasStage = hasStage;
     }
 
-    public static List<Object> readFile(String filePath){
-        List<Object> data = new ArrayList<>();
-        List<Object> items = new ArrayList<>();
-
-        try(Scanner input = new Scanner(new File(filePath))) {
-            input.useDelimiter(",\\s*|\r\n|\n");
-            input.useLocale(Locale.US);
-            while(input.hasNext()){
-                data.add(input.nextLong());
-                data.add(input.next());
-                data.add(input.next());
-                data.add(input.next());
-                data.add(input.next());
-                data.add(input.nextDouble());
-
-                String stageStr = input.next().toLowerCase(Locale.ROOT);
-                boolean stage = stageStr.equals("true");
-                data.add(stage);
-
-                items.add(EState.STUDENT.factory(data));
-                data.clear();
-            }
-        }  catch (Exception e){
-            Log.getInstance().addMessage("The file does not exist");
-        }
-        return items;
-    }
-
     @Override
     public String toString() {
         return "\nStudent id :" + id + "\n" +
+                "-".repeat(20) + "\n" +
                 "-Name: " + name + "\n" +
                 "-Email: " + email + "\n" +
                 "-Curse: " + curse + "\n" +
                 "-Branch: " + branch + "\n" +
                 "-Classification: " + classification + "\n" +
-                "-Has project: " + hasStage;
+                "-Has project: " + hasStage + "\n" +
+                "-".repeat(20) + "\n";
     }
 
     @Override

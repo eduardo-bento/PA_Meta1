@@ -57,8 +57,8 @@ public class Data implements Serializable {
         return phasesLock[type];
     }
 
-    public boolean lockPhase(int type){
-        return phasesLock[type] = true;
+    public void lockPhase(int type){
+        phasesLock[type] = true;
     }
 
     public boolean insert(Object item){
@@ -92,7 +92,7 @@ public class Data implements Serializable {
 
     public String querying(Class<?> type) {
         Manager manager = management.get(Utils.getSuperClass(type));
-        return manager.querying();
+        return manager.querying().isEmpty() ? "no data found" : manager.querying();
     }
 
     public String getListOfStudents_CandidacyPhase(){
@@ -117,14 +117,7 @@ public class Data implements Serializable {
     }
 
     public void readCSV(String filePath, Class<?> type){
-        try {
-            List<Object> objects = (List<Object>) Utils.getSuperClass(type).getMethod("readFile",String.class).invoke(null,filePath);
-            objects.forEach(this::insert);
-        } catch (NoSuchMethodException e ) {
-            System.err.println("No method found" + type.getName());
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            System.err.println("Could not invoke the method");
-        }
+        management.get(type).readFile(filePath);
     }
 
     public boolean lockConfigurationPhase(){

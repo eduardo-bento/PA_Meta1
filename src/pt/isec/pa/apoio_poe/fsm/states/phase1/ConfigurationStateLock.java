@@ -11,13 +11,12 @@ public class ConfigurationStateLock extends ContextAdapter {
     }
 
     @Override
-    public EState getMode() {
-        return data.getCurrentMode();
-    }
-
-    @Override
-    public void changeMode(EState management) {
-        data.setCurrentMode(management);
+    public void goToMode(int option) {
+        switch (option){
+            case 1 -> changeState(EState.STUDENT_LOCK);
+            case 2 -> changeState(EState.TEACHER_LOCK);
+            case 3 -> changeState(EState.PROPOSAL_LOCK);
+        }
     }
 
     @Override

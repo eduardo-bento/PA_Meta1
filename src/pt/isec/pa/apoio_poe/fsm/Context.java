@@ -37,16 +37,8 @@ public class Context {
         return state.querying();
     }
 
-    public void changeMode(EState management) {
-        state.changeMode(management);
-    }
-
-    public EState getMode(){
-        return state.getMode();
-    }
-
     public boolean closePhase(){
-        return state.closePhase();
+         return state.closePhase();
     }
 
     public void forward() {
@@ -101,8 +93,8 @@ public class Context {
         return state.getState();
     }
 
-    public void goToMode() {
-        state.goToMode();
+    public void goToMode(int option) {
+        state.goToMode(option);
     }
 
     public void save() {

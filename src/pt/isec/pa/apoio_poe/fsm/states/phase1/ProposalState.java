@@ -6,29 +6,19 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 
-public class InterShipState extends ContextAdapter {
-    public InterShipState(Context context, Data data) {
+public class ProposalState extends ContextAdapter {
+    public ProposalState(Context context, Data data) {
         super(context, data);
-    }
-
-    @Override
-    public boolean insert(Object item) {
-        return data.insert(item);
-    }
-
-    @Override
-    public <T> boolean remove(T id) {
-        return data.remove(id, Proposal.class);
-    }
-
-    @Override
-    public String querying() {
-        return data.querying(Proposal.class);
     }
 
     @Override
     public void readFromFile(String filePath) {
         data.readCSV(filePath, Proposal.class);
+    }
+
+    @Override
+    public String querying() {
+        return data.querying(Proposal.class);
     }
 
     @Override
@@ -39,6 +29,6 @@ public class InterShipState extends ContextAdapter {
 
     @Override
     public EState getState() {
-        return EState.INTER_SHIP;
+        return EState.PROPOSAL;
     }
 }

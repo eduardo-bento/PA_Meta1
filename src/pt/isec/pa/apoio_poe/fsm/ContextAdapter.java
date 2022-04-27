@@ -2,9 +2,10 @@ package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class ContextAdapter implements IState{
+public abstract class ContextAdapter implements IState, Serializable {
     protected Context context;
     protected Data data;
 
@@ -13,12 +14,12 @@ public abstract class ContextAdapter implements IState{
         this.data = data;
     }
 
-    public void changeState(pt.isec.pa.apoio_poe.fsm.EState state){
+    public void changeState(EState state){
         context.changeState(state.stateFactory(context,data));
     }
 
     @Override
-    public void goToMode() {
+    public void goToMode(int option) {
     }
 
     @Override
@@ -92,14 +93,6 @@ public abstract class ContextAdapter implements IState{
 
     @Override
     public String getFilterList(List<Integer> filters) {
-        return null;
-    }
-
-    @Override
-    public void changeMode(EState management){}
-
-    @Override
-    public EState getMode() {
         return null;
     }
 }

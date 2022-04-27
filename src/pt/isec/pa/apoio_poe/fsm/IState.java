@@ -10,9 +10,7 @@ public interface IState {
     void forward();
     boolean back();
 
-    void changeMode(EState management);
-    EState getMode();
-    void goToMode();
+    void goToMode(int option);
     boolean closePhase();
 
     String getListOfStudents();

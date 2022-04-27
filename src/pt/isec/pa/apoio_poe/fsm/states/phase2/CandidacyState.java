@@ -19,6 +19,7 @@ public class CandidacyState extends ContextAdapter {
     public boolean back() {
         if (data.isPhaseLock(0)){
             changeState(EState.CONFIGURATION_PHASE_LOCK);
+            return true;
         }
         changeState(EState.CONFIGURATION_PHASE);
         return true;
@@ -32,7 +33,8 @@ public class CandidacyState extends ContextAdapter {
             forward();
             return true;
         }
-        Log.getInstance().addMessage("The Candidacy phase could not be locked");
+        Log.getInstance().addMessage("The Candidacy phase could not be locked " +
+                "because the configuration phase is not lock");
         return false;
     }
 

@@ -7,8 +7,8 @@ import pt.isec.pa.apoio_poe.fsm.EState;
 
 import java.util.List;
 
-public class ProposalsState extends ContextAdapter {
-    public ProposalsState(Context context, Data data) {
+public class ProposalAttributionState extends ContextAdapter {
+    public ProposalAttributionState(Context context, Data data) {
         super(context, data);
     }
 

@@ -7,12 +7,36 @@ import pt.isec.pa.apoio_poe.model.Candidacy;
 import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.*;
 
 public class CandidacyManager extends Manager<Candidacy> {
     public CandidacyManager(Data data) {
         super(data);
+    }
+
+    @Override
+    public void readFile(String filePath){
+        Set<String> data = new HashSet<>();
+        List<Candidacy> items = new ArrayList<>();
+
+        try(Scanner input = new Scanner(new File(filePath))) {
+            input.useDelimiter(",\\s*|\r\n|\n");
+            input.useLocale(Locale.US);
+            while(input.hasNext()){
+                long studentID = input.nextLong();
+                while(!input.hasNextLong()){
+                    if (!input.hasNext()) break;
+                    data.add(input.next());
+                }
+                items.add(new Candidacy(studentID,data));
+                data.clear();
+            }
+        }  catch (Exception e){
+            Log.getInstance().addMessage("The file does not exist");
+        }
+        items.forEach(this::insert);
     }
 
     public void automaticAssignment(){

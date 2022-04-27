@@ -34,9 +34,11 @@ public class Project extends Proposal{
 
     @Override
     public String toString() {
-        return "Project: " +
+        return "Project:\n" +
+                super.toString() +
                 "destiny: " + destiny + "\n" +
                 "id: " + id + "\n" +
-                "title: " + title + "\n";
+                "title: " + title + "\n" +
+                "-".repeat(20) + "\n";
     }
 }

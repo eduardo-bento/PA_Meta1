@@ -58,51 +58,6 @@ public class Proposal implements Serializable {
         this._hasCandidacy = candidacy;
     }
 
-    public static List<Object> readFile(String filePath){
-        List<Object> items = new ArrayList<>();
-
-        try(Scanner input = new Scanner(new File(filePath))) {
-            input.useDelimiter(",\\s*|\r\n|\n");
-            input.useLocale(Locale.US);
-            while(input.hasNext()){
-                switch (input.next()){
-                    case "T1" -> {
-                        String id = input.next();
-                        String destiny = input.next();
-                        String title = input.next();
-                        String entity = input.next();
-                        long studentId = -1;
-                        if (input.hasNextLong()){
-                            studentId = input.nextLong();
-                        }
-                        items.add(new InterShip(id,title,studentId,destiny,entity));
-                    }
-                    case "T2" -> {
-                        String id = input.next();
-                        String destiny = input.next();
-                        String title = input.next();
-                        String teacher = input.next();
-                        long studentId = -1;
-                        if (input.hasNextLong()){
-                            studentId = input.nextLong();
-                        }
-                        items.add(new Project(id,title,studentId,destiny,teacher));
-                    }
-                    case "T3" -> {
-                        String id = input.next();
-                        String title = input.next();
-                        long studentId = input.nextLong();
-
-                        items.add(new SelfProposal(id,title,studentId));
-                    }
-                }
-            }
-        }  catch (Exception e){
-            Log.getInstance().addMessage("The file does not exist");
-        }
-        return items;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,5 +71,13 @@ public class Proposal implements Serializable {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "id: " + id + "\n" +
+                "-".repeat(20) + "\n" +
+                "title: " + title + "\n" +
+                (student == -1 ? "no student associated" : "student: " + student) + "\n";
     }
 }

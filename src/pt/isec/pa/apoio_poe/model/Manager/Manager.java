@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model.Manager;
 
-import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
@@ -8,16 +7,33 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public abstract class Manager<T> implements Serializable {
     protected final Set<T> list;
     protected final Data data;
+    protected List<String> branches = List.of(
+            "DA | RAS | SI", "RAS | DA | SI", "SI | DA | RAS",
+            "DA | SI | RAS", "RAS | SI | DA", "SI | RAS | DA",
+            "DA","SI","RAS","DA | SI","DA | RAS","SI | DA",
+            "SI | RAS", "RAS | DA","RAS | SI");
+    protected List<String> curses = List.of("LEI","LEI-PL");
 
     public Manager(Data data) {
         list = new HashSet<>();
         this.data = data;
     }
+
+    protected boolean equal(String branch,List<String> permutation){
+        for (String s : permutation){
+            if (s.equals(branch))
+                return true;
+        }
+        return false;
+    }
+
+    public void readFile(String filePath){}
 
     public Set<T> getList(){
         return list;
@@ -33,8 +49,7 @@ public abstract class Manager<T> implements Serializable {
 
         try{
             Method method = type[0].getMethod("getFake" + className,name);
-            T item = (T) method.invoke(null, id);
-            return list.remove(item);
+            return list.remove(method.invoke(null, id));
         } catch (Exception e) {
             e.printStackTrace();
         }

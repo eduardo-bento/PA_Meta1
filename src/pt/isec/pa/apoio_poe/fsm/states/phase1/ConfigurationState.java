@@ -9,24 +9,18 @@ import pt.isec.pa.apoio_poe.model.Student;
 
 import java.io.Serializable;
 
-public class ConfigurationState extends ContextAdapter implements Serializable {
+public class ConfigurationState extends ContextAdapter {
     public ConfigurationState(Context context, Data data) {
         super(context, data);
     }
 
     @Override
-    public void changeMode(EState management) {
-        data.setCurrentMode(management);
-    }
-
-    @Override
-    public EState getMode() {
-        return data.getCurrentMode();
-    }
-
-    @Override
-    public void goToMode() {
-        changeState(data.getCurrentMode());
+    public void goToMode(int option) {
+        switch (option){
+            case 1 -> changeState(EState.STUDENT);
+            case 2 -> changeState(EState.TEACHER);
+            case 3 -> changeState(EState.PROPOSAL);
+        }
     }
 
     @Override
@@ -38,16 +32,6 @@ public class ConfigurationState extends ContextAdapter implements Serializable {
             return true;
         }
         return false;
-    }
-
-    @Override
-    public String querying() {
-        return data.querying(Student.class);
-    }
-
-    @Override
-    public void readFromFile(String filePath) {
-        data.readCSV(filePath,data.getCurrentMode().getStructureClass());
     }
 
     @Override

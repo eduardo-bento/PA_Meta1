@@ -4,7 +4,7 @@ import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.states.*;
 import pt.isec.pa.apoio_poe.fsm.states.phase1.*;
-import pt.isec.pa.apoio_poe.fsm.states.ProposalsState;
+import pt.isec.pa.apoio_poe.fsm.states.ProposalAttributionState;
 import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyState;
 import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyStateLock;
 import pt.isec.pa.apoio_poe.model.Candidacy;
@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum EState implements Serializable {
-    CONFIGURATION_PHASE,STUDENT,TEACHER,INTER_SHIP,PROJECT,SELF_PROPOSAL,CONFIGURATION_PHASE_LOCK,
+    CONFIGURATION_PHASE,STUDENT,TEACHER,STUDENT_LOCK,TEACHER_LOCK,PROPOSAL,PROPOSAL_LOCK,CONFIGURATION_PHASE_LOCK,
     PROPOSALS_PHASE,
     CANDIDACY,CANDIDACY_PHASE_LOCK,
     TEACHER_ATTRIBUTION_PHASE,
@@ -32,12 +32,13 @@ public enum EState implements Serializable {
            case CONFIGURATION_PHASE_LOCK -> new ConfigurationStateLock(context,data);
            case STUDENT -> new StudentState(context,data);
            case TEACHER -> new TeacherState(context,data);
-           case INTER_SHIP -> new InterShipState(context,data);
-           case PROJECT -> new ProjectState(context,data);
-           case SELF_PROPOSAL -> new SelfProposalState(context,data);
+           case PROPOSAL -> new ProposalState(context,data);
+           case STUDENT_LOCK -> new StudentLockPhase(context,data);
+           case TEACHER_LOCK -> new TeacherLockPhase(context,data);
+           case PROPOSAL_LOCK -> new ProposalLockPhase(context,data);
            case CANDIDACY -> new CandidacyState(context,data);
            case CANDIDACY_PHASE_LOCK -> new CandidacyStateLock(context,data);
-           case PROPOSALS_PHASE -> new ProposalsState(context,data);
+           case PROPOSALS_PHASE -> new ProposalAttributionState(context,data);
            case TEACHER_ATTRIBUTION_PHASE -> new TeacherAttributionState(context,data);
            case QUERYING_PHASE -> new Querying(context,data);
        };
@@ -56,10 +57,6 @@ public enum EState implements Serializable {
         return switch (this){
             case STUDENT -> createStudent(data);
             case TEACHER ->  new Teacher((String) data.get(0), (String) data.get(1), (Boolean) data.get(2));
-            case INTER_SHIP -> new InterShip((String) data.get(0), (String) data.get(1),
-                    (Long) data.get(2), (String) data.get(3), (String) data.get(4));
-            case PROJECT -> new Project((String) data.get(0),(String) data.get(1),(Long) data.get(2),(String) data.get(3),(String) data.get(4));
-            case SELF_PROPOSAL -> new SelfProposal((String) data.get(0),(String) data.get(1),(Long) data.get(2));
             case CANDIDACY -> new Candidacy((Long) data.get(0));
             default -> null;
         };

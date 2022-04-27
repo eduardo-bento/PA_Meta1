@@ -46,28 +46,6 @@ public class Candidacy implements Serializable {
         return proposals;
     }
 
-    public static List<Object> readFile(String filePath){
-        Set<String> data = new HashSet<>();
-        List<Object> items = new ArrayList<>();
-
-        try(Scanner input = new Scanner(new File(filePath))) {
-            input.useDelimiter(",\\s*|\r\n|\n");
-            input.useLocale(Locale.US);
-            while(input.hasNext()){
-                long studentID = input.nextLong();
-                while(!input.hasNextLong()){
-                    if (!input.hasNext()) break;
-                    data.add(input.next());
-                }
-                items.add(new Candidacy(studentID,data));
-                data.clear();
-            }
-        }  catch (Exception e){
-            Log.getInstance().addMessage("The file does not exist");
-        }
-        return items;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

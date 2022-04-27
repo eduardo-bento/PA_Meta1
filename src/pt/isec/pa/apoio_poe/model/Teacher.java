@@ -60,23 +60,6 @@ public class Teacher implements Serializable {
         _amount++;
     }
 
-    public static List<Object> readFile(String filePath){
-        List<Object> items = new ArrayList<>();
-
-        try(Scanner input = new Scanner(new File(filePath))) {
-            input.useDelimiter(",\\s*|\r\n|\n");
-            input.useLocale(Locale.US);
-            while(input.hasNext()){
-                String name = input.next();
-                String email = input.next();
-                items.add(EState.TEACHER.factory(List.of(email,name,false)));
-            }
-        }  catch (Exception e){
-            Log.getInstance().addMessage("The file does not exist");
-        }
-        return items;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,9 +75,10 @@ public class Teacher implements Serializable {
 
     @Override
     public String toString() {
-        return "Teacher: " +
-                "email: " + email + "\n" +
+        return "Teacher: " + email + "\n" +
+                "-".repeat(20) + "\n" +
                 "name: " + name + "\n" +
-                "advisor: " + advisor;
+                "advisor: " + advisor + "\n" +
+                "-".repeat(20) + "\n";
     }
 }
