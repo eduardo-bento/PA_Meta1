@@ -24,7 +24,10 @@ public class UserInterface {
                 case STUDENT_LOCK,TEACHER_LOCK,PROPOSAL_LOCK -> modeLock();
                 case CANDIDACY -> candidacy();
                 case CANDIDACY_PHASE_LOCK -> candidacyLockPhase();
+                case PROPOSAL_PHASE_SINGLE -> proposalsSingle();
                 case PROPOSALS_PHASE -> proposals();
+                case TIEBREAKER -> tieBreaker();
+                case PROPOSALS_PHASE_LOCK -> proposalsLock();
                 case TEACHER_ATTRIBUTION_PHASE -> teacher();
                 case QUERYING_PHASE -> querying();
             }
@@ -101,25 +104,68 @@ public class UserInterface {
         }
     }
 
-    private void proposals() {
-        switch (Input.chooseOption("Proposals", "Automatic attribution for proposals with student",
-                "Automatic attribution for students without defined attribution",
-                "List of students", "List of proposals", "Manual attribution", "Manual Remove", "Close phase","Export file", "Next phase")) {
-            case 1 -> context.automaticAttributionForProposalsWithStudent();
-            case 2 -> context.automaticAttribution();
+    private void proposalsSingle() {
+        switch (Input.chooseOption("Proposals (lock previous phase to have more options)", "Back to candidacy state", "Automatic attribution for SelfProposal and Project",
+                "List of students", "List of proposals", "Next phase teacher attribution")) {
+            case 1 -> context.back();
+            case 2 -> context.automaticAssignmentForProjectAndInterShip();
             case 3 -> System.out.println(context.getListOfStudents());
             case 4 -> {
-                List<Integer> filters = Input.chooseMultipleOptions("Candidacy", "SelfProposals",
+                List<Integer> filters = Input.chooseMultipleOptions("Proposals", "SelfProposals",
                         "Teacher proposals",
                         "Available proposals",
                         "Proposals already attributed");
                 System.out.println(context.getFilterList(filters));
             }
-            case 5 -> {}//context.manualAttribution(Input.readString("Proposal id", true), Input.readLong("Student id"));
-            case 6 -> context.manualRemove(Input.readString("Proposal id:", true));
-            case 7 -> context.closePhase();
-            case 8 -> context.exportFile(Input.readString("file path: ",true));
-            case 9 -> context.forward();
+            case 5 -> context.forward();
+        }
+    }
+
+    private void proposals() {
+        switch (Input.chooseOption("Proposals", "Back to candidacy state","Automatic attribution for SelfProposal and Project",
+                "Automatic attribution for students without defined attribution",
+                "List of students", "List of proposals", "Manual attribution", "Manual Remove", "Close phase","Export file", "Next phase teacher attribution")) {
+            case 1 -> context.back();
+            case 2 -> context.automaticAssignmentForProjectAndInterShip();
+            case 3 -> context.automaticAttribution();
+            case 4 -> System.out.println(context.getListOfStudents());
+            case 5 -> {
+                List<Integer> filters = Input.chooseMultipleOptions("Proposals", "SelfProposals",
+                        "Teacher proposals",
+                        "Available proposals",
+                        "Proposals already attributed");
+                System.out.println(context.getFilterList(filters));
+            }
+            case 6 -> context.manualAttribution(Input.readString("Proposal id", true), Input.readLong("Student id"));
+            case 7 -> context.manualRemove(Input.readString("Proposal id:", true));
+            case 8 -> context.closePhase();
+            case 9 -> context.exportFile(Input.readString("file path: ",true));
+            case 10 -> context.forward();
+        }
+    }
+
+    private void proposalsLock(){
+        switch (Input.chooseOption("Proposals", "Back to candidacy state",
+                "List of students", "List of proposals","Export file", "Next phase teacher attribution")) {
+            case 1 -> context.back();
+            case 2 -> System.out.println(context.getListOfStudents());
+            case 3 -> {
+                List<Integer> filters = Input.chooseMultipleOptions("Proposals", "SelfProposals",
+                        "Teacher proposals",
+                        "Available proposals",
+                        "Proposals already attributed");
+                System.out.println(context.getFilterList(filters));
+            }
+            case 4 -> context.exportFile(Input.readString("file path: ",true));
+            case 5 -> context.forward();
+        }
+
+    }
+
+    private void tieBreaker(){
+        switch (Input.chooseOption("TieBreaker Phase", "Data", "Change")) {
+            case 1 -> System.out.println(context.getData());
+            case 2 -> context.handleConflict(Input.readLong("Student id: "),Input.readString("Proposal id:",true));
         }
     }
 
@@ -137,8 +183,6 @@ public class UserInterface {
             case 9 -> context.querying();
         }
     }
-
-    private void teacherLock(){}
 
     private void querying() {
         switch (Input.chooseOption("Querying Phase", "Data","Export to file","Exit")) {

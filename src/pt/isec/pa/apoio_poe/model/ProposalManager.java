@@ -70,15 +70,14 @@ public class ProposalManager extends Manager<Proposal> {
 
     @Override
     public boolean insert(Proposal item) {
-        boolean add = true;
-        if (item instanceof Project){
-            add = verifyProject((Project)item);
-        } else if (item instanceof InterShip){
-            add = verifyInterShip((InterShip) item);
-        } else if(item instanceof SelfProposal){
-            add = verifySelfProposal((SelfProposal) item);
+        if (item instanceof Project && !verifyProject((Project)item)){
+            return false;
+        } else if (item instanceof InterShip && !verifyInterShip((InterShip) item)){
+            return false;
+        } else if(item instanceof SelfProposal && !verifySelfProposal((SelfProposal) item)){
+            return false;
         }
-        if (!add) return false;
+
         if(super.insert(item)){
             listOfProposals.get(item.getClass()).add(item);
         }
@@ -149,7 +148,7 @@ public class ProposalManager extends Manager<Proposal> {
 
     public String getProjectList(){
         StringBuilder builder = new StringBuilder();
-        listOfProposals.get(Project.class).forEach(selfProposal -> builder.append(selfProposal).append("\n"));
+        listOfProposals.get(Project.class).forEach(project -> builder.append(project).append("\n"));
         return builder.toString();
     }
 

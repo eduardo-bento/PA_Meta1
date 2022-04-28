@@ -41,6 +41,11 @@ public class Data implements Serializable {
         return new ArrayList<>(((ProposalManager)management.get(Proposal.class)).getSpecific(SelfProposal.class));
     }
 
+    public List<Student> getListOfStudentsWithNoProposal(){
+        StudentManager studentManager = (StudentManager) management.get(Student.class);
+        return studentManager.getListOfStudentsWithNoProposals();
+    }
+
     public boolean isPhaseLock(int type){
         return phasesLock[type];
     }
@@ -135,20 +140,20 @@ public class Data implements Serializable {
     //Phase 3
     public String getListOfStudentsFinal(){
         StudentManager manager = (StudentManager) management.get(Student.class);
-        return "With candidacy " + manager.getStudentsWithCandidacy() +
-                "With SelfProposal" + manager.getStudentsWithSelfProposal() +
-                "With no proposal " + manager.getStudentsWithNoProposal();
+        return "With candidacy\n" + manager.getStudentsWithCandidacy() +
+                "With SelfProposal\n" + manager.getStudentsWithSelfProposal() +
+                "With no proposal\n" + manager.getStudentsWithNoProposal();
     }
 
     public String getListProposalsFinal(List<Integer> filters){
         StringBuilder builder = new StringBuilder();
-        ProposalManager manager = (ProposalManager) management.get(ProposalManager.class);
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
         for (int i : filters){
             switch (i){
-                case 1 -> builder.append("SelfProposal\n").append("-".repeat(20)).append(manager.getSelfProposalList());
-                case 2 -> builder.append("Project\n").append("-".repeat(20)).append(manager.getProjectList());
-                case 3 -> builder.append("Available").append("-".repeat(20)).append(manager.getProposalsAvailable());
-                case 4 -> builder.append("Attributed").append("-".repeat(20)).append(manager.getProposalsAttributed());
+                case 1 -> builder.append("SelfProposal\n").append("-".repeat(20)).append("\n").append(manager.getSelfProposalList());
+                case 2 -> builder.append("Project\n").append("-".repeat(20)).append("\n").append(manager.getProjectList());
+                case 3 -> builder.append("Available\n").append("-".repeat(20)).append("\n").append(manager.getProposalsAvailable());
+                case 4 -> builder.append("Attributed\n").append("-".repeat(20)).append("\n").append(manager.getProposalsAttributed());
             }
         }
         return builder.toString();
@@ -156,9 +161,7 @@ public class Data implements Serializable {
 
     public void manualProposalAttribution(String proposalID,long studentID){
         FinalProposalManager proposal = (FinalProposalManager) management.get(FinalProposal.class);
-        if(!proposal.manualAttribution(proposalID,studentID)){
-            Log.getInstance().addMessage("The proposal id or the student does not exit");
-        }
+        proposal.manualAttribution(proposalID,studentID);
     }
 
     public void manualProposalRemoveAttribution(String proposalID) {
@@ -168,12 +171,12 @@ public class Data implements Serializable {
         }
     }
 
-    public void automaticAttribution(){
+    public boolean automaticAttribution(){
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        manager.automaticAttribution();
+        return manager.automaticAttribution();
     }
 
-    public void automaticAttributionForProposalsWithStudent() {
+    public void automaticAssignmentForProjectAndInterShip() {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         manager.automaticAssignmentForProjectAndInterShip();
     }
@@ -246,5 +249,15 @@ public class Data implements Serializable {
     public boolean manualTeacherRemove(String proposalID) {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         return manager.manualTeacherRemove(proposalID);
+    }
+
+    public String getTieBreakerList() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getTieBreakerList();
+    }
+
+    public boolean handleConflict(long studentId, String proposalId) {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.tieBreakerChange(studentId,proposalId);
     }
 }

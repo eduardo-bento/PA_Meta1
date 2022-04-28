@@ -18,7 +18,7 @@ public interface IState {
 
     void exportFile(String filePath);
     void automaticAttributionWithoutAssociation();
-    void automaticAttributionForProposalsWithStudent();
+    void automaticAssignmentForProjectAndInterShip();
     void manualRemove(String proposalID);
 
     String getAttributionTeacherData();
@@ -27,8 +27,11 @@ public interface IState {
     boolean manualTeacherRemove(String proposalID);
 
     String getData();
+    boolean handleConflict(long studentId,String proposalId);
 
     void readFromFile(String filePath);
 
     EState getState();
+
+    void manualAttribution(String proposal_id, long student_id);
 }

@@ -55,8 +55,8 @@ public class Context {
         state.automaticAttributionWithoutAssociation();
     }
 
-    public void automaticAttributionForProposalsWithStudent(){
-        state.automaticAttributionForProposalsWithStudent();
+    public void automaticAssignmentForProjectAndInterShip(){
+        state.automaticAssignmentForProjectAndInterShip();
     }
 
     public void manualTeacherAttribution(String proposalID, String teacherID){
@@ -122,5 +122,13 @@ public class Context {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void manualAttribution(String proposal_id, long student_id) {
+        state.manualAttribution(proposal_id,student_id);
+    }
+
+    public void handleConflict(long studentId, String proposalId) {
+        state.handleConflict(studentId,proposalId);
     }
 }

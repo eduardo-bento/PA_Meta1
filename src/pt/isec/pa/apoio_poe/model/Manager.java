@@ -69,7 +69,7 @@ public abstract class Manager<T> implements Serializable {
                     return (K) v;
                 }
             }
-            Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
+            //Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was not found");
         } catch (Exception e) {
             e.printStackTrace();
         }

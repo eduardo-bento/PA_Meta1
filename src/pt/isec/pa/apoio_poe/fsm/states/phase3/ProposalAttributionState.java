@@ -14,17 +14,22 @@ public class ProposalAttributionState extends ContextAdapter {
 
     @Override
     public void automaticAttributionWithoutAssociation() {
-        data.automaticAttribution();
+        if(!data.automaticAttribution()){
+            changeState(EState.TIEBREAKER);
+            return;
+        }
+        changeState(EState.PROPOSALS_PHASE);
     }
 
     @Override
-    public void automaticAttributionForProposalsWithStudent() {
-        data.automaticAttributionForProposalsWithStudent();
+    public void automaticAssignmentForProjectAndInterShip() {
+        data.automaticAssignmentForProjectAndInterShip();
     }
 
+
     @Override
-    public void manualTeacherAttribution(String proposalID, String teacherID) {
-        //data.manualProposalAttribution(proposalID, teacherID);
+    public void manualAttribution(String proposal_id, long student_id) {
+        data.manualProposalAttribution(proposal_id,student_id);
     }
 
     @Override
@@ -51,9 +56,10 @@ public class ProposalAttributionState extends ContextAdapter {
     public boolean back() {
         if (!data.isPhaseLock(1)){
             changeState(EState.CANDIDACY);
+            return true;
         }
-        changeState(EState.PROPOSALS_PHASE);
-        return false;
+        changeState(EState.CANDIDACY_PHASE_LOCK);
+        return true;
     }
 
     @Override

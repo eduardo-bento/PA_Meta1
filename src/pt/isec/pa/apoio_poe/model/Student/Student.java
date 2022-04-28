@@ -100,7 +100,7 @@ public class Student implements Serializable {
         this._hasCandidacy = candidacy;
     }
 
-    public void setHasStage(boolean hasStage) {
+    public void setStage(boolean hasStage) {
         if (this.hasStage == hasStage){
             Log.getInstance().addMessage("You tried to change the stage to" + hasStage + "but the attribute already has that value");
         }

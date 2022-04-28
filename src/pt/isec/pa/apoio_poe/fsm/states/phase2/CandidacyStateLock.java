@@ -14,18 +14,22 @@ public class CandidacyStateLock extends ContextAdapter {
     }
 
     @Override
-    public void forward() {
-        changeState(EState.PROPOSALS_PHASE);
+    public boolean back() {
+        if (!data.isPhaseLock(0)){
+            changeState(EState.CONFIGURATION_PHASE);
+            return true;
+        }
+        changeState(EState.CONFIGURATION_PHASE_LOCK);
+        return true;
     }
 
     @Override
-    public boolean back() {
-        if (data.isPhaseLock(0)){
-            changeState(EState.CONFIGURATION_PHASE_LOCK);
-            return true;
+    public void forward() {
+        if (!data.isPhaseLock(2)){
+            changeState(EState.PROPOSALS_PHASE);
+            return;
         }
-        changeState(EState.CONFIGURATION_PHASE);
-        return true;
+        changeState(EState.PROPOSALS_PHASE_LOCK);
     }
 
     @Override

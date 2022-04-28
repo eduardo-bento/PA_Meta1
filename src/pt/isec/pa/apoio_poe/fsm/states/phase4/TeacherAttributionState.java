@@ -43,17 +43,13 @@ public class TeacherAttributionState extends ContextAdapter {
             changeState(EState.PROPOSALS_PHASE);
             return true;
         }
+        changeState(EState.PROPOSALS_PHASE_LOCK);
         return false;
     }
 
     @Override
     public String querying() {
         return data.teacherQuerying();
-    }
-
-    @Override
-    public void forward() {
-        changeState(EState.QUERYING_PHASE);
     }
 
     @Override

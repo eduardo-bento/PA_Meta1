@@ -106,7 +106,7 @@ public class StudentManager extends Manager<Student> {
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
             if (student.hasCandidacy())
-                builder.append(student).append("\n");
+                builder.append("-").append(student.getId()).append("\n");
         }
         return builder.toString();
     }
@@ -115,7 +115,7 @@ public class StudentManager extends Manager<Student> {
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
             if (!student.hasCandidacy())
-                builder.append(student).append("\n");
+                builder.append("-").append(student).append("\n");
         }
         return builder.toString();
     }
@@ -124,7 +124,7 @@ public class StudentManager extends Manager<Student> {
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
             if (!student.hasAssignedProposal())
-                builder.append(student).append("\n");
+                builder.append("-").append(student.getId()).append("\n");
         }
         return builder.toString();
     }
@@ -133,9 +133,19 @@ public class StudentManager extends Manager<Student> {
         StringBuilder builder = new StringBuilder();
         List<Proposal> proposals = data.getSelfProposalList();
         for (Proposal proposal : proposals){
-            builder.append(find(proposal.getStudent(),Student.class)).append("\n");
+            builder.append("-").append(find(proposal.getStudent(),Student.class).getId()).append("\n");
         }
         return builder.toString();
+    }
+
+    //Phase 4
+    public List<Student> getListOfStudentsWithNoProposals(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (!student.hasAssignedProposal() && student.hasCandidacy())
+                students.add(student);
+        }
+        return students;
     }
 
     //Phase 5

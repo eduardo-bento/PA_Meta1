@@ -54,13 +54,23 @@ public abstract class ContextAdapter implements IState, Serializable {
     public void automaticAttributionWithoutAssociation() {}
 
     @Override
-    public void automaticAttributionForProposalsWithStudent() {}
+    public void automaticAssignmentForProjectAndInterShip() {}
 
     @Override
     public void manualTeacherAttribution(String proposalID, String teacherID) {}
 
     @Override
     public void manualRemove(String proposalID) {}
+
+    @Override
+    public void manualAttribution(String proposal_id, long student_id) {
+
+    }
+
+    @Override
+    public boolean handleConflict(long studentId, String proposalId) {
+        return false;
+    }
 
     @Override
     public void readFromFile(String filePath) {}

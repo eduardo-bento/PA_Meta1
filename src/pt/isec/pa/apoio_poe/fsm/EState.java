@@ -3,9 +3,12 @@ package pt.isec.pa.apoio_poe.fsm;
 import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.states.phase1.*;
+import pt.isec.pa.apoio_poe.fsm.states.phase3.ProposalAttributionLockState;
+import pt.isec.pa.apoio_poe.fsm.states.phase3.ProposalAttributionSingleState;
 import pt.isec.pa.apoio_poe.fsm.states.phase3.ProposalAttributionState;
 import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyState;
 import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyStateLock;
+import pt.isec.pa.apoio_poe.fsm.states.phase3.TieBreakerPhase;
 import pt.isec.pa.apoio_poe.fsm.states.phase4.TeacherAttributionState;
 import pt.isec.pa.apoio_poe.fsm.states.phase5.Querying;
 import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
@@ -19,7 +22,7 @@ import java.util.List;
 
 public enum EState implements Serializable {
     CONFIGURATION_PHASE,STUDENT,TEACHER,STUDENT_LOCK,TEACHER_LOCK,PROPOSAL,PROPOSAL_LOCK,CONFIGURATION_PHASE_LOCK,
-    PROPOSALS_PHASE,
+    PROPOSALS_PHASE,PROPOSALS_PHASE_LOCK,PROPOSAL_PHASE_SINGLE,TIEBREAKER,
     CANDIDACY,CANDIDACY_PHASE_LOCK,
     TEACHER_ATTRIBUTION_PHASE,
     QUERYING_PHASE;
@@ -37,6 +40,9 @@ public enum EState implements Serializable {
            case CANDIDACY -> new CandidacyState(context,data);
            case CANDIDACY_PHASE_LOCK -> new CandidacyStateLock(context,data);
            case PROPOSALS_PHASE -> new ProposalAttributionState(context,data);
+           case PROPOSALS_PHASE_LOCK -> new ProposalAttributionLockState(context,data);
+           case PROPOSAL_PHASE_SINGLE -> new ProposalAttributionSingleState(context,data);
+           case TIEBREAKER ->  new TieBreakerPhase(context,data);
            case TEACHER_ATTRIBUTION_PHASE -> new TeacherAttributionState(context,data);
            case QUERYING_PHASE -> new Querying(context,data);
        };

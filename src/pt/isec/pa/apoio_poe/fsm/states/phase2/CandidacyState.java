@@ -14,15 +14,27 @@ public class CandidacyState extends ContextAdapter {
         super(context, data);
     }
 
-
     @Override
     public boolean back() {
-        if (data.isPhaseLock(0)){
-            changeState(EState.CONFIGURATION_PHASE_LOCK);
+        if (!data.isPhaseLock(0)){
+            changeState(EState.CONFIGURATION_PHASE);
             return true;
         }
-        changeState(EState.CONFIGURATION_PHASE);
+        changeState(EState.CONFIGURATION_PHASE_LOCK);
         return true;
+    }
+
+    @Override
+    public void forward() {
+        if (!data.isPhaseLock(2)){
+            if (!data.isPhaseLock(1)){
+                changeState(EState.PROPOSAL_PHASE_SINGLE);
+                return;
+            }
+            changeState(EState.PROPOSALS_PHASE);
+            return;
+        }
+        changeState(EState.PROPOSALS_PHASE_LOCK);
     }
 
     @Override
@@ -41,11 +53,6 @@ public class CandidacyState extends ContextAdapter {
     @Override
     public void readFromFile(String filePath) {
         data.readCSV(filePath,Candidacy.class);
-    }
-
-    @Override
-    public void forward() {
-        changeState(EState.PROPOSALS_PHASE);
     }
 
     @Override
