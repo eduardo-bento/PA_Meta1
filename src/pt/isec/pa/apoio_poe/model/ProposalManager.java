@@ -140,6 +140,15 @@ public class ProposalManager extends Manager<Proposal> {
         return listOfProposals.get(label);
     }
 
+    public List<Proposal> getProposalsNotAssigned(){
+        List<Proposal> proposals = new ArrayList<>();
+        for(Proposal proposal : list){
+            if (!proposal.isAssigned() && proposal.getStudent() == -1)
+                proposals.add(proposal);
+        }
+        return proposals;
+    }
+
     public String getSelfProposalList(){
         StringBuilder builder = new StringBuilder();
         listOfProposals.get(SelfProposal.class).forEach(selfProposal -> builder.append(selfProposal).append("\n"));
@@ -175,7 +184,7 @@ public class ProposalManager extends Manager<Proposal> {
     public String getProposalsAvailable(){
         StringBuilder builder = new StringBuilder();
         for (Proposal proposal : list){
-            if (!proposal.isAssigned())
+            if (!proposal.isAssigned() && proposal.getStudent() != -1)
                 builder.append(proposal).append("\n");
         }
         return builder.toString();

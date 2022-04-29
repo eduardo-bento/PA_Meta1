@@ -46,6 +46,11 @@ public class Data implements Serializable {
         return studentManager.getListOfStudentsWithNoProposals();
     }
 
+    public List<Proposal> getProposalsNotAssigned(){
+        ProposalManager proposalManager = (ProposalManager) management.get(Proposal.class);
+        return proposalManager.getProposalsNotAssigned();
+    }
+
     public boolean isPhaseLock(int type){
         return phasesLock[type];
     }
@@ -258,6 +263,6 @@ public class Data implements Serializable {
 
     public boolean handleConflict(long studentId, String proposalId) {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        return manager.tieBreakerChange(studentId,proposalId);
+        return manager.tieHandleConflict(studentId,proposalId);
     }
 }

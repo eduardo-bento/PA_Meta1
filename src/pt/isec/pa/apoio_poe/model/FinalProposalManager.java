@@ -11,17 +11,16 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student.Student;
 import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class FinalProposalManager extends Manager<FinalProposal> {
+    private final TieBreaker tieBreaker;
+
     public FinalProposalManager(Data data) {
         super(data);
+        tieBreaker = new TieBreaker(this,data);
     }
-    final List<Student> tieBreakerStudents = new ArrayList<>();
-    List<Student> toRemove = new ArrayList<>();
-
     @Override
     public boolean insert(FinalProposal item) {
         if(list.add(item)){
@@ -45,22 +44,22 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         List<Student> students = data.getListOfStudentsWithNoProposal();
         Collections.sort(students,new StudentClassification());
         Collections.reverse(students);
+
         for (int i = 0; i < students.size(); i++){
-            int count = equalsClassification(students,students.get(i));
-            if (count != 0){
-                tieBreakerInfo(students,i,count);
+            if (tieBreaker.findTie(students,students.get(i))){
                 return false;
             }
-            if(!list.contains(FinalProposal.getFakeFinalproposal(students.get(i).getId()))){
+
+            if(find(students.get(i).getId(),FinalProposal.class) == null){
                 Candidacy candidacy = find(students.get(i).getId(),Candidacy.class);
-                if (candidacy != null){
-                    List<String> proposals = candidacy.getProposals();
-                    for (int j = 0;  j < proposals.size(); j++){
-                        if (!findProposal(proposals.get(j))){
-                            linkToStudent(students.get(i).getId());
-                            insert(new FinalProposal(students.get(i).getId(), proposals.get(j),j+ 1));
-                            break;
-                        }
+                List<String> proposals = candidacy.getProposals();
+                for (int j = 0;  j < proposals.size(); j++){
+                    if (!findProposal(proposals.get(j))){
+                        linkToStudent(students.get(i).getId());
+                        find(proposals.get(j),Proposal.class).setAssigned(true);
+                        insert(new FinalProposal(students.get(i).getId()
+                                , proposals.get(j),j+ 1));
+                        break;
                     }
                 }
             }
@@ -68,84 +67,18 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return true;
     }
 
-    private int equalsClassification(List<Student> students,Student student){
-        int count = 0;
-        for (Student s : students){
-            if (student != s && student.getClassification() == s.getClassification())
-                count++;
-        }
-        return count;
-    }
-
-    public boolean tieBreakerChange(long studentId,String proposalId){
-        Proposal proposal = find(proposalId,Proposal.class);
-        if (find(studentId,Student.class) == null && proposal == null) return false;
-
-        Candidacy candidacy = find(studentId,Candidacy.class);
-        FinalProposal finalProposal = find(studentId,FinalProposal.class);
-
-        for (Student student : tieBreakerStudents){
-            candidacy = find(student.getId(),Candidacy.class);
-            if (proposalsAssigned(candidacy)){
-                for (Proposal p : data.getList(Proposal.class)){
-                    if (!p.isAssigned()){
-                        Log.getInstance().addMessage("All of your proposals are already assigned so we attributed a random one");
-                        insert(new FinalProposal(student.getId(),p.getId(),-1));
-                        toRemove.add(Student.getFakeStudent(student.getId()));
-                        p.setAssigned(true);
-                        break;
-                    }
-                }
-            }
-        }
-
-        if (finalProposal == null && !proposal.isAssigned()){
-            insert(new FinalProposal(studentId,proposalId,getPosition(candidacy,proposalId)));
-            tieBreakerStudents.remove(Student.getFakeStudent(studentId));
-            proposal.setAssigned(true);
-        } else {
-            Log.getInstance().addMessage("The proposal is already attributed");
-        }
-
-        for (Student student : toRemove){
-            tieBreakerStudents.remove(student);
-        }
-
-        return tieBreakerStudents.isEmpty();
-    }
-
-    private boolean proposalsAssigned(Candidacy candidacy){
-        int count = 0;
-        for (String id : candidacy.getProposals()){
-            Proposal proposal = find(id,Proposal.class);
-            if (proposal.isAssigned())
-                count++;
-        }
-        return count == candidacy.getProposals().size();
-    }
-
-    private int getPosition(Candidacy candidacy,String proposalID){
-        int count = 0;
-        for (String proposal : candidacy.getProposals()){
-            count++;
-            if (proposal.equals(proposalID))
-               break;
-        }
-        return count;
-    }
-
-    private void tieBreakerInfo(List<Student> students,int incialPos,int amout){
-        for (int i = incialPos; i <= incialPos + amout; i++){
-            tieBreakerStudents.add(students.get(i));
-        }
+    public boolean tieHandleConflict(long studentId, String proposalId){
+       return tieBreaker.handleConflict(studentId,proposalId);
     }
 
     public String getTieBreakerList(){
         StringBuilder builder = new StringBuilder();
-        for (Student student : tieBreakerStudents){
+        for (Student student : tieBreaker.getStudents()){
             builder.append(student).append("\n");
-            Candidacy candidacy = find(student.getId(),Candidacy.class);
-            builder.append(candidacy.getProposals());
+            for (String id : find(student.getId(),Candidacy.class).getProposals()){
+                if(!find(id,Proposal.class).isAssigned())
+                    builder.append(id).append(",");
+            }
         }
         return builder.toString();
     }
