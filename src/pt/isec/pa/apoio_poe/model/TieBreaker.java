@@ -7,10 +7,11 @@ import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Student.Student;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TieBreaker {
+public class TieBreaker implements Serializable {
     final private FinalProposalManager manager;
     final private Data data;
     final private List<Student> students;
@@ -74,7 +75,7 @@ public class TieBreaker {
             if(allProposalsAreAssigned(manager.find(s.getId(), Candidacy.class).getProposals())){
                 if (!data.getProposalsNotAssigned().isEmpty()){
                     Proposal proposal = data.getProposalsNotAssigned().get(0);
-                    Log.getInstance().addMessage("The students was assigned with proposal" + proposal.getId());
+                    Log.getInstance().addMessage("The students was assigned with proposal " + proposal.getId());
                     manager.insert(new FinalProposal(s.getId(),proposal.getId(),-1));
                     proposal.setAssigned(true);
                     s.setAssignedProposal(true);

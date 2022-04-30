@@ -27,6 +27,8 @@ public class TeacherManager extends Manager<Teacher> {
                 }
             }  catch (FileNotFoundException e){
                 Log.getInstance().addMessage("The file does not exist");
+            } catch (NoSuchElementException e){
+                Log.getInstance().addMessage("Could not read");
             }
         items.forEach(this::insert);
     }

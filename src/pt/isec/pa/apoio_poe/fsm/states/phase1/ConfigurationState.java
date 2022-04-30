@@ -28,6 +28,7 @@ public class ConfigurationState extends ContextAdapter {
             changeState(EState.CONFIGURATION_PHASE_LOCK);
             return true;
         }
+        Log.getInstance().addMessage("Configuration Phase was not locked");
         return false;
     }
 

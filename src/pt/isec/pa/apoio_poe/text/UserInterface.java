@@ -36,7 +36,7 @@ public class UserInterface {
     }
 
     private void configuration() {
-        switch (Input.chooseOption("Configuration State\n", "Chose mode","Close phase","Go to next state","save","load")) {
+        switch (Input.chooseOption("Configuration State\n", "Chose mode","Close phase","Next state - Candidacy","save","load")) {
             case 1 -> context.goToMode(Input.chooseOption("Mode: ","Student","Teacher","Proposal"));
             case 2 -> context.closePhase();
             case 3 -> context.forward();
@@ -68,7 +68,7 @@ public class UserInterface {
     }
 
     private void candidacy() {
-        switch (Input.chooseOption("Candidacy State\n", "Back to configuration", "Querying", "Read CVS", "List of Students",
+        switch (Input.chooseOption("Candidacy State\n", "Back to configuration", "Querying", "Read from file", "List of Students",
                 "List of proposals", "Close phase", "Next state - Proposals")) {
             case 1 -> context.back();
             case 2 -> System.out.println(context.querying());

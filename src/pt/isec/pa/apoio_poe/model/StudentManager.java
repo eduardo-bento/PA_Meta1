@@ -115,7 +115,7 @@ public class StudentManager extends Manager<Student> {
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
             if (!student.hasCandidacy())
-                builder.append("-").append(student).append("\n");
+                builder.append("-").append(student.getId()).append("\n");
         }
         return builder.toString();
     }

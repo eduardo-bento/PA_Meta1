@@ -128,6 +128,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
                 finalProposal.setTeacher(((Project) proposal).getTeacher());
                 Teacher teacher = find(((Project) proposal).getTeacher(),Teacher.class);
                 teacher.addToAmount();
+                System.out.println("The teacher " + teacher.getEmail() + " was assigned to the proposal" + proposal.getId());
             }
         }
     }

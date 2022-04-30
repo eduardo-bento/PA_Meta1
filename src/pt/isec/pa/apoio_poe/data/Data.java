@@ -95,9 +95,9 @@ public class Data implements Serializable {
 
     public String getListOfStudents_CandidacyPhase(){
         StudentManager manager = (StudentManager) management.get(Student.class);
-        return "With candidacy" + "\n" + manager.getStudentsWithCandidacy() + "\n" +
-                "Without candidacy" + "\n" + manager.getStudentsWithoutCandidacy() +
-                "Self Proposal" + "\n" + manager.getStudentsWithSelfProposal();
+        return "With candidacy\n" + manager.getStudentsWithCandidacy()  +
+                "Without candidacy\n" + manager.getStudentsWithoutCandidacy() +
+                "Self Proposal\n" + manager.getStudentsWithSelfProposal();
     }
 
     public String getListProposals_CandidacyPhase(List<Integer> filters){
@@ -105,10 +105,10 @@ public class Data implements Serializable {
         StringBuilder stringBuilder = new StringBuilder();
         for (int f : filters){
             switch (f){
-                case 1 -> stringBuilder.append("SelfProposals").append("\n").append(manager.getSelfProposalList());
-                case 2 -> stringBuilder.append("Teacher Proposals").append("\n").append(manager.getProjectList());
-                case 3 -> stringBuilder.append("Proposals with candidacy").append("\n").append(manager.getProposalsWithCandidacy());
-                case 4 -> stringBuilder.append("Proposals without candidacy").append("\n").append(manager.getProposalsWithoutCandidacy());
+                case 1 -> stringBuilder.append("SelfProposals\n").append(manager.getSelfProposalList());
+                case 2 -> stringBuilder.append("Teacher Proposals\n").append(manager.getProjectList());
+                case 3 -> stringBuilder.append("Proposals with candidacy\n").append(manager.getProposalsWithCandidacy());
+                case 4 -> stringBuilder.append("Proposals without candidacy\n").append(manager.getProposalsWithoutCandidacy());
                 }
             }
         return stringBuilder.toString();
@@ -203,10 +203,9 @@ public class Data implements Serializable {
     }
 
     public boolean lockProposalPhase(){
-        int count = 0;
         List<Candidacy> candidacies = new ArrayList<>(management.get(Candidacy.class).getList());
         List<FinalProposal> proposals = new ArrayList<>(management.get(FinalProposal.class).getList());
-
+        int count = 0;
         for (Candidacy candidacy : candidacies){
             if(proposals.contains(FinalProposal.getFakeFinalproposal(candidacy.getStudentId())))
                 count++;
