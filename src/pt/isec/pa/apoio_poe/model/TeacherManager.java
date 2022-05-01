@@ -28,7 +28,7 @@ public class TeacherManager extends Manager<Teacher> {
             }  catch (FileNotFoundException e){
                 Log.getInstance().addMessage("The file does not exist");
             } catch (NoSuchElementException e){
-                Log.getInstance().addMessage("Could not read");
+                Log.getInstance().addMessage("Error reading");
             }
         items.forEach(this::insert);
     }
@@ -58,5 +58,13 @@ public class TeacherManager extends Manager<Teacher> {
     public int lowest(){
         Teacher teacher = Collections.min(list,new TeacherOrder());
         return teacher.getAmount();
+    }
+
+    public String getTeacherList(){
+        StringBuilder builder = new StringBuilder();
+        for (Teacher teacher : list){
+            builder.append(teacher.getEmail()).append("\n");
+        }
+        return builder.toString();
     }
 }

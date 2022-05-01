@@ -46,6 +46,11 @@ public class Data implements Serializable {
         return studentManager.getListOfStudentsWithNoProposals();
     }
 
+    public String getTeacherList(){
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return teacherManager.getTeacherList();
+    }
+
     public List<Proposal> getProposalsNotAssigned(){
         ProposalManager proposalManager = (ProposalManager) management.get(Proposal.class);
         return proposalManager.getProposalsNotAssigned();
@@ -89,7 +94,7 @@ public class Data implements Serializable {
     }
 
     public String querying(Class<?> type) {
-        Manager manager = management.get(Utils.getSuperClass(type));
+        Manager manager = management.get(type);
         return manager.querying().isEmpty() ? "no data found" : manager.querying();
     }
 

@@ -23,6 +23,11 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
+    public String getTeacherList() {
+        return null;
+    }
+
+    @Override
     public boolean closePhase() {
         return false;
     }

@@ -16,6 +16,11 @@ public class Querying extends ContextAdapter {
     }
 
     @Override
+    public void exportFile(String filePath) {
+        data.exportPhase4(filePath);
+    }
+
+    @Override
     public EState getState() {
         return EState.QUERYING_PHASE;
     }

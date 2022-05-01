@@ -9,6 +9,7 @@ import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Student.Student;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class CandidacyManager extends Manager<Candidacy> {
@@ -33,8 +34,10 @@ public class CandidacyManager extends Manager<Candidacy> {
                 items.add(new Candidacy(studentID,data));
                 data.clear();
             }
-        }  catch (Exception e){
+        }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
+        } catch (NoSuchElementException e){
+            Log.getInstance().addMessage("Error reading");
         }
         items.forEach(this::insert);
     }

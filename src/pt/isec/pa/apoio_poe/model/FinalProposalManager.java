@@ -35,6 +35,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         for (Proposal p : proposals){
             if ((p instanceof SelfProposal || p instanceof Project) && p.getStudent() != -1){
                 linkToStudent(p.getStudent());
+                p.setAssigned(true);
                 insert(new FinalProposal(p.getStudent(),p.getId(),1));
             }
         }
@@ -104,6 +105,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
 
         FinalProposal finalProposal = find(studentID,FinalProposal.class);
         if (finalProposal == null){
+            proposal.setStudent(studentID);
            insert(new FinalProposal(studentID,proposalID,-1));
         }
         proposal.setAssigned(true);
@@ -114,8 +116,10 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         Proposal proposal = find(proposalID,Proposal.class);
         if (proposal == null || proposal instanceof SelfProposal || proposal.getStudent() == -1) return false;
 
+        Log.getInstance().addMessage("The proposal with id : " + proposalID + "was removed");
         Student student = find(proposal.getStudent(),Student.class);
         list.remove(FinalProposal.getFakeFinalproposal(proposal.getStudent()));
+        proposal.setStudent(-1);
         student.setAssignedProposal(false);
         proposal.setAssigned(false);
         return true;
@@ -136,20 +140,33 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     public boolean manualTeacherAttribution(String proposalID, String teacherID) {
         Teacher teacher = find(teacherID,Teacher.class);
         if (find(teacherID,Teacher.class) != null){
-            FinalProposal proposal = find(proposalID,FinalProposal.class);
+            FinalProposal proposal = getProposal(proposalID);
             if (proposal != null){
                 proposal.setTeacher(teacherID);
                 teacher.addToAmount();
+                Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
+                        " was added to the proposal " + proposalID);
                 return true;
             }
         }
         return false;
     }
 
+    private FinalProposal getProposal(String proposalId){
+        for (FinalProposal proposal : list){
+            if (proposal.getProposal().equals(proposalId)){
+                return proposal;
+            }
+        }
+        return null;
+    }
+
     public boolean manualTeacherRemove(String proposalID){
-        FinalProposal proposal = find(proposalID,FinalProposal.class);
+        FinalProposal proposal = getProposal(proposalID);
         if (proposal != null){
             Teacher teacher = find(proposal.getTeacher(),Teacher.class);
+            Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
+                    " was removed from the proposal " + proposalID);
             proposal.setTeacher("");
             teacher.subToAmount();
             return true;
@@ -160,7 +177,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     public String getFinalProposalWithTeacher(){
         StringBuilder builder = new StringBuilder();
         for (FinalProposal proposal : list){
-            if (!proposal.getTeacher().isEmpty())
+            if (!proposal.getTeacher().equals(""))
                 builder.append(proposal).append("\n");
         }
         return builder.toString();

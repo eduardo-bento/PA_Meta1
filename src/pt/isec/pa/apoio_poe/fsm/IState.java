@@ -25,6 +25,7 @@ public interface IState {
     void automaticTeacherAttribution();
     void manualTeacherAttribution(String proposalID, String teacherID);
     boolean manualTeacherRemove(String proposalID);
+    String getTeacherList();
 
     String getData();
     boolean handleConflict(long studentId,String proposalId);

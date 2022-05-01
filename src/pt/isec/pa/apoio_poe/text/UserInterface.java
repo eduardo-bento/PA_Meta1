@@ -26,8 +26,8 @@ public class UserInterface {
                 case CANDIDACY_PHASE_LOCK -> candidacyLockPhase();
                 case PROPOSAL_PHASE_SINGLE -> proposalsSingle();
                 case PROPOSALS_PHASE -> proposals();
-                case TIEBREAKER -> tieBreaker();
                 case PROPOSALS_PHASE_LOCK -> proposalsLock();
+                case TIEBREAKER -> tieBreaker();
                 case TEACHER_ATTRIBUTION_PHASE -> teacher();
                 case QUERYING_PHASE -> querying();
             }
@@ -170,17 +170,22 @@ public class UserInterface {
     }
 
     private void teacher() {
-        switch (Input.chooseOption("Teacher Attribution Phase", "Automatic attribution", "Data", "Close Phase", "Back","Export to file","Next State",
-                "Manual Attribution","Manual Remove","Querying")) {
-            case 1 -> context.automaticTeacherAttribution();
+        switch (Input.chooseOption("Teacher Attribution Phase","Back","Data","Automatic attribution","Export to file",
+                "Manual Attribution","Manual Remove","Querying","Close Phase")) {
+            case 1 -> context.back();
             case 2 -> System.out.println(context.getAttributionTeacherData());
-            case 3 -> context.closePhase();
-            case 4 -> context.back();
-            case 5 -> context.exportFile(Input.readString("file path: ",true));
-            case 6 -> context.forward();
-            case 7 -> context.manualTeacherAttribution(Input.readString("Proposal id",true),Input.readString("Teacher id",true));
-            case 8 -> context.manualTeacherRemove(Input.readString("Proposal id",true));
-            case 9 -> context.querying();
+            case 3 -> context.automaticTeacherAttribution();
+            case 4 -> context.exportFile(Input.readString("file path: ",true));
+            case 5 -> {
+                System.out.println(context.getTeacherList());
+                context.manualTeacherAttribution(Input.readString("Proposal id",true),Input.readString("Teacher id",true));
+            }
+            case 6 -> {
+                System.out.println(context.getTeacherList());
+                context.manualTeacherRemove(Input.readString("Proposal id",true));
+            }
+            case 7 -> System.out.println(context.querying());
+            case 8 -> context.closePhase();
         }
     }
 

@@ -64,6 +64,8 @@ public class ProposalManager extends Manager<Proposal> {
             }
         }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
+        } catch (NoSuchElementException e){
+            Log.getInstance().addMessage("Error reading");
         }
         items.forEach(this::insert);
     }
@@ -184,7 +186,7 @@ public class ProposalManager extends Manager<Proposal> {
     public String getProposalsAvailable(){
         StringBuilder builder = new StringBuilder();
         for (Proposal proposal : list){
-            if (!proposal.isAssigned() && proposal.getStudent() != -1)
+            if (!proposal.isAssigned() && proposal.getStudent() == -1)
                 builder.append(proposal).append("\n");
         }
         return builder.toString();

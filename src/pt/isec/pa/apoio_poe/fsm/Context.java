@@ -131,4 +131,8 @@ public class Context {
     public void handleConflict(long studentId, String proposalId) {
         state.handleConflict(studentId,proposalId);
     }
+
+    public String getTeacherList() {
+        return state.getTeacherList();
+    }
 }

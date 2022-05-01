@@ -56,7 +56,8 @@ public class StudentManager extends Manager<Student> {
             }
         }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
-            e.printStackTrace();
+        } catch (NoSuchElementException e){
+            Log.getInstance().addMessage("Error reading");
         }
 
         items.forEach(this::insert);

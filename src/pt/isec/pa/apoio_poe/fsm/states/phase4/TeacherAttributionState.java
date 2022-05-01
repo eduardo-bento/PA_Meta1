@@ -4,6 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
 
 public class TeacherAttributionState extends ContextAdapter {
     public TeacherAttributionState(Context context, Data data) {
@@ -55,6 +56,11 @@ public class TeacherAttributionState extends ContextAdapter {
     @Override
     public void automaticTeacherAttribution() {
         data.automaticTeacherAttribution();
+    }
+
+    @Override
+    public String getTeacherList() {
+        return data.getTeacherList();
     }
 
     @Override

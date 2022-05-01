@@ -65,6 +65,7 @@ public class ProposalAttributionState extends ContextAdapter {
     @Override
     public boolean closePhase() {
         if (data.lockProposalPhase()){
+            data.lockPhase(2);
             changeState(EState.TEACHER_ATTRIBUTION_PHASE);
             return true;
         }
