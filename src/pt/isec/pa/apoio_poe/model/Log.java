@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe;
+package pt.isec.pa.apoio_poe.model;
 
 import java.util.ArrayList;
 import java.util.List;

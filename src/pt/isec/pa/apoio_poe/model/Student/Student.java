@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.model.Student;
 
-import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.model.Log;
 
 import java.io.Serializable;
 import java.util.*;

@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model;
 
-import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Student.StudentClassification;
 import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
@@ -58,8 +57,8 @@ public class FinalProposalManager extends Manager<FinalProposal> {
                     if (!findProposal(proposals.get(j))){
                         linkToStudent(students.get(i).getId());
                         find(proposals.get(j),Proposal.class).setAssigned(true);
-                        insert(new FinalProposal(students.get(i).getId()
-                                , proposals.get(j),j+ 1));
+                        insert(new FinalProposal(students.get(i).getId(),
+                                proposals.get(j),j+ 1));
                         break;
                     }
                 }

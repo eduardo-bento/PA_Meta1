@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model;
 
-import pt.isec.pa.apoio_poe.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;

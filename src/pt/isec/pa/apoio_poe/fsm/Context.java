@@ -15,7 +15,7 @@ public class Context {
         state = EState.CONFIGURATION_PHASE.stateFactory(this,data);
     }
 
-    void changeState(IState state){
+    public void changeState(IState state){
         this.state = state;
     }
 

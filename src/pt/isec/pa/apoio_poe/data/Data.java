@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.data;
 
-import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.model.*;
 import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Proposals.Proposal;

@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm.states.phase1;
 
-import pt.isec.pa.apoio_poe.Log;
+import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
