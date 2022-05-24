@@ -11,10 +11,10 @@ import pt.isec.pa.apoio_poe.fsm.states.phase2.CandidacyStateLock;
 import pt.isec.pa.apoio_poe.fsm.states.phase3.TieBreakerPhase;
 import pt.isec.pa.apoio_poe.fsm.states.phase4.TeacherAttributionState;
 import pt.isec.pa.apoio_poe.fsm.states.phase5.Querying;
-import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Student.Student;
-import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.io.Serializable;
 import java.util.Arrays;

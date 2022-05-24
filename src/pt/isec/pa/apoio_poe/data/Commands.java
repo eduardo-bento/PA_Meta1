@@ -1,11 +1,11 @@
 package pt.isec.pa.apoio_poe.data;
 
-import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
-import pt.isec.pa.apoio_poe.model.Proposals.InterShip;
-import pt.isec.pa.apoio_poe.model.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student.Student;
-import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.InterShip;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Project;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,13 +1,13 @@
 package pt.isec.pa.apoio_poe.data;
 
+import pt.isec.pa.apoio_poe.model.Data.*;
 import pt.isec.pa.apoio_poe.model.Log;
-import pt.isec.pa.apoio_poe.model.*;
-import pt.isec.pa.apoio_poe.model.FinalProposal.FinalProposal;
-import pt.isec.pa.apoio_poe.model.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
-import pt.isec.pa.apoio_poe.model.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Student.Student;
-import pt.isec.pa.apoio_poe.model.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.SelfProposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.utils.Utils;
 
 import java.io.*;

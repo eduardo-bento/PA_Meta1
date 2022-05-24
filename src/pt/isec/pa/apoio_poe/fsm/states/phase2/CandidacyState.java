@@ -4,7 +4,7 @@ import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
 
 import java.util.List;
