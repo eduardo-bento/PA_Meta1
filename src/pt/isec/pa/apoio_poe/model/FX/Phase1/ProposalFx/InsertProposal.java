@@ -30,9 +30,9 @@ public class InsertProposal extends VBox {
         this.setLayoutY(10);
         this.setMaxWidth(300);
         this.setPrefWidth(300);
-        this.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
-        this.setPadding(new Insets(30));
-        this.setEffect(new DropShadow());
+        //this.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
+        //this.setPadding(new Insets(30));
+        //this.setEffect(new DropShadow());
         insert.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
         setSpacing(10);

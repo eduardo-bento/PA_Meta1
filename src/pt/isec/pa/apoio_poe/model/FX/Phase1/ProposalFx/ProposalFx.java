@@ -9,6 +9,7 @@ import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
+import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
 import pt.isec.pa.apoio_poe.model.FX.ListPane;
 import pt.isec.pa.apoio_poe.model.FX.ReadFileFx;
 
@@ -84,17 +85,16 @@ public class ProposalFx extends BorderPane {
         //type.setPrefHeight(150);
 
         idField = new TextField();
-        idField.setPromptText("Enter your id.");
         remove = new Button("Remove");
         remove.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
-        VBox removeBox = new VBox(new Label("Remove"),idField,remove);
-        removeBox.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
+        VBox removeBox = new VBox(remove,idField);
+        //removeBox.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
         removeBox.setMaxHeight(50);
         removeBox.setPadding(new Insets(12));
-
-        HBox blocks = new HBox(stackPane,new VBox(new ReadFileFx(model),removeBox));
+        removeBox.setSpacing(10);
+        HBox blocks = new HBox(stackPane,new ReadFromFile(model),removeBox);
         blocks.setSpacing(20);
-        blocks.setAlignment(Pos.CENTER);
+        blocks.setAlignment(Pos.BASELINE_CENTER);
 
         setLeft(new VBox(type,previous));
         setCenter(blocks);

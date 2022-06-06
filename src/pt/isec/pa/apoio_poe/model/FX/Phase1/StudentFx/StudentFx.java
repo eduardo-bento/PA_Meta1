@@ -66,7 +66,7 @@ public class StudentFx extends BorderPane {
         idField = new TextField();
         remove = new MyButton("Remove");
 
-        VBox r = new VBox(remove,idField);
+        VBox r = new VBox(idField,remove);
         r.setMaxWidth(200);
         r.setMinWidth(200);
         r.setMaxHeight(400);
@@ -75,8 +75,8 @@ public class StudentFx extends BorderPane {
         r.setAlignment(Pos.CENTER);
 
         HBox center = new HBox(insertStudent,r,readFromFile);
-        center.setAlignment(Pos.CENTER);
-        center.setSpacing(5);
+        center.setAlignment(Pos.BASELINE_CENTER);
+        center.setSpacing(40);
 
         setCenter(center);
         setLeft(listPane);

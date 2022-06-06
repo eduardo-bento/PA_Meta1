@@ -79,7 +79,7 @@ public class TeacherFx extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
+        this.setStyle("-fx-background-color: #5F7161;");
         VBox vBox = new VBox();
         insert = new MyButton("Insert");
 
@@ -112,9 +112,9 @@ public class TeacherFx extends BorderPane {
         vBox.setAlignment(Pos.CENTER_LEFT);
 
         HBox center = new HBox(vBox,r,readFromFile);
-        center.setSpacing(10);
+        center.setSpacing(80);
 
-        center.setAlignment(Pos.CENTER);
+        center.setAlignment(Pos.BASELINE_CENTER);
 
         setCenter(center);
         setLeft(listPane);
