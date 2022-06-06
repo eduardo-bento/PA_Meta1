@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.utils.Utils;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -97,11 +98,7 @@ public abstract class Manager<T> implements Serializable {
         }
     }
 
-    public String querying() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (T o : list){
-            stringBuilder.append(o.toString()).append("\n");
-        }
-        return stringBuilder.toString();
+    public List<Object> querying() {
+        return  new ArrayList<>(list);
     }
 }

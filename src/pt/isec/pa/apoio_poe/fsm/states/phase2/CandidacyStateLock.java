@@ -43,7 +43,7 @@ public class CandidacyStateLock extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Candidacy.class);
     }
 

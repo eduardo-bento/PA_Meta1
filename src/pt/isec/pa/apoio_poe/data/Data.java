@@ -93,9 +93,9 @@ public class Data implements Serializable {
         return false;
     }
 
-    public String querying(Class<?> type) {
+    public List<Object> querying(Class<?> type) {
         Manager manager = management.get(type);
-        return manager.querying().isEmpty() ? "no data found" : manager.querying();
+        return manager.querying();
     }
 
     public String getListOfStudents_CandidacyPhase(){

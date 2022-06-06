@@ -15,7 +15,7 @@ import pt.isec.pa.apoio_poe.model.FX.ListPane;
 public class StudentFx extends BorderPane {
     ModelManager model;
     InsertStudent insertStudent;
-    ListPane listPane;
+    StudentList listPane;
     ReadFromFile readFromFile;
     MyButton previous;
 
@@ -24,7 +24,7 @@ public class StudentFx extends BorderPane {
 
     public StudentFx(ModelManager model) {
         this.model = model;
-        listPane = new ListPane(model);
+        listPane = new StudentList(model);
         createViews();
         registerHandlers();
         update();

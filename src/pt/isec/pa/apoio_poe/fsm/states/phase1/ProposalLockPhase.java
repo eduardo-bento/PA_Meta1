@@ -6,13 +6,15 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 
+import java.util.List;
+
 public class ProposalLockPhase extends ContextAdapter {
     public ProposalLockPhase(Context context, Data data) {
         super(context, data);
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Proposal.class);
     }
 

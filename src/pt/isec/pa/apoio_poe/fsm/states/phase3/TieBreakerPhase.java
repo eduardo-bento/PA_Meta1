@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 
+import java.util.List;
+
 public class TieBreakerPhase extends ContextAdapter {
     public TieBreakerPhase(Context context, Data data) {
         super(context, data);
@@ -27,7 +29,7 @@ public class TieBreakerPhase extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return super.querying();
     }
 

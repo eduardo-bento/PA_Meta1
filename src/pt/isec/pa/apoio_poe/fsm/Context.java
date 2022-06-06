@@ -31,7 +31,7 @@ public class Context {
         return state.remove(id);
     }
 
-    public String querying(){
+    public List<Object> querying(){
         return state.querying();
     }
 

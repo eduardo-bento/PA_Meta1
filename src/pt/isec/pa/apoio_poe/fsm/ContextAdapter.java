@@ -48,7 +48,7 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return null;
     }
 

@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
+import java.util.List;
+
 public class TeacherState extends ContextAdapter {
     public TeacherState(Context context, Data data) {
         super(context, data);
@@ -17,7 +19,7 @@ public class TeacherState extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Teacher.class);
     }
 
@@ -25,6 +27,11 @@ public class TeacherState extends ContextAdapter {
     public boolean back() {
         changeState(EState.CONFIGURATION_PHASE);
         return true;
+    }
+
+    @Override
+    public <T> boolean remove(T id) {
+        return data.remove(id,Teacher.class);
     }
 
     @Override

@@ -132,11 +132,21 @@ public class ProposalManager extends Manager<Proposal> {
     @Override
     public <K> boolean remove(K id, Class<?>... type) {
         Proposal proposal = Proposal.getFakeProposal((String) id);
+        System.out.println();
         if(list.remove(proposal)){
-            listOfProposals.get(type[0]).remove(proposal);
+            removeFromListOfProposals(proposal);
             return true;
         }
         return false;
+    }
+
+    private void removeFromListOfProposals(Proposal proposal){
+        Set<Proposal> proposals = listOfProposals.get(InterShip.class);
+        proposals.remove(proposal);
+        proposals = listOfProposals.get(Project.class);
+        proposals.remove(proposal);
+        proposals = listOfProposals.get(SelfProposal.class);
+        proposals.remove(proposal);
     }
 
     public Set<Proposal> getSpecific(Class<?> label){

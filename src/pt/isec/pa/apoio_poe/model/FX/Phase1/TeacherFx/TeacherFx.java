@@ -20,7 +20,7 @@ public class TeacherFx extends BorderPane {
     TextField nameField;
     TextField emailField;
     ModelManager model;
-    ListPane listPane;
+    TeacherList listPane;
     MyButton insert;
 
     MyButton previous;
@@ -31,7 +31,7 @@ public class TeacherFx extends BorderPane {
 
     public TeacherFx(ModelManager model) {
         this.model = model;
-        listPane = new ListPane(model);
+        listPane = new TeacherList(model);
         createViews();
         registerHandlers();
         update();

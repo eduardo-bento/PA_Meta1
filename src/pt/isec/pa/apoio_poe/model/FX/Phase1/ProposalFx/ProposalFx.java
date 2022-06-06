@@ -19,7 +19,7 @@ public class ProposalFx extends BorderPane {
     StackPane stackPane;
     TextField idField;
     Button remove;
-    ListPane list;
+    ProposalList list;
     MyButton previous;
 
     public ProposalFx(ModelManager model) {
@@ -64,7 +64,7 @@ public class ProposalFx extends BorderPane {
         this.setStyle("-fx-background-color: #5F7161;");
 
         previous = new MyButton("Previous");
-        list = new ListPane(model);
+        list = new ProposalList(model);
         project = new ProjectFx(model);
         interShip = new InterShipFx(model);
         selfProposal = new InsertProposal(model);

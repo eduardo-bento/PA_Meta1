@@ -6,7 +6,7 @@ public interface IState {
     boolean insert(Object item);
     <T,K,A> boolean edit(T id, K value, String label, Class<A> type);
     <T> boolean remove(T id);
-    String querying();
+    List<Object> querying();
     void forward();
     boolean back();
 

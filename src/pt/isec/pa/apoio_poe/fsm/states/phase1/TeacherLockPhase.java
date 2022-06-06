@@ -6,13 +6,15 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
+import java.util.List;
+
 public class TeacherLockPhase extends ContextAdapter {
     public TeacherLockPhase(Context context, Data data) {
         super(context, data);
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Teacher.class);
     }
 

@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 
+import java.util.List;
+
 public class ProposalState extends ContextAdapter {
     public ProposalState(Context context, Data data) {
         super(context, data);
@@ -22,7 +24,7 @@ public class ProposalState extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Proposal.class);
     }
 
@@ -30,6 +32,11 @@ public class ProposalState extends ContextAdapter {
     public boolean back() {
         changeState(EState.CONFIGURATION_PHASE);
         return true;
+    }
+
+    @Override
+    public <T> boolean remove(T id) {
+        return data.remove(id,Proposal.class);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class ModelManager {
         return value;
     }
 
-    public String querying(){
+    public List<Object> querying(){
         return context.querying();
     }
 

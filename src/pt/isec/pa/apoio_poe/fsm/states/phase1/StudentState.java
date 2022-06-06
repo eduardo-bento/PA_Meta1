@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 
+import java.util.List;
+
 public class StudentState extends ContextAdapter {
     public StudentState(Context context, Data data) {
         super(context, data);
@@ -17,7 +19,7 @@ public class StudentState extends ContextAdapter {
     }
 
     @Override
-    public String querying() {
+    public List<Object> querying() {
         return data.querying(Student.class);
     }
 
