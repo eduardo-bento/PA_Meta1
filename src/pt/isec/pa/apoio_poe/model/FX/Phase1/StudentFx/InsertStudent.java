@@ -94,12 +94,16 @@ public class InsertStudent extends VBox {
                 true,false)
         );
         stageOption.setValue(true);
-        VBox typesBox = new VBox(new Label("Has stage?"), stageOption);
+
+        Label stage = new Label("Has stage?");
+        stageOption.setStyle("-fx-background-color: #D0C9C0;");
+        VBox typesBox = new VBox(stage, stageOption);
 
         curse = new ChoiceBox(FXCollections.observableArrayList(
                 "LEI","LEI-PL")
         );
         curse.setValue("LEI");
+        curse.setStyle("-fx-background-color: #D0C9C0;");
         VBox curseBox = new VBox(new Label("Curse"), curse);
 
 
@@ -107,6 +111,7 @@ public class InsertStudent extends VBox {
                 "DA","RAS","SI")
         );
         branch.setValue("DA");
+        branch.setStyle("-fx-background-color: #D0C9C0;");
         VBox branchBox = new VBox(new Label("Branch"), branch);
 
         idField = new TextField();
@@ -116,8 +121,9 @@ public class InsertStudent extends VBox {
         emailField = new TextField();
         emailField.setPromptText("Enter your email.");
 
-
-        this.getChildren().addAll(idField,nameField,emailField,new HBox(typesBox,curseBox,branchBox),classification,insert);
+        HBox chooseBoxes = new HBox(typesBox,curseBox,branchBox);
+        chooseBoxes.setSpacing(5);
+        this.getChildren().addAll(idField,nameField,emailField,chooseBoxes,classification,insert);
 
         this.setMaxWidth(200);
         this.setMinWidth(200);
