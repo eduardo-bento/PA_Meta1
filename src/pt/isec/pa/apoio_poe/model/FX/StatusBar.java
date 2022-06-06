@@ -26,12 +26,11 @@ public class StatusBar extends HBox {
         lbMsg.setPrefWidth(Integer.MAX_VALUE);
         lbMsg.setAlignment(Pos.CENTER_LEFT);
         this.getChildren().addAll(lbMsgTitle, lbMsg);
+        setStyle("-fx-background-color: #D0C9C0;");
     }
 
     private void registerHandlers() {
-        model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> {
-            update();
-        });
+        model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
     }
 
     private void update() {

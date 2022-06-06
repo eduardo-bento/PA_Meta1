@@ -60,7 +60,7 @@ public enum EState implements Serializable {
     public Object factory(List<Object> data){
         return switch (this){
             case STUDENT -> createStudent(data);
-            case TEACHER ->  new Teacher((String) data.get(0), (String) data.get(1), (Boolean) data.get(2));
+            case TEACHER ->  new Teacher((String) data.get(0), (String) data.get(1));
             case CANDIDACY -> new Candidacy((Long) data.get(0));
             default -> null;
         };

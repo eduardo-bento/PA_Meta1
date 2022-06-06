@@ -17,6 +17,11 @@ public class ProposalState extends ContextAdapter {
     }
 
     @Override
+    public boolean insert(Object item) {
+        return super.insert(item);
+    }
+
+    @Override
     public String querying() {
         return data.querying(Proposal.class);
     }

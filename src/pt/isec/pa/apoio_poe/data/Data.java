@@ -85,7 +85,7 @@ public class Data implements Serializable {
     public <T> boolean remove(T id, Class<?> type){
         Manager manager = management.get(type);
 
-        if (manager.remove(id)) {
+        if (manager.remove(id,type)) {
             Log.getInstance().addMessage("The " + Utils.splitString(type.getName(), "\\.") + " was successfully removed");
             return true;
         }

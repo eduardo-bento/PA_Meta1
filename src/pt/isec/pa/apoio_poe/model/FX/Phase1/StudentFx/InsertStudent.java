@@ -1,43 +1,38 @@
-package pt.isec.pa.apoio_poe.model.FX;
+package pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pt.isec.pa.apoio_poe.fsm.EState;
-import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
+import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 
-public class StudentFx extends BorderPane {
+public class InsertStudent extends VBox {
+    private ModelManager model;
     TextField idField;
     TextField nameField;
     TextField emailField;
-    ModelManager model;
-    Button insert;
+    MyButton insert;
     Slider slider;
     ChoiceBox<Boolean> stageOption;
     ChoiceBox<String> curse;
     ChoiceBox<String> branch;
-    ListPane listPane;
 
-    public StudentFx(ModelManager model) {
+
+    public InsertStudent(ModelManager model){
         this.model = model;
-        listPane = new ListPane(model);
         createViews();
         registerHandlers();
         update();
     }
 
     private void update() {
-        this.setVisible(model != null && model.getState() == EState.STUDENT);
     }
 
     private void registerHandlers() {
-        model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
-
         insert.setOnAction(insert -> {
             Long id;
             String email,name;
@@ -70,7 +65,9 @@ public class StudentFx extends BorderPane {
     }
 
     private void createViews() {
-        VBox vBox = new VBox();
+        //this.setPadding(new Insets(10));
+        //this.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
+
         stageOption = new ChoiceBox<>();
         Label classificationTitle = new Label("Classification");
         Label  value  = new Label();
@@ -90,7 +87,7 @@ public class StudentFx extends BorderPane {
 
         VBox classification = new VBox(classificationTitle,v);
         classification.maxWidth(200);
-        insert = new Button("Insert");
+        insert = new MyButton("Insert");
 
 
         stageOption = new ChoiceBox(FXCollections.observableArrayList(
@@ -119,14 +116,16 @@ public class StudentFx extends BorderPane {
         emailField = new TextField();
         emailField.setPromptText("Enter your email.");
 
-        vBox.getChildren().addAll(nameField, idField, emailField,new HBox(typesBox,curseBox,branchBox),classification,insert);
 
-        vBox.setMaxWidth(200);
-        vBox.setMinWidth(200);
-        vBox.setSpacing(10);
-        vBox.setAlignment(Pos.CENTER_LEFT);
+        this.getChildren().addAll(idField,nameField,emailField,new HBox(typesBox,curseBox,branchBox),classification,insert);
 
+        this.setMaxWidth(200);
+        this.setMinWidth(200);
+        this.setMaxHeight(400);
+        this.setMinHeight(400);
 
-        setCenter(new HBox(vBox,listPane));
+        this.setSpacing(30);
     }
+
+
 }

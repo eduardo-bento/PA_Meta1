@@ -36,8 +36,9 @@ public class ModelManager {
     }
 
     public boolean insert(Object object) {
+        boolean value = context.insert(object);
         pcs.firePropertyChange(PROP_DATA,null,null);
-        return context.insert(object);
+        return value;
     }
 
     public <T,K,A> boolean edit(T entity,K value,String label,Class<A> typeClass) {
@@ -45,7 +46,9 @@ public class ModelManager {
     }
 
     public <T> boolean remove(T id) {
-        return context.remove(id);
+        boolean value =  context.remove(id);
+        pcs.firePropertyChange(PROP_DATA,null,null);
+        return value;
     }
 
     public String querying(){
@@ -55,7 +58,6 @@ public class ModelManager {
     public boolean closePhase(){
         if (context.closePhase()){
             pcs.firePropertyChange(PROP_STATE,null,context.getState());
-            System.out.println(context.getState());
             return true;
         }
         return false;
@@ -67,11 +69,14 @@ public class ModelManager {
     }
 
     public boolean back() {
-        return context.back();
+        context.back();
+        pcs.firePropertyChange(PROP_STATE,null,context.getState());
+        return true;
     }
 
     public void readFromFile(String filePath){
         context.readFromFile(filePath);
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void automaticAttribution(){

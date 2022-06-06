@@ -1,10 +1,10 @@
-package pt.isec.pa.apoio_poe.model.FX.ProposalFx;
+package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx;
 
 import javafx.scene.control.TextField;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Project;
 
-public class ProjectFx extends P{
+public class ProjectFx extends InsertProposal {
     private final TextField teacherField = new TextField();
     public ProjectFx(ModelManager model) {
         super(model);

@@ -1,12 +1,14 @@
-package pt.isec.pa.apoio_poe.model.FX;
-
-import javafx.scene.control.ListView;
+package pt.isec.pa.apoio_poe.model.FX.Phase2;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 
-public class ListPane extends ListView<String> {
-    ModelManager model;
+import java.util.List;
 
-    public ListPane(ModelManager model){
+public class ListFilterProposal extends VBox {
+    ModelManager model;
+    Label label;
+    public ListFilterProposal(ModelManager model){
         this.model = model;
         createViews();
         registerHandlers();
@@ -14,8 +16,7 @@ public class ListPane extends ListView<String> {
     }
 
     private void update() {
-        this.getItems().clear();
-        this.getItems().addAll(model.querying());
+        label.setText(model.getFilterList(List.of(1)));
     }
 
     private void registerHandlers() {
@@ -23,8 +24,7 @@ public class ListPane extends ListView<String> {
     }
 
     private void createViews() {
-        this.getItems().addAll(model.querying());
-        this.getItems().clear();
+        label = new Label();
     }
 
 }

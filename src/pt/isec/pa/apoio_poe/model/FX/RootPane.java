@@ -2,9 +2,14 @@ package pt.isec.pa.apoio_poe.model.FX;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import pt.isec.pa.apoio_poe.model.Data.ConfigurationClosed;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
-import pt.isec.pa.apoio_poe.model.FX.ProposalFx.ProposalFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.*;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.ProposalFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx.StudentFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.TeacherFx.TeacherFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.CandidacyClosedFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.CandidacyFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase3.ProposalSingleFx;
 
 public class RootPane extends BorderPane {
     ModelManager model;
@@ -19,10 +24,13 @@ public class RootPane extends BorderPane {
 
     private void createViews() {
         StackPane stackPane = new StackPane(
-                new ConfigurationFx(model),new ConfigurationClosed(model),
-                new StudentFx(model),new ProposalFx(model));
+                new ConfigurationFx(model),new ConfigurationClosedFx(model),
+                new StudentFx(model),new ProposalFx(model),
+                new TeacherFx(model),new Template(model),
+                new CandidacyFx(model),new CandidacyClosedFx(model), new ProposalSingleFx(model));
         this.setCenter(stackPane);
         setTop(model.getTopMenu());
+        setBottom(new StatusBar(model));
     }
 
     private void registerHandlers() { }

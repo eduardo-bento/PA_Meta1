@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.FX.ProposalFx;
+package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,16 +7,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
-import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 
-public class P extends VBox {
+public class InsertProposal extends VBox {
     protected final ModelManager model;
     protected final TextField idField = new TextField();
     protected final TextField studentField = new TextField();
     protected final TextField titleField = new TextField();
     protected final Button insert = new Button("Insert");
 
-    public P(ModelManager model) {
+    public InsertProposal(ModelManager model) {
         this.model = model;
         createViews();
     }

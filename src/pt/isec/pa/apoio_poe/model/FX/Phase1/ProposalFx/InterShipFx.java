@@ -1,11 +1,14 @@
-package pt.isec.pa.apoio_poe.model.FX.ProposalFx;
+package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx;
 
+import javafx.collections.FXCollections;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.InterShip;
 
-public class InterShipFx extends P{
+public class InterShipFx extends InsertProposal {
     private final TextField entityField = new TextField();
+    private ChoiceBox<String> destiny;
 
     public InterShipFx(ModelManager model) {
         super(model);
@@ -41,18 +44,19 @@ public class InterShipFx extends P{
             try {
                 id = Long.valueOf(studentField.getText());
                 studentField.setStyle(null);
-                if(!model.insert(new InterShip(idField.getText(),titleField.getText(),id,null,null))){
-                    System.out.println("nao foi possivel adicioanr");
-                }
+                model.insert(new InterShip(idField.getText(),titleField.getText(),id,destiny.getValue(),entityField.getText()));
             } catch (NumberFormatException e){
                 studentField.setStyle("-fx-background-color: #FF0000;");
             }
-
         });
     }
 
     private void createViews() {
         entityField.setPromptText("Enter your entity.");
-        this.getChildren().add(entityField);
+        destiny = new ChoiceBox(FXCollections.observableArrayList("DA","SI","RAS"));
+        destiny.setValue("DA");
+        destiny.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
+
+        this.getChildren().addAll(entityField,destiny);
     }
 }

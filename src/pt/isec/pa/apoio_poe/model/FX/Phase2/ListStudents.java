@@ -1,12 +1,12 @@
-package pt.isec.pa.apoio_poe.model.FX;
+package pt.isec.pa.apoio_poe.model.FX.Phase2;
 
 import javafx.scene.control.ListView;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 
-public class ListPane extends ListView<String> {
+public class ListStudents extends ListView<String> {
     ModelManager model;
 
-    public ListPane(ModelManager model){
+    public ListStudents(ModelManager model){
         this.model = model;
         createViews();
         registerHandlers();
@@ -15,7 +15,7 @@ public class ListPane extends ListView<String> {
 
     private void update() {
         this.getItems().clear();
-        this.getItems().addAll(model.querying());
+        this.getItems().addAll(model.getListOfStudents());
     }
 
     private void registerHandlers() {
@@ -23,8 +23,6 @@ public class ListPane extends ListView<String> {
     }
 
     private void createViews() {
-        this.getItems().addAll(model.querying());
-        this.getItems().clear();
+        this.getItems().addAll(model.getListOfStudents());
     }
-
 }

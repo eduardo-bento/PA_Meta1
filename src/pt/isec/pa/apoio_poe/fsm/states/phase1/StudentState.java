@@ -12,11 +12,6 @@ public class StudentState extends ContextAdapter {
     }
 
     @Override
-    public boolean insert(Object item) {
-        return data.insert(item);
-    }
-
-    @Override
     public <T> boolean remove(T id) {
         return data.remove(id,Student.class);
     }

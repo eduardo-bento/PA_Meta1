@@ -82,8 +82,9 @@ public class ProposalManager extends Manager<Proposal> {
 
         if(super.insert(item)){
             listOfProposals.get(item.getClass()).add(item);
+            return true;
         }
-        return true;
+        return false;
     }
 
     private boolean verifyInterShip(InterShip interShip){

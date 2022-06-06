@@ -23,7 +23,7 @@ public class TeacherManager extends Manager<Teacher> {
                 while(input.hasNext()){
                     String name = input.next();
                     String email = input.next();
-                    items.add(new Teacher(email,name,false));
+                    items.add(new Teacher(email,name));
                 }
             }  catch (FileNotFoundException e){
                 Log.getInstance().addMessage("The file does not exist");

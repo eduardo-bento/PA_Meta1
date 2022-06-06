@@ -1,18 +1,22 @@
-package pt.isec.pa.apoio_poe.model.FX;
+package pt.isec.pa.apoio_poe.model.FX.Phase1;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
+
+import java.awt.*;
 
 public class ConfigurationFx extends BorderPane {
     ModelManager model;
     Button next, changeMode, closePhase;
-
     ChoiceBox<String> types;
 
     public ConfigurationFx(ModelManager model) {
@@ -43,19 +47,24 @@ public class ConfigurationFx extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #FFA080;");
+        this.setStyle("-fx-background-color: #5F7161;");
 
         next = new Button("Next state");
+        next.setStyle("-fx-background-color: #D0C9C0;");
         closePhase = new Button("Close Phase");
+        closePhase.setStyle("-fx-background-color: #D0C9C0;");
         types = new ChoiceBox(FXCollections.observableArrayList(
                 "Student", "Teacher", "Proposal")
         );
         types.setValue("Student");
+        types.setStyle("-fx-background-color: #D0C9C0;");
 
         changeMode = new Button("Change Mode");
-        HBox hBox = new HBox(next, types,changeMode,closePhase);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        setCenter(hBox);
+        changeMode.setStyle("-fx-background-color: #D0C9C0;");
+        VBox pane = new VBox(next, types,changeMode,closePhase);
+        pane.setSpacing(10);
+        pane.setAlignment(Pos.CENTER);
+        pane.setPrefWidth(300);
+        setCenter(pane);
     }
 }

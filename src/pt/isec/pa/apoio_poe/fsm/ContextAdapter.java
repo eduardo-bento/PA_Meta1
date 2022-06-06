@@ -34,7 +34,7 @@ public abstract class ContextAdapter implements IState, Serializable {
 
     @Override
     public boolean insert(Object item) {
-        return false;
+        return data.insert(item);
     }
 
     @Override

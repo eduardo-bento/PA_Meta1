@@ -11,14 +11,13 @@ public class Teacher implements Serializable {
     private boolean advisor;
     private int _amount;
 
-    public Teacher(String email, String name,boolean advisor) {
+    public Teacher(String email, String name) {
         this.email = email;
         this.name = name;
-        this.advisor = advisor;
     }
 
     public static Teacher getFakeTeacher(String email){
-        return new Teacher(email,"----",true);
+        return new Teacher(email,"----");
     }
 
     public String getEmail() {
@@ -82,7 +81,6 @@ public class Teacher implements Serializable {
         return "Teacher: " + email + "\n" +
                 "-".repeat(20) + "\n" +
                 "name: " + name + "\n" +
-                "advisor: " + advisor + "\n" +
                 "-".repeat(20) + "\n";
     }
 }
