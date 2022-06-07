@@ -24,6 +24,11 @@ public class TeacherState extends ContextAdapter {
     }
 
     @Override
+    public <T, K, A> boolean edit(T id, K value, String label, Class<A> type) {
+        return data.edit(id,value,label,type);
+    }
+
+    @Override
     public boolean back() {
         changeState(EState.CONFIGURATION_PHASE);
         return true;

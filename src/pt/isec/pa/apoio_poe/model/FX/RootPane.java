@@ -9,7 +9,9 @@ import pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx.StudentFx;
 import pt.isec.pa.apoio_poe.model.FX.Phase1.TeacherFx.TeacherFx;
 import pt.isec.pa.apoio_poe.model.FX.Phase2.CandidacyClosedFx;
 import pt.isec.pa.apoio_poe.model.FX.Phase2.CandidacyFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase3.ProposalPhaseFx;
 import pt.isec.pa.apoio_poe.model.FX.Phase3.ProposalSingleFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase3.TieBreakerFx;
 
 public class RootPane extends BorderPane {
     ModelManager model;
@@ -27,7 +29,8 @@ public class RootPane extends BorderPane {
                 new ConfigurationFx(model),new ConfigurationClosedFx(model),
                 new StudentFx(model),new ProposalFx(model),
                 new TeacherFx(model),new Template(model),
-                new CandidacyFx(model),new CandidacyClosedFx(model), new ProposalSingleFx(model));
+                new CandidacyFx(model),new CandidacyClosedFx(model), new ProposalSingleFx(model),
+                new TieBreakerFx(model),new ProposalPhaseFx(model));
         this.setCenter(stackPane);
         setTop(model.getTopMenu());
         setBottom(new StatusBar(model));

@@ -18,4 +18,8 @@ public class StudentList extends ListPane {
             }
         });
     }
+
+    public Student getSelected(){
+        return (Student) this.getSelectionModel().getSelectedItem();
+    }
 }

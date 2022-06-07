@@ -42,7 +42,9 @@ public class ModelManager {
     }
 
     public <T,K,A> boolean edit(T entity,K value,String label,Class<A> typeClass) {
-        return context.edit(entity,value,label,typeClass);
+        boolean v = context.edit(entity,value,label,typeClass);
+        pcs.firePropertyChange(PROP_DATA,null,null);
+        return v;
     }
 
     public <T> boolean remove(T id) {
@@ -146,6 +148,7 @@ public class ModelManager {
 
     public void handleConflict(long studentId, String proposalId) {
         context.handleConflict(studentId,proposalId);
+        pcs.firePropertyChange(PROP_STATE,null,context.getState());
     }
 
     public String getTeacherList() {

@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase1.TeacherFx;
 
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -11,16 +10,13 @@ import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
-
-import java.util.concurrent.CancellationException;
-
 
 public class TeacherFx extends BorderPane {
     TextField nameField;
     TextField emailField;
     ModelManager model;
-    TeacherList listPane;
+    TeacherList list;
+    EditTeacher edit;
     MyButton insert;
 
     MyButton previous;
@@ -31,7 +27,7 @@ public class TeacherFx extends BorderPane {
 
     public TeacherFx(ModelManager model) {
         this.model = model;
-        listPane = new TeacherList(model);
+        list = new TeacherList(model);
         createViews();
         registerHandlers();
         update();
@@ -111,13 +107,14 @@ public class TeacherFx extends BorderPane {
         vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_LEFT);
 
-        HBox center = new HBox(vBox,r,readFromFile);
+        edit = new EditTeacher(model, list);
+        HBox center = new HBox(vBox,r,readFromFile,edit);
         center.setSpacing(80);
 
         center.setAlignment(Pos.BASELINE_CENTER);
 
         setCenter(center);
-        setLeft(listPane);
+        setLeft(list);
         setRight(previous);
     }
 }

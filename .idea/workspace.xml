@@ -2,11 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9527424c-c998-4996-97e3-03eb45bdbeb4" name="Changes" comment="javafx proposal interface updated">
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/EditStudent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/EditTeacher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseFx.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/InsertProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/InsertProposal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/ProposalFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/ProposalFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/StudentState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/StudentState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/TeacherState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/TeacherState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Student/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Student/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/ListPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/ListPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/InsertStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/InsertStudent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalFx.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalSingleFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalSingleFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/TieBreakerFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/TieBreakerFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/RootPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/RootPane.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +58,7 @@
       <recent name="C:\Users\35191\OneDrive\Ambiente de Trabalho\PA\src\pt\isec\pa\apoio_poe" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pt.isec.pa.apoio_poe.model.FX.Phase1.TeacherFx" />
       <recent name="pt.isec.pa.apoio_poe" />
     </key>
   </component>
@@ -113,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654548654961</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="javafx proposal interface updated">
+      <created>1654549954986</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1654549954986</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

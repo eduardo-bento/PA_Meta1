@@ -123,7 +123,7 @@ public class InsertStudent extends VBox {
 
         HBox chooseBoxes = new HBox(typesBox,curseBox,branchBox);
         chooseBoxes.setSpacing(5);
-        this.getChildren().addAll(idField,nameField,emailField,chooseBoxes,classification,insert);
+        this.getChildren().addAll(insert,idField,nameField,emailField,chooseBoxes,classification);
 
         this.setMaxWidth(200);
         this.setMinWidth(200);

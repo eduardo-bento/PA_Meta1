@@ -35,6 +35,11 @@ public class StudentState extends ContextAdapter {
     }
 
     @Override
+    public <T, K, A> boolean edit(T id, K value, String label, Class<A> type) {
+        return data.edit(id,value,label,type);
+    }
+
+    @Override
     public EState getState() {
         return EState.STUDENT;
     }

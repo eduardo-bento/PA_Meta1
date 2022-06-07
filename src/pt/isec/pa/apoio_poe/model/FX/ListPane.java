@@ -8,9 +8,7 @@ public class ListPane extends ListView<Object> {
 
     public ListPane(ModelManager model){
         this.model = model;
-        createViews();
         registerHandlers();
-        //update();
     }
 
     private void update() {
@@ -20,10 +18,6 @@ public class ListPane extends ListView<Object> {
 
     private void registerHandlers() {
         model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
-    }
-
-    private void createViews() {
-        //this.getItems().addAll(model.querying());
     }
 
 }

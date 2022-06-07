@@ -18,13 +18,13 @@ public class StudentFx extends BorderPane {
     StudentList listPane;
     ReadFromFile readFromFile;
     MyButton previous;
+    EditStudent edit;
 
     TextField idField;
     MyButton remove;
 
     public StudentFx(ModelManager model) {
         this.model = model;
-        listPane = new StudentList(model);
         createViews();
         registerHandlers();
         update();
@@ -60,11 +60,14 @@ public class StudentFx extends BorderPane {
     private void createViews() {
         this.setStyle("-fx-background-color: #5F7161;");
 
+        listPane = new StudentList(model);
         previous = new MyButton("Back");
         insertStudent = new InsertStudent(model);
         readFromFile = new ReadFromFile(model);
         idField = new TextField();
         remove = new MyButton("Remove");
+
+        edit = new EditStudent(model,listPane);
 
         VBox r = new VBox(idField,remove);
         r.setMaxWidth(200);
@@ -74,7 +77,7 @@ public class StudentFx extends BorderPane {
         r.setSpacing(10);
         r.setAlignment(Pos.CENTER);
 
-        HBox center = new HBox(insertStudent,r,readFromFile);
+        HBox center = new HBox(insertStudent,r,readFromFile,edit);
         center.setAlignment(Pos.BASELINE_CENTER);
         center.setSpacing(40);
 
