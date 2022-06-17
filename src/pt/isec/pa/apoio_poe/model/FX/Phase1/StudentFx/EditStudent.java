@@ -31,6 +31,14 @@ public class EditStudent extends VBox {
 
     private void registerHandlers() {
         button.setOnAction(event -> {
+            if(list.getSelected() == null){
+                button.setStyle("-fx-background-color: #FF0000;");
+                return;
+            } else{
+                button.setStyle("-fx-background-color: #D0C9C0;");
+                field.setStyle(null);
+            }
+
             if (choiceBox.getValue().equals("email")) {
                 model.edit(list.getSelected().getId(),field.getText(),choiceBox.getValue(), Student.class);
             } else if (choiceBox.getValue().equals("classification")){
@@ -46,12 +54,15 @@ public class EditStudent extends VBox {
                 boolean value;
                 try {
                     value = Boolean.parseBoolean(field.getText());
-                    System.out.println(value);
                     field.setStyle(null);
-                    model.edit(list.getSelected().getId(),value,choiceBox.getValue(), Student.class);
+                    model.edit(list.getSelected().getId(),value,"hasStage", Student.class);
                 } catch (NumberFormatException e){
                     field.setStyle("-fx-background-color: #FF0000;");
                 }
+            } else if (choiceBox.getValue().equals("curse")){
+                model.edit(list.getSelected().getId(),field.getText(),choiceBox.getValue(), Student.class);
+            } else if(choiceBox.getValue().equals("branch")){
+                model.edit(list.getSelected().getId(),field.getText(),choiceBox.getValue(), Student.class);
             }
         });
 
@@ -62,7 +73,7 @@ public class EditStudent extends VBox {
 
     private void createViews() {
         choiceBox = new ChoiceBox(FXCollections.observableArrayList(
-                "email","classification","hasStage")
+                "email","classification","stage","curse","branch")
         );
 
         choiceBox.setValue("email");

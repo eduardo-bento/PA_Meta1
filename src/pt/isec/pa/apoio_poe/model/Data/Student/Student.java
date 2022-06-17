@@ -60,8 +60,11 @@ public class Student implements Serializable {
     }
 
     public void setEmail(String email) {
-        Log.getInstance().addMessage("The student email was changed");
-        this.email = email;
+        if (email.contains("@isec.pt")){
+            Log.getInstance().addMessage("Email changed");
+            this.email = email;
+        }
+        Log.getInstance().addMessage("Email was not changed");
     }
 
     public String getCurse() {
@@ -69,7 +72,11 @@ public class Student implements Serializable {
     }
 
     public void setCurse(String curse) {
-        this.curse = curse;
+        if (curse.equals("LEI") || curse.equals("LEI-PL")){
+            Log.getInstance().addMessage("Curse changed");
+            this.curse = curse;
+        }
+        Log.getInstance().addMessage("Curse was not changed");
     }
 
     public String getBranch() {
@@ -77,7 +84,11 @@ public class Student implements Serializable {
     }
 
     public void setBranch(String branch) {
-        this.branch = branch;
+        if (branch.equals("RAS") || branch.equals("SI") || branch.equals("DA")){
+            Log.getInstance().addMessage("Branch changed");
+            this.branch = branch;
+        }
+        Log.getInstance().addMessage("Branch was not changed");
     }
 
     public double getClassification() {
@@ -85,7 +96,11 @@ public class Student implements Serializable {
     }
 
     public void setClassification(double classification) {
-        this.classification = classification;
+        if (classification >= 0 && classification <= 1){
+
+            this.classification = classification;
+        }
+        Log.getInstance().addMessage("The classification must be between [0,1]");
     }
 
     public boolean hasStage() {
@@ -115,13 +130,13 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "\nStudent id :" + id + "\n" +
+        return "Student id :" + id + "\n" +
                 "Name: " + name + "\n" +
                 "Email: " + email + "\n" +
                 "Curse: " + curse + "\n" +
                 "Branch: " + branch + "\n" +
                 "Classification: " + classification + "\n" +
-                "Has project: " + hasStage;
+                "Has stage: " + hasStage;
     }
 
     @Override

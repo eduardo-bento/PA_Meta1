@@ -25,8 +25,11 @@ public class Teacher implements Serializable {
     }
 
     public void setEmail(String email) {
-        Log.getInstance().addMessage("Email changed");
-        this.email = email;
+        if (email.contains("@isec.pt")){
+            Log.getInstance().addMessage("Email changed");
+            this.email = email;
+        }
+        Log.getInstance().addMessage("Email was not changed");
     }
 
     public String getName() {

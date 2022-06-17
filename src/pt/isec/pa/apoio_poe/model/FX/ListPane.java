@@ -9,7 +9,6 @@ public class ListPane extends ListView<Object> {
     public ListPane(ModelManager model){
         this.model = model;
         registerHandlers();
-        this.setStyle("-fx-font-family: monospace; -fx-font-weight: bold;");
     }
 
     private void update() {

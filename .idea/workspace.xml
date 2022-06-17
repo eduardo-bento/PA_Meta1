@@ -2,64 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="389b3476-46ab-4d23-a35b-cee808553c0b" name="Changes" comment="new">
-      <change afterPath="$PROJECT_DIR$/.idea/PA_TP.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PA_TP.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Command/ICommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Command/Invoker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddProposal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddTeacher.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/CommandAdapter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/CandidacyList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseClosedFx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/List.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualAttribution.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualRemove.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/TeachersFx.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase5/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase5/ExportToFile.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase5/QueryingFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PA.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PA.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PA_TP.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PA_TP.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/data/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/data/Data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/ContextAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/ContextAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/IState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/IState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase4/TeacherAttributionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase4/TeacherAttributionState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase5/Querying.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase5/Querying.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/ProposalState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/ProposalState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/StudentState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/StudentState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/TeacherState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase1/TeacherState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase2/CandidacyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase2/CandidacyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/CandidacyManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/CandidacyManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Manager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Manager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ProposalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ProposalManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/InterShip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/InterShip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/Proposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/Proposal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/SelfProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Proposals/SelfProposal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Student/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Student/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/StudentManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/StudentManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Teacher/Teacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Teacher/Teacher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/TeacherManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/TeacherManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/TieBreaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/TieBreaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Helper/MyButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Helper/MyButton.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Helper/ReadFromFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Helper/ReadFromFile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/ListPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/ListPane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/InsertProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/InsertProposal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/ProposalFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/ProposalFx/ProposalFx.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/EditStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/EditStudent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/InsertStudent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/InsertStudent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentFx.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/StudentFx/StudentList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/EditTeacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/EditTeacher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/CandidacyClosedFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/CandidacyClosedFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/CandidacyFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/CandidacyFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/InsertCandidacy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/InsertCandidacy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/ListFilterProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/ListFilterProposal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/ListStudents.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/ListStudents.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalSingleFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalSingleFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/TieBreakerFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/TieBreakerFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/RootPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/RootPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase1/TeacherFx/TeacherList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/StatusBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/StatusBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/MainJFX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/MainJFX.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,16 +55,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "C:/Users/eduar/OneDrive/Ambiente de Trabalho/PA_TP/src/pt/isec/pa/apoio_poe/model/Data/TeacherManager",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\eduar\OneDrive\Ambiente de Trabalho\PA_TP\src\pt\isec\pa\apoio_poe\model\Data\TeacherManager" />
@@ -109,7 +76,7 @@
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="pt.isec.pa.apoio_poe.model.Main" />
       <module name="PA_TP" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;C:\openjfx-18.0.1_windows-x64_bin-sdk\javafx-sdk-18.0.1\lib&quot; --add-modules javafx.controls,javafx.media" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;D:\javafx-sdk-18.0.1\lib&quot; --add-modules javafx.controls,javafx.media" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="pt.isec.pa.apoio_poe.model.*" />

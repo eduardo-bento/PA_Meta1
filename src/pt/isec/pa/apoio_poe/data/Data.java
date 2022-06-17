@@ -120,8 +120,8 @@ public class Data implements Serializable {
         return stringBuilder.toString();
     }
 
-    public void readCSV(String filePath, Class<?> type){
-        management.get(type).readFile(filePath);
+    public boolean readCSV(String filePath, Class<?> type){
+        return management.get(type).readFile(filePath);
     }
 
     public void exportPhase4(String filePath){

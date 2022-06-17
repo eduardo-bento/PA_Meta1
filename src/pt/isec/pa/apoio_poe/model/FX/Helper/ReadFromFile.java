@@ -37,7 +37,11 @@ public class ReadFromFile extends VBox {
 
     private void registerHandlers(){
         readFromFile.setOnAction(event -> {
-            model.readFromFile(idField.getText());
+            if(!model.readFromFile(idField.getText())){
+                readFromFile.setStyle("-fx-background-color: #FF0000;");
+            } else {
+                readFromFile.setStyle("-fx-background-color: #D0C9C0;");
+            }
         });
     }
 }

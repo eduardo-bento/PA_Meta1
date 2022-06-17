@@ -34,7 +34,7 @@ public abstract class Manager<T> implements Serializable {
         return false;
     }
 
-    public void readFile(String filePath){}
+    public boolean readFile(String filePath){return false;}
 
     public Set<T> getList(){
         return list;

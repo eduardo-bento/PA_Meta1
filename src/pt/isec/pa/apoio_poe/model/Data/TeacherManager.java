@@ -15,7 +15,7 @@ public class TeacherManager extends Manager<Teacher> {
     }
 
     @Override
-    public void readFile(String filePath) {
+    public boolean readFile(String filePath) {
         List<Teacher> items = new ArrayList<>();
         try (Scanner input = new Scanner(new File(filePath))) {
             input.useDelimiter(",\\s*|\r\n|\n");
@@ -27,10 +27,12 @@ public class TeacherManager extends Manager<Teacher> {
             }
         } catch (FileNotFoundException e) {
             Log.getInstance().addMessage("The file does not exist");
+            return false;
         } catch (NoSuchElementException e) {
             Log.getInstance().addMessage("Error reading");
         }
         items.forEach(this::insert);
+        return true;
     }
 
     @Override

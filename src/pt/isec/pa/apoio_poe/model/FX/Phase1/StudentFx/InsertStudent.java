@@ -34,17 +34,18 @@ public class InsertStudent extends VBox {
     }
 
     private void registerHandlers() {
-        insert.setOnAction(insert -> {
-            Long id;
+        insert.setOnAction(event -> {
+            Long id = null;
             String email,name;
             name = nameField.getText();
             email = emailField.getText();
 
-            if (emailField.getText().isBlank()){
-                emailField.setStyle("-fx-background-color: #FF0000;");
+            try {
+                id = Long.valueOf(idField.getText());
+                idField.setStyle(null);
+            } catch (NumberFormatException e){
+                idField.setStyle("-fx-background-color: #FF0000;");
                 return;
-            } else {
-                emailField.setStyle(null);
             }
             if (nameField.getText().isBlank()){
                 nameField.setStyle("-fx-background-color: #FF0000;");
@@ -53,15 +54,19 @@ public class InsertStudent extends VBox {
                 nameField.setStyle(null);
             }
 
-            try {
-                id = Long.valueOf(idField.getText());
-                idField.setStyle(null);
-                if(!model.insert(new Student(id,name,email,curse.getValue(),branch.getValue(),slider.getValue(),stageOption.getValue()))){
-                    System.out.println("nao foi possivel adicioanr");
-                }
-            } catch (NumberFormatException e){
-                idField.setStyle("-fx-background-color: #FF0000;");
+            if (emailField.getText().isBlank()){
+                emailField.setStyle("-fx-background-color: #FF0000;");
+                return;
+            } else {
+                emailField.setStyle(null);
             }
+
+            if(!model.insert(new Student(id,name,email,curse.getValue(),branch.getValue(),slider.getValue(),stageOption.getValue()))){
+                insert.setStyle("-fx-background-color: #FF0000;");
+            } else {
+                insert.setStyle("-fx-background-color: #D0C9C0;");
+            }
+
         });
     }
 

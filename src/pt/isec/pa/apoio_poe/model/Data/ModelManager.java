@@ -100,9 +100,10 @@ public class ModelManager {
         return value;
     }
 
-    public void readFromFile(String filePath){
-        context.readFromFile(filePath);
+    public boolean readFromFile(String filePath){
+        boolean value = context.readFromFile(filePath);
         pcs.firePropertyChange(PROP_DATA,null,null);
+        return value;
     }
 
     public void automaticAttribution(){

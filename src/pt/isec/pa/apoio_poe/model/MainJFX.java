@@ -23,12 +23,13 @@ public class MainJFX extends Application {
         stage.setMinWidth(400);
         stage.show();
 
-        /*Stage stage2 = new Stage();
+        Stage stage2 = new Stage();
         RootPane root2 = new RootPane(model);
-        Scene scene2 = new Scene(root2,600,400);
+        Scene scene2 = new Scene(root2,1280,720);
+        stage.setResizable(false);
         stage2.setScene(scene2);
         stage2.setTitle("App_v2");
         stage2.setMinWidth(400);
-        stage2.show();*/
+        stage2.show();
     }
 }

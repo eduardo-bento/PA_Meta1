@@ -6,19 +6,23 @@ import javafx.scene.layout.HBox;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StatusBar extends HBox {
     ModelManager model;
     Label lbMsg;
+    List<String> message;
 
     public StatusBar(ModelManager model) {
         this.model = model;
 
         createViews();
         registerHandlers();
-        update();
     }
 
     private void createViews() {
+        message = new ArrayList<>();
         Label lbMsgTitle = new Label("Message: ");
         lbMsgTitle.setPrefWidth(Integer.MAX_VALUE);
         lbMsgTitle.setAlignment(Pos.CENTER_RIGHT);
@@ -34,7 +38,10 @@ public class StatusBar extends HBox {
     }
 
     private void update() {
-        lbMsg.setText(Log.getInstance().getMessages().toString());
+        if (!Log.getInstance().getMessages().isEmpty()){
+            message = List.copyOf(Log.getInstance().getMessages());
+            lbMsg.setText(message.toString());
+        }
         Log.getInstance().reset();
     }
 }

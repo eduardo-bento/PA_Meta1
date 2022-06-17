@@ -18,7 +18,7 @@ public class CandidacyManager extends Manager<Candidacy> {
     }
 
     @Override
-    public void readFile(String filePath){
+    public boolean readFile(String filePath){
         Set<String> data = new HashSet<>();
         List<Candidacy> items = new ArrayList<>();
 
@@ -36,10 +36,12 @@ public class CandidacyManager extends Manager<Candidacy> {
             }
         }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
+            return false;
         } catch (NoSuchElementException e){
             Log.getInstance().addMessage("Error reading");
         }
         items.forEach(this::insert);
+        return true;
     }
 
     @Override

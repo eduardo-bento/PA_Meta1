@@ -51,8 +51,8 @@ public class CandidacyState extends ContextAdapter {
     }
 
     @Override
-    public void readFromFile(String filePath) {
-        data.readCSV(filePath,Candidacy.class);
+    public boolean readFromFile(String filePath) {
+        return data.readCSV(filePath,Candidacy.class);
     }
 
     @Override

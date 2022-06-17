@@ -24,8 +24,8 @@ public class StudentState extends ContextAdapter {
     }
 
     @Override
-    public void readFromFile(String filePath) {
-        data.readCSV(filePath, Student.class);
+    public boolean readFromFile(String filePath) {
+        return data.readCSV(filePath, Student.class);
     }
 
     @Override

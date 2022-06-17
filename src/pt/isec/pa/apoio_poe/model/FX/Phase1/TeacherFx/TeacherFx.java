@@ -50,7 +50,7 @@ public class TeacherFx extends BorderPane {
             }
         });
 
-        insert.setOnAction(insert -> {
+        insert.setOnAction(event -> {
             String email,name;
             name = nameField.getText();
             email = emailField.getText();
@@ -69,7 +69,9 @@ public class TeacherFx extends BorderPane {
             }
 
             if(!model.insert(new Teacher(email,name))){
-                System.out.println("nao foi possivel adicioanr");
+                insert.setStyle("-fx-background-color: #FF0000;");
+            } else{
+                insert.setStyle("-fx-background-color: #D0C9C0;");
             }
         });
     }

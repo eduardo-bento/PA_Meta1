@@ -38,7 +38,7 @@ public interface IState {
     String getData();
     boolean handleConflict(long studentId,String proposalId);
 
-    void readFromFile(String filePath);
+    boolean readFromFile(String filePath);
 
     EState getState();
 

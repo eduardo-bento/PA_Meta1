@@ -11,6 +11,7 @@ import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx.StudentList;
+import pt.isec.pa.apoio_poe.model.Log;
 
 public class EditTeacher extends VBox {
     ModelManager model;
@@ -31,7 +32,17 @@ public class EditTeacher extends VBox {
 
     private void registerHandlers() {
         button.setOnAction(event -> {
-            model.edit(list.getSelected().getEmail(),field.getText(),"name",Teacher.class);
+            if (list.getSelected() == null) {
+                button.setStyle("-fx-background-color: #FF0000;");
+                return;
+            } else {
+                button.setStyle("-fx-background-color: #D0C9C0;");
+            }
+            if(!model.edit(list.getSelected().getEmail(),field.getText(),"name",Teacher.class)){
+                button.setStyle("-fx-background-color: #FF0000;");
+            } else{
+                button.setStyle("-fx-background-color: #D0C9C0;");
+            }
         });
     }
 

@@ -104,7 +104,7 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
-    public void readFromFile(String filePath) {}
+    public boolean readFromFile(String filePath) {return false;}
 
     @Override
     public boolean back() {

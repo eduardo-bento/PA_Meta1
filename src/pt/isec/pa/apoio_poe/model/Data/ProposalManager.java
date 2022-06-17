@@ -25,7 +25,7 @@ public class ProposalManager extends Manager<Proposal> {
     }
 
     @Override
-    public void readFile(String filePath){
+    public boolean readFile(String filePath){
         List<Proposal> items = new ArrayList<>();
 
         try(Scanner input = new Scanner(new File(filePath))) {
@@ -64,10 +64,12 @@ public class ProposalManager extends Manager<Proposal> {
             }
         }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
+            return false;
         } catch (NoSuchElementException e){
             Log.getInstance().addMessage("Error reading");
         }
         items.forEach(this::insert);
+        return true;
     }
 
     public List<Integer> getPercentage(){

@@ -15,7 +15,7 @@ public class StudentManager extends Manager<Student> {
     }
 
     @Override
-    public void readFile(String filePath){
+    public boolean readFile(String filePath){
         List<Student> items = new ArrayList<>();
 
         try(Scanner input = new Scanner(new File(filePath))) {
@@ -56,11 +56,12 @@ public class StudentManager extends Manager<Student> {
             }
         }  catch (FileNotFoundException e){
             Log.getInstance().addMessage("The file does not exist");
+            return false;
         } catch (NoSuchElementException e){
             Log.getInstance().addMessage("Error reading");
         }
-
         items.forEach(this::insert);
+        return true;
     }
 
     @Override

@@ -48,8 +48,8 @@ public class Context {
         return state.back();
     }
 
-    public void readFromFile(String filePath){
-        state.readFromFile(filePath);
+    public boolean readFromFile(String filePath){
+        return state.readFromFile(filePath);
     }
 
     public void automaticAttribution(){
