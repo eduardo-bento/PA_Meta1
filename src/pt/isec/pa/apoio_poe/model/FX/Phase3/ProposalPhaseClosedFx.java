@@ -5,24 +5,25 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
-import pt.isec.pa.apoio_poe.model.FX.Phase2.ListStudents;
 
 import java.util.Collections;
 
-public class ProposalSingleFx extends BorderPane {
-    ModelManager model;
-    MyButton previous,next,automaticAttribution;
-    Label listOfStudents;
+public class ProposalPhaseClosedFx extends BorderPane {
     ChoiceBox<String> filter;
-    Label filterLabel;
+    MyButton filerButton,exportButton;
+    Label filterLabel,listOfStudents;
+    TextField exportField;
 
-    public ProposalSingleFx(ModelManager model) {
+    MyButton next, previous;
+    ModelManager model;
+    public ProposalPhaseClosedFx(ModelManager model) {
         this.model = model;
         createViews();
         registerHandlers();
@@ -30,12 +31,13 @@ public class ProposalSingleFx extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(model != null && model.getState() == EState.PROPOSAL_PHASE_SINGLE);
+        this.setVisible(model != null && model.getState() == EState.PROPOSALS_PHASE_LOCK);
         listOfStudents.setText(model.getListOfStudents());
     }
 
     private void registerHandlers() {
         model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
+        model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
 
         previous.setOnAction(event -> {
             model.back();
@@ -45,43 +47,51 @@ public class ProposalSingleFx extends BorderPane {
             model.forward();
         });
 
-        automaticAttribution.setOnAction(event -> {
-            model.automaticAssignmentForProjectAndInterShip();
-        });
-
-        filter.setOnAction(event -> {
-            filterLabel.setText(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
+        exportButton.setOnAction(event -> {
+            if (exportField.getText().isBlank()){
+                exportField.setStyle("-fx-background-color: #FF0000;");
+                return;
+            }
+            exportField.setStyle(null);
+            model.exportFile(exportField.getText());
         });
     }
 
     private void createViews() {
         this.setStyle("-fx-background-color: #5F7161;");
 
-        previous = new MyButton("Back");
+        filter = new ChoiceBox<>(FXCollections.observableArrayList(
+                "Proposals","SelfProposals","Teacher proposals","Available proposals","Proposals already attributed"));
+        filter.setValue("Available proposals");
+        filter.setStyle("-fx-background-color: #D0C9C0;");
+        filerButton = new MyButton("Get");
+        filterLabel = new Label(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
+        filterLabel.setPadding(new Insets(10));
+        filterLabel.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
+
+        VBox filters = new VBox(filerButton,filter,filterLabel);
+        filters.setAlignment(Pos.CENTER);
+        filters.setSpacing(10);
+
         next = new MyButton("Next");
-        automaticAttribution = new MyButton("Automatic Attribution");
+        previous = new MyButton("Back");
 
         listOfStudents = new Label();
         listOfStudents.setText(model.getListOfStudents());
         listOfStudents.setPadding(new Insets(10));
         listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        filter = new ChoiceBox<>(FXCollections.observableArrayList(
-                "Proposals","SelfProposals","Teacher proposals","Available proposals","Proposals already attributed"));
-        filter.setValue("Available proposals");
-        filter.setStyle("-fx-background-color: #D0C9C0;");
-        filterLabel = new Label(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
-        filterLabel.setPadding(new Insets(10));
-        filterLabel.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
+        exportButton = new MyButton("export");
+        exportField = new TextField();
+        exportField.setPromptText("File path");
 
-        VBox filters = new VBox(filter,filterLabel);
-        filters.setAlignment(Pos.CENTER);
-        filters.setSpacing(10);
+        VBox export = new VBox(exportButton,exportField);
+        export.setAlignment(Pos.CENTER);
+        export.setSpacing(10);
 
-        HBox center = new HBox(automaticAttribution,listOfStudents,filters);
-        center.setSpacing(10);
+        HBox center = new HBox(filters,listOfStudents,export);
         center.setAlignment(Pos.CENTER);
-        center.setPrefWidth(300);
+        center.setSpacing(10);
 
         setCenter(center);
 

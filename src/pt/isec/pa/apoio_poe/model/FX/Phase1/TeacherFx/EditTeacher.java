@@ -38,11 +38,12 @@ public class EditTeacher extends VBox {
     private void createViews() {
 
         field = new TextField();
+        field.setPromptText("change name");
         button = new MyButton("Change");
 
-        this.getChildren().addAll(button,new Label("name"),field);
+        this.getChildren().addAll(button,field);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(10);
+        this.setSpacing(30);
     }
 
 }

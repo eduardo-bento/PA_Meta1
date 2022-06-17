@@ -35,8 +35,8 @@ public class InsertProposal extends VBox {
         //this.setEffect(new DropShadow());
         insert.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        setSpacing(10);
+        setSpacing(30);
         maxWidth(300);
-        setAlignment(Pos.CENTER);
+        this.setAlignment(Pos.CENTER);
     }
 }

@@ -1,6 +1,8 @@
-package pt.isec.pa.apoio_poe.model.Data;
+package pt.isec.pa.apoio_poe.model.Data.FinalProposalManager;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Command.Invoker;
+import pt.isec.pa.apoio_poe.model.Data.Manager;
 import pt.isec.pa.apoio_poe.model.Data.Student.StudentClassification;
 import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
@@ -9,16 +11,22 @@ import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.SelfProposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Data.TieBreaker;
 import pt.isec.pa.apoio_poe.model.Log;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class FinalProposalManager extends Manager<FinalProposal> {
     private final TieBreaker tieBreaker;
+    private final Invoker invokerProposal;
+    private final Invoker invokerTeacher;
 
     public FinalProposalManager(Data data) {
         super(data);
+        invokerProposal = new Invoker();
+        invokerTeacher = new Invoker();
         tieBreaker = new TieBreaker(this,data);
     }
     @Override
@@ -92,24 +100,20 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return false;
     }
 
-    private void linkToStudent(long studentId){
+    public void linkToStudent(long studentId){
         find(studentId,Student.class).setAssignedProposal(true);
     }
 
     public void manualAttribution(String proposalID,long studentID) {
-        Student student = find(studentID,Student.class);
-        Proposal proposal = find(proposalID,Proposal.class);
-        if (student == null || proposal == null) return;
+        invokerProposal.invokeCommand(new AddProposal(this,proposalID,studentID));
+    }
 
-        if (proposal.getStudent() != -1) return;
+    public boolean undoProposal(){
+        return invokerProposal.undo();
+    }
 
-        FinalProposal finalProposal = find(studentID,FinalProposal.class);
-        if (finalProposal == null){
-            proposal.setStudent(studentID);
-           insert(new FinalProposal(studentID,proposalID,-1));
-        }
-        proposal.setAssigned(true);
-        linkToStudent(studentID);
+    public boolean redoProposal() {
+        return invokerProposal.redo();
     }
 
     public boolean manuelRemove(String proposalID){
@@ -138,27 +142,24 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     }
 
     public boolean manualTeacherAttribution(String proposalID, String teacherID) {
-        Teacher teacher = find(teacherID,Teacher.class);
-        if (find(teacherID,Teacher.class) != null){
-            FinalProposal proposal = getProposal(proposalID);
-            if (proposal != null){
-                proposal.setTeacher(teacherID);
-                teacher.addToAmount();
-                Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
-                        " was added to the proposal " + proposalID);
-                return true;
-            }
-        }
-        return false;
+        return invokerTeacher.invokeCommand(new AddTeacher(this,proposalID,teacherID));
     }
 
-    private FinalProposal getProposal(String proposalId){
+    public FinalProposal getProposal(String proposalId){
         for (FinalProposal proposal : list){
             if (proposal.getProposal().equals(proposalId)){
                 return proposal;
             }
         }
         return null;
+    }
+
+    public boolean undoTeacher(){
+        return invokerTeacher.undo();
+    }
+
+    public boolean redoTeacher(){
+        return invokerTeacher.redo();
     }
 
     public boolean manualTeacherRemove(String proposalID){
@@ -174,13 +175,15 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return false;
     }
 
-    public String getFinalProposalWithTeacher(){
+    public List<FinalProposal> getFinalProposalWithTeacher(){
+        List<FinalProposal> proposals = new ArrayList<>();
         StringBuilder builder = new StringBuilder();
         for (FinalProposal proposal : list){
             if (!proposal.getTeacher().equals(""))
-                builder.append(proposal).append("\n");
+                proposals.add(proposal);
+                //builder.append(proposal).append("\n");
         }
-        return builder.toString();
+        return proposals;
     }
 
     public String getFinalProposalWithoutTeacher(){

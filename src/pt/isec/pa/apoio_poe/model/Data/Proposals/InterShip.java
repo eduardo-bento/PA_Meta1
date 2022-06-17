@@ -37,8 +37,7 @@ public class InterShip extends Proposal{
     @Override
     public String toString() {
         return "InterShip:\n" +
-                super.toString() +
-                "destiny: " + destiny + "\n" +
-                "-".repeat(20) + "\n";
+                super.toString() + "\n" +
+                "destiny: " + destiny;
     }
 }

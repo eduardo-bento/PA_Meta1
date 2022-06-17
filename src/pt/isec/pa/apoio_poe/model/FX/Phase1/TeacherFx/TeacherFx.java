@@ -86,14 +86,14 @@ public class TeacherFx extends BorderPane {
 
         readFromFile = new ReadFromFile(model);
 
-        VBox r = new VBox(idField,remove);
+        VBox removeBox = new VBox(remove,idField);
         //r.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
-        r.setMaxWidth(200);
-        r.setMinWidth(200);
-        r.setMaxHeight(400);
-        r.setMinHeight(400);
-        r.setSpacing(10);
-        r.setAlignment(Pos.CENTER);
+        removeBox.setMaxWidth(200);
+        removeBox.setMinWidth(200);
+        removeBox.setMaxHeight(400);
+        removeBox.setMinHeight(400);
+        removeBox.setSpacing(30);
+        removeBox.setAlignment(Pos.CENTER);
 
         emailField = new TextField();
         emailField.setPromptText("Enter your email.");
@@ -101,14 +101,15 @@ public class TeacherFx extends BorderPane {
         nameField.setPromptText("Enter your name.");
 
 
-        vBox.getChildren().addAll(emailField,nameField,insert);
+        vBox.getChildren().addAll(insert,emailField,nameField);
         vBox.setMaxWidth(200);
         vBox.setMinWidth(200);
-        vBox.setSpacing(10);
+        vBox.setSpacing(30);
         vBox.setAlignment(Pos.CENTER_LEFT);
+        vBox.setAlignment(Pos.CENTER);
 
         edit = new EditTeacher(model, list);
-        HBox center = new HBox(vBox,r,readFromFile,edit);
+        HBox center = new HBox(vBox,readFromFile,edit);
         center.setSpacing(80);
 
         center.setAlignment(Pos.BASELINE_CENTER);

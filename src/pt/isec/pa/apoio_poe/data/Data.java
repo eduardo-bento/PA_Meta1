@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.model.Data.*;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposalManager.FinalProposalManager;
 import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
@@ -219,6 +220,16 @@ public class Data implements Serializable {
         return candidacies.size() == count;
     }
 
+    public int getNumberDestiny(String type) {
+        ProposalManager proposalManager = (ProposalManager) management.get(Proposal.class);
+        return proposalManager.getNumberDestiny(type);
+    }
+
+    public List<Integer> getPercentage(){
+        ProposalManager proposalManager = (ProposalManager) management.get(Proposal.class);
+        return proposalManager.getPercentage();
+    }
+
     public String getAttributionTeacherData() {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
@@ -250,7 +261,27 @@ public class Data implements Serializable {
         return manager.manualTeacherAttribution(proposalID,teacherID);
     }
 
-    public String teacherQuerying(){
+    public boolean undo_FinalProposal(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.undoProposal();
+    }
+
+    public boolean redo_FinalProposal() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.redoProposal();
+    }
+
+    public boolean undo_Teacher() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.undoTeacher();
+    }
+
+    public boolean redo_Teacher() {
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.redoTeacher();
+    }
+
+    public List<FinalProposal> teacherQuerying(){
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         return manager.getFinalProposalWithTeacher();
     }
@@ -268,5 +299,11 @@ public class Data implements Serializable {
     public boolean handleConflict(long studentId, String proposalId) {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         return manager.tieHandleConflict(studentId,proposalId);
+    }
+
+    //Phase 5
+    public List<Teacher> getTop5(){
+        TeacherManager manager = (TeacherManager) management.get(Teacher.class);
+        return manager.top5();
     }
 }

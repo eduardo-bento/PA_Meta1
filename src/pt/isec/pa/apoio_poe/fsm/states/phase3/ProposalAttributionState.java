@@ -38,6 +38,15 @@ public class ProposalAttributionState extends ContextAdapter {
     }
 
     @Override
+    public boolean undo() {
+        return data.undo_FinalProposal();
+    }
+
+    public boolean redo() {
+        return data.redo_FinalProposal();
+    }
+
+    @Override
     public String getListOfStudents() {
         return data.getListOfStudentsFinal();
     }

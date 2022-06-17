@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TeacherAttributionState extends ContextAdapter {
@@ -51,9 +53,17 @@ public class TeacherAttributionState extends ContextAdapter {
 
     @Override
     public List<Object> querying() {
-        //todo:
-        //return data.teacherQuerying();
-        return null;
+        return List.of(data.teacherQuerying());
+    }
+
+    @Override
+    public boolean undo() {
+        return data.undo_Teacher();
+    }
+
+    @Override
+    public boolean redo() {
+        return data.redo_Teacher();
     }
 
     @Override

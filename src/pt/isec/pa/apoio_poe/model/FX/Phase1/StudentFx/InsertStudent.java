@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -124,7 +125,7 @@ public class InsertStudent extends VBox {
         HBox chooseBoxes = new HBox(typesBox,curseBox,branchBox);
         chooseBoxes.setSpacing(5);
         this.getChildren().addAll(insert,idField,nameField,emailField,chooseBoxes,classification);
-
+        this.setAlignment(Pos.CENTER);
         this.setMaxWidth(200);
         this.setMinWidth(200);
         this.setMaxHeight(400);

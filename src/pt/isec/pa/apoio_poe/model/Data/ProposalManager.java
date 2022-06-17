@@ -70,6 +70,48 @@ public class ProposalManager extends Manager<Proposal> {
         items.forEach(this::insert);
     }
 
+    public List<Integer> getPercentage(){
+        List<Integer> amount = new ArrayList<>();
+
+        int count = 0;
+        for (Proposal proposal : list){
+            if (proposal.isAssigned())
+                count++;
+        }
+        //assigned
+        amount.add(count);
+        //not assigned
+        amount.add(list.size() - count);
+        //total
+        amount.add(list.size());
+        return amount;
+    }
+
+    public List<Integer> mostStages(){
+        for (Proposal proposal : listOfProposals.get(InterShip.class)){
+            InterShip interShip = (InterShip) proposal;
+        }
+        return null;
+    }
+
+    public int getNumberDestiny(String type){
+        System.out.println("here");
+        int count = 0;
+        for (Proposal proposal : listOfProposals.get(Project.class)){
+            Project project = (Project) proposal;
+            if (proposal.isAssigned() && project.getDestiny().contains(type)){
+                count++;
+            }
+        }
+        for (Proposal proposal : listOfProposals.get(InterShip.class)){
+            InterShip interShip = (InterShip) proposal;
+            if (proposal.isAssigned() && interShip.getDestiny().contains(type)){
+                count++;
+            }
+        }
+        return count;
+    }
+
     @Override
     public boolean insert(Proposal item) {
         if (item instanceof Project && !verifyProject((Project)item)){

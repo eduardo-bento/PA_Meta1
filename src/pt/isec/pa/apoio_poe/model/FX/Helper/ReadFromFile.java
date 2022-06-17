@@ -30,7 +30,7 @@ public class ReadFromFile extends VBox {
         this.setMaxHeight(400);
         this.setMinHeight(400);
 
-        this.setSpacing(10);
+        this.setSpacing(30);
 
         this.setAlignment(Pos.CENTER);
     }

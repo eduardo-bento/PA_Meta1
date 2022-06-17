@@ -17,11 +17,10 @@ public class StudentFx extends BorderPane {
     InsertStudent insertStudent;
     StudentList listPane;
     ReadFromFile readFromFile;
-    MyButton previous;
+    MyButton previous,remove;
     EditStudent edit;
 
     TextField idField;
-    MyButton remove;
 
     public StudentFx(ModelManager model) {
         this.model = model;
@@ -69,15 +68,15 @@ public class StudentFx extends BorderPane {
 
         edit = new EditStudent(model,listPane);
 
-        VBox r = new VBox(idField,remove);
-        r.setMaxWidth(200);
-        r.setMinWidth(200);
-        r.setMaxHeight(400);
-        r.setMinHeight(400);
-        r.setSpacing(10);
-        r.setAlignment(Pos.CENTER);
+        VBox removeBox = new VBox(remove,idField);
+        removeBox.setMaxWidth(200);
+        removeBox.setMinWidth(200);
+        removeBox.setMaxHeight(400);
+        removeBox.setMinHeight(400);
+        removeBox.setSpacing(30);
+        removeBox.setAlignment(Pos.CENTER);
 
-        HBox center = new HBox(insertStudent,r,readFromFile,edit);
+        HBox center = new HBox(insertStudent,readFromFile,edit);
         center.setAlignment(Pos.BASELINE_CENTER);
         center.setSpacing(40);
 

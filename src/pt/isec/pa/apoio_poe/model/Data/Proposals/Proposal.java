@@ -77,8 +77,7 @@ public class Proposal implements Serializable {
     @Override
     public String toString() {
         return "id: " + id + "\n" +
-                "-".repeat(20) + "\n" +
                 "title: " + title + "\n" +
-                (student == -1 ? "no student associated" : "student: " + student) + "\n";
+                (student == -1 ? "no student associated" : "student: " + student) ;
     }
 }

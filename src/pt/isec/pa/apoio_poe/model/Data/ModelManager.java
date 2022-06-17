@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.fsm.IState;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.model.FX.TopMenu;
 
 import java.beans.PropertyChangeListener;
@@ -12,6 +13,7 @@ import java.util.List;
 public class ModelManager {
     public static final String PROP_STATE = "state";
     public static final String PROP_DATA  = "data";
+    public static final String PROP_UPDATE  = "update";
 
     TopMenu topMenu;
     Context context;
@@ -41,6 +43,29 @@ public class ModelManager {
         return value;
     }
 
+    public boolean undo(){
+        boolean value = context.undo();
+        pcs.firePropertyChange(PROP_DATA,null,null);
+        return value;
+    }
+
+    public int getNumberDestiny(String type){
+        return context.getNumberDestiny(type);
+    }
+
+    public List<Integer> getPercentage(){
+        return context.getPercentage();
+    }
+
+    public boolean redo(){
+        boolean value = context.redo();
+        pcs.firePropertyChange(PROP_DATA,null,null);
+        return value;
+    }
+
+    public List<Teacher> top5(){
+        return context.top5();
+    }
     public <T,K,A> boolean edit(T entity,K value,String label,Class<A> typeClass) {
         boolean v = context.edit(entity,value,label,typeClass);
         pcs.firePropertyChange(PROP_DATA,null,null);
@@ -58,11 +83,9 @@ public class ModelManager {
     }
 
     public boolean closePhase(){
-        if (context.closePhase()){
-            pcs.firePropertyChange(PROP_STATE,null,context.getState());
-            return true;
-        }
-        return false;
+        boolean value = context.closePhase();
+        pcs.firePropertyChange(PROP_STATE,null,context.getState());
+        return value;
     }
 
     public void forward() {
@@ -71,9 +94,10 @@ public class ModelManager {
     }
 
     public boolean back() {
-        context.back();
+        boolean value = context.back();
         pcs.firePropertyChange(PROP_STATE,null,context.getState());
-        return true;
+        pcs.firePropertyChange(PROP_UPDATE,null,null);
+        return value;
     }
 
     public void readFromFile(String filePath){
@@ -83,14 +107,17 @@ public class ModelManager {
 
     public void automaticAttribution(){
         context.automaticAttribution();
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void automaticAssignmentForProjectAndInterShip(){
         context.automaticAssignmentForProjectAndInterShip();
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void manualTeacherAttribution(String proposalID, String teacherID){
         context.manualTeacherAttribution(proposalID,teacherID);
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public String getAttributionTeacherData(){
@@ -99,6 +126,7 @@ public class ModelManager {
 
     public void automaticTeacherAttribution(){
         context.automaticTeacherAttribution();
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public String getData(){
@@ -107,6 +135,7 @@ public class ModelManager {
 
     public void manualRemove(String proposalID){
         context.manualRemove(proposalID);
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public String getListOfStudents() {
@@ -114,7 +143,8 @@ public class ModelManager {
     }
 
     public String getFilterList(List<Integer> filters){
-        return context.getFilterList(filters);
+        String value = context.getFilterList(filters);
+        return value;
     }
 
     public EState getState(){
@@ -124,10 +154,12 @@ public class ModelManager {
     public void goToMode(int option) {
         context.goToMode(option);
         pcs.firePropertyChange(PROP_STATE,null,context.getState());
+        pcs.firePropertyChange(PROP_UPDATE,null,null);
     }
 
     public void exportFile(String filePath) {
         context.exportFile(filePath);
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public boolean manualTeacherRemove(String proposalID){
@@ -144,6 +176,7 @@ public class ModelManager {
 
     public void manualAttribution(String proposal_id, long student_id) {
         context.manualAttribution(proposal_id,student_id);
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void handleConflict(long studentId, String proposalId) {

@@ -12,7 +12,6 @@ public class SelfProposal extends Proposal {
     @Override
     public String toString() {
         return "SelfProposal:\n" +
-                super.toString() +
-                "-".repeat(20) + "\n";
+                super.toString();
     }
 }

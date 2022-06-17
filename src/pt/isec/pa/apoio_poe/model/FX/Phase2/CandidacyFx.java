@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase2;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -14,7 +15,7 @@ import pt.isec.pa.apoio_poe.model.FX.ListPane;
 
 public class CandidacyFx extends BorderPane {
     ModelManager model;
-    ListPane listPane;
+    CandidacyList list;
     ReadFromFile readFromFile;
     InsertCandidacy insertCandidacy;
     ListFilterProposal listFilterProposal;
@@ -26,7 +27,7 @@ public class CandidacyFx extends BorderPane {
 
     public CandidacyFx(ModelManager model) {
         this.model = model;
-        listPane = new ListPane(model);
+        list = new CandidacyList(model);
         createViews();
         registerHandlers();
         update();
@@ -40,6 +41,7 @@ public class CandidacyFx extends BorderPane {
     private void registerHandlers() {
         model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
         model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
+
         previous.setOnAction(event -> {
             model.back();
         });
@@ -56,7 +58,6 @@ public class CandidacyFx extends BorderPane {
             } catch (NumberFormatException e){
                 idField.setStyle("-fx-background-color: #FF0000;");
             }
-
         });
 
         closePhase.setOnAction(event -> {
@@ -74,14 +75,14 @@ public class CandidacyFx extends BorderPane {
         idField = new TextField();
         remove = new MyButton("Remove");
 
-        VBox r = new VBox(remove,idField);
+        VBox removeBox = new VBox(remove,idField);
         //r.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
-        r.setMaxWidth(200);
-        r.setMinWidth(200);
-        r.setMaxHeight(400);
-        r.setMinHeight(400);
-        r.setSpacing(10);
-        r.setAlignment(Pos.CENTER);
+        removeBox.setMaxWidth(200);
+        removeBox.setMinWidth(200);
+        removeBox.setMaxHeight(400);
+        removeBox.setMinHeight(400);
+        removeBox.setSpacing(30);
+        removeBox.setAlignment(Pos.CENTER);
 
         previous = new MyButton("Back");
         closePhase = new MyButton("Close Phase");
@@ -91,16 +92,22 @@ public class CandidacyFx extends BorderPane {
         listFilterProposal = new ListFilterProposal(model);
 
         listOfStudents = new Label();
-        listOfStudents.setText(model.getListOfStudents());
-        listOfStudents.setMinHeight(400);
+        listOfStudents.setAlignment(Pos.CENTER);
         listOfStudents.setMinWidth(200);
-        //listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
+        listOfStudents.setText(model.getListOfStudents());
+        listOfStudents.setPadding(new Insets(10));
+        listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        HBox center = new HBox(insertCandidacy,r,readFromFile,listOfStudents);
-        center.setAlignment(Pos.CENTER);
+        HBox center = new HBox(readFromFile,insertCandidacy,listFilterProposal,new VBox(new Label("Students"),listOfStudents));
+        center.setAlignment(Pos.BASELINE_CENTER);
+        center.setSpacing(10);
 
         setCenter(center);
-        setLeft(listPane);
-        setRight(new VBox(previous,closePhase,next));
+        setLeft(list);
+
+        VBox right = new VBox(previous,next,closePhase);
+        right.setSpacing(10);
+
+        setRight(right);
     }
 }

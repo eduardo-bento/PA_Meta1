@@ -115,15 +115,13 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "-".repeat(22) + "\nStudent id :" + id + "\n" +
-                "-".repeat(22) + "\n" +
-                "-Name: " + name + "\n" +
-                "-Email: " + email + "\n" +
-                "-Curse: " + curse + "\n" +
-                "-Branch: " + branch + "\n" +
-                "-Classification: " + classification + "\n" +
-                "-Has project: " + hasStage + "\n" +
-                "-".repeat(20) + "\n";
+        return "\nStudent id :" + id + "\n" +
+                "Name: " + name + "\n" +
+                "Email: " + email + "\n" +
+                "Curse: " + curse + "\n" +
+                "Branch: " + branch + "\n" +
+                "Classification: " + classification + "\n" +
+                "Has project: " + hasStage;
     }
 
     @Override

@@ -54,6 +54,10 @@ public class EditStudent extends VBox {
                 }
             }
         });
+
+        choiceBox.setOnAction(event -> {
+            field.setPromptText("Change " + choiceBox.getValue());
+        });
     }
 
     private void createViews() {
@@ -64,10 +68,15 @@ public class EditStudent extends VBox {
         choiceBox.setValue("email");
         field = new TextField();
         button = new MyButton("Change");
+        choiceBox.setStyle("-fx-background-color: #D0C9C0;");
 
-        this.getChildren().addAll(button,choiceBox,field);
+        VBox choose = new VBox(choiceBox,button);
+        choose.setSpacing(2);
+        choose.setAlignment(Pos.CENTER);
+        field.setPromptText("Change " + choiceBox.getValue());
+        this.getChildren().addAll(choose,field);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(10);
+        this.setSpacing(30);
     }
 
 }

@@ -79,8 +79,6 @@ public class Teacher implements Serializable {
     @Override
     public String toString() {
         return "Teacher: " + email + "\n" +
-                "-".repeat(20) + "\n" +
-                "name: " + name + "\n" +
-                "-".repeat(20) + "\n";
+                "name: " + name;
     }
 }

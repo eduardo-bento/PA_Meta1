@@ -1,5 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
+
 import java.util.List;
 
 public interface IState {
@@ -10,6 +12,12 @@ public interface IState {
     void forward();
     boolean back();
 
+    boolean undo();
+    boolean redo();
+
+    int getNumberDestiny(String type);
+    List<Integer> getPercentage();
+    List<Teacher> top5();
     void goToMode(int option);
     boolean closePhase();
 

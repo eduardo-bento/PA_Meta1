@@ -3,13 +3,17 @@ package pt.isec.pa.apoio_poe.model.Data;
 import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposalManager.FinalProposalManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.TeacherOrder;
 import pt.isec.pa.apoio_poe.model.Log;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TieBreaker implements Serializable {
     final private FinalProposalManager manager;
@@ -105,4 +109,5 @@ public class TieBreaker implements Serializable {
     public List<Student> getStudents() {
         return students;
     }
+
 }

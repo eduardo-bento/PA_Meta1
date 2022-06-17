@@ -65,7 +65,7 @@ public class InsertCandidacy extends VBox {
         this.setPadding(new Insets(30));
         insert.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        setSpacing(10);
+        setSpacing(30);
         setAlignment(Pos.CENTER);
     }
 }

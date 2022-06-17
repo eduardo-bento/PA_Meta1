@@ -27,6 +27,8 @@ public class TieBreakerFx extends BorderPane {
     }
 
     private void createViews() {
+        this.setStyle("-fx-background-color: #5F7161;");
+
         data = new Label();
         proposalId = new TextField();
         studentId = new TextField();

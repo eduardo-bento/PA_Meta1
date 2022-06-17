@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.io.*;
 import java.util.List;
@@ -135,4 +136,24 @@ public class Context {
     public String getTeacherList() {
         return state.getTeacherList();
     }
+
+    public boolean undo() {
+        return state.undo();
+    }
+
+    public int getNumberDestiny(String type){
+        return state.getNumberDestiny(type);
+    }
+
+    public List<Integer> getPercentage(){
+        return state.getPercentage();
+    }
+
+    public List<Teacher> top5(){
+        return state.top5();
+    }
+    public boolean redo(){
+        return state.redo();
+    }
+
 }

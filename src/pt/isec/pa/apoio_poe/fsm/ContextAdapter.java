@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,12 +15,37 @@ public abstract class ContextAdapter implements IState, Serializable {
         this.data = data;
     }
 
+    @Override
+    public boolean undo() {
+        return false;
+    }
+
+    @Override
+    public boolean redo() {
+        return false;
+    }
+
+    @Override
+    public int getNumberDestiny(String type) {
+        return 0;
+    }
+
+    @Override
+    public List<Integer> getPercentage() {
+        return null;
+    }
+
     public void changeState(EState state){
         context.changeState(state.stateFactory(context,data));
     }
 
     @Override
     public void goToMode(int option) {
+    }
+
+    @Override
+    public List<Teacher> top5() {
+        return null;
     }
 
     @Override

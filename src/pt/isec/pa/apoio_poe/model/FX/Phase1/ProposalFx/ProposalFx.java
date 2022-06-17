@@ -91,8 +91,9 @@ public class ProposalFx extends BorderPane {
         //removeBox.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
         removeBox.setMaxHeight(50);
         removeBox.setPadding(new Insets(12));
-        removeBox.setSpacing(10);
-        HBox blocks = new HBox(stackPane,new ReadFromFile(model),removeBox);
+        removeBox.setAlignment(Pos.CENTER);
+        removeBox.setSpacing(30);
+        HBox blocks = new HBox(stackPane,new ReadFromFile(model));
         blocks.setSpacing(20);
         blocks.setAlignment(Pos.BASELINE_CENTER);
 

@@ -1,5 +1,9 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase3;
 
+import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -8,15 +12,22 @@ import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
+import pt.isec.pa.apoio_poe.model.FX.Phase4.List;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class ProposalPhaseFx extends BorderPane {
     ModelManager model;
     MyButton previous,next,closePhase, automaticAttributionForSelfProposalAndProject,
     automaticAttributionForStudentsWithoutDefinedAttribution,
-            manualAttribution,manualRemove;
+            manualAttribution,manualRemove,undo,redo;
+
+    ChoiceBox<String> filter;
+
     TextField proposalId,studentId;
     TextField proposalId_Remove;
-    Label listOfStudents;
+    Label listOfStudents,filterLabel;
 
     public ProposalPhaseFx(ModelManager model) {
         this.model = model;
@@ -27,10 +38,17 @@ public class ProposalPhaseFx extends BorderPane {
 
     private void update() {
         this.setVisible(model != null && model.getState() == EState.PROPOSALS_PHASE);
+        listOfStudents.setText(model.getListOfStudents());
+        filterLabel.setText(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
     }
 
     private void registerHandlers() {
         model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
+        model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
+
+        closePhase.setOnAction(event -> {
+            model.closePhase();
+        });
 
         previous.setOnAction(event -> {
             model.back();
@@ -66,6 +84,14 @@ public class ProposalPhaseFx extends BorderPane {
             }
         });
 
+        undo.setOnAction(event -> {
+            model.undo();
+        });
+
+        redo.setOnAction(event -> {
+            model.redo();
+        });
+
         manualRemove.setOnAction(event -> {
             Long id = null;
             if (proposalId.getText().isEmpty()){
@@ -76,23 +102,82 @@ public class ProposalPhaseFx extends BorderPane {
             }
             model.manualRemove(proposalId.getText());
         });
+
+        filter.setOnAction(event -> {
+            filterLabel.setText(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
+        });
     }
 
     private void createViews() {
-        previous = new MyButton("previous");
-        next = new MyButton("next");
+        this.setStyle("-fx-background-color: #5F7161;");
+
+        previous = new MyButton("Back");
+        next = new MyButton("Next");
         closePhase = new MyButton("Close Phase");
         automaticAttributionForSelfProposalAndProject = new MyButton("Automatic Attribution");
         automaticAttributionForStudentsWithoutDefinedAttribution = new MyButton("Automatic Attribution For Students Without Defined Attribution");
+        automaticAttributionForStudentsWithoutDefinedAttribution.setMaxWidth(200);
+
+        undo = new MyButton("Undo");
+        redo = new MyButton("Redo");
 
         proposalId = new TextField();
+        proposalId.setPromptText("Proposal id");
         studentId = new TextField();
+        studentId.setPromptText("Student id");
+
+        listOfStudents = new Label();
+        listOfStudents.setText(model.getListOfStudents());
+        listOfStudents.setPadding(new Insets(10));
+        listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
+
         proposalId_Remove = new TextField();
+        proposalId_Remove.setPromptText("Proposal id");
         manualAttribution = new MyButton("Manual Attribution");
         manualRemove = new MyButton("Manual Remove");
 
+        filter = new ChoiceBox<>(FXCollections.observableArrayList(
+                "Proposals","SelfProposals","Teacher proposals","Available proposals","Proposals already attributed"));
+        filter.setValue("Available proposals");
+        filter.setStyle("-fx-background-color: #D0C9C0;");
+        filterLabel = new Label(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
+        filterLabel.setPadding(new Insets(10));
+        filterLabel.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        setRight(new VBox(previous,next,closePhase,new VBox(proposalId,studentId,manualAttribution),new VBox(proposalId_Remove,manualRemove)));
-        setCenter(new HBox(automaticAttributionForSelfProposalAndProject,automaticAttributionForStudentsWithoutDefinedAttribution));
+        VBox filters = new VBox(filter,filterLabel);
+        filters.setAlignment(Pos.CENTER);
+        filters.setSpacing(10);
+
+        HBox undo_redo = new HBox(undo,redo);
+        undo_redo.setSpacing(10);
+        undo_redo.setAlignment(Pos.CENTER);
+
+        VBox boxManualAttribution = new VBox(manualAttribution,proposalId,studentId,undo_redo);
+        boxManualAttribution.setAlignment(Pos.CENTER);
+        boxManualAttribution.setSpacing(10);
+
+        VBox boxManualRemove = new VBox(manualRemove,proposalId_Remove);
+        boxManualRemove.setAlignment(Pos.CENTER);
+        boxManualRemove.setSpacing(10);
+
+        VBox attributions = new VBox(boxManualAttribution,boxManualRemove);
+        attributions.setAlignment(Pos.CENTER);
+        attributions.setSpacing(30);
+
+        VBox left = new VBox(automaticAttributionForSelfProposalAndProject,automaticAttributionForStudentsWithoutDefinedAttribution,listOfStudents);
+        left.setSpacing(10);
+        left.setAlignment(Pos.CENTER);
+
+        HBox center = new HBox(attributions,filters);
+        center.setSpacing(60);
+        center.setAlignment(Pos.CENTER);
+        center.setPrefWidth(300);
+
+        VBox right = new VBox(previous,next,closePhase);
+        right.setSpacing(10);
+
+        setLeft(left);
+        setRight(right);
+        setCenter(center);
     }
 }
