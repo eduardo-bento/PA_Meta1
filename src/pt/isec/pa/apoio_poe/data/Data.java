@@ -306,4 +306,14 @@ public class Data implements Serializable {
         TeacherManager manager = (TeacherManager) management.get(Teacher.class);
         return manager.top5();
     }
+
+    public List<Teacher> getTeachers() {
+        TeacherManager manager = (TeacherManager) management.get(Teacher.class);
+        return manager.getTeachers();
+    }
+
+    public List<Student> getStudents() {
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return manager.getStudents();
+    }
 }

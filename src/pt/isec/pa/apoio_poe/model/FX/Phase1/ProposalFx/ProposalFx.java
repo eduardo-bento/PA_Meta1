@@ -4,20 +4,23 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
-import pt.isec.pa.apoio_poe.model.FX.ReadFileFx;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.List.ProposalList;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.List.StudentList;
+import pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.List.TeacherList;
 
 public class ProposalFx extends BorderPane {
     ModelManager model;
     ChoiceBox<String> option;
     VBox project,interShip,selfProposal;
     StackPane stackPane;
+    StudentList students;
+    TeacherList teachers;
+    Edit edit;
     TextField idField;
     Button remove;
     ProposalList list;
@@ -63,19 +66,25 @@ public class ProposalFx extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #5F7161;");
-
-        previous = new MyButton("Previous");
         list = new ProposalList(model);
+
         project = new ProjectFx(model);
+        edit = new Edit(model,list);
+
+
         interShip = new InterShipFx(model);
-        selfProposal = new InsertProposal(model);
-        option = new ChoiceBox<>();
+        selfProposal = new SelfProposalFx(model);
+
+        teachers =  new TeacherList(model, (ProjectFx) project);
+        previous = new MyButton("Previous");
+
         option = new ChoiceBox(FXCollections.observableArrayList("Project","InterShip","SelfProposal"));
         option.setValue("Project");
 
+        students = new StudentList(model, (ProjectFx) project,(InterShipFx) interShip,(SelfProposalFx) selfProposal,option);
         stackPane = new StackPane(project,interShip,selfProposal);
         this.setPadding(new Insets(50));
-        stackPane.setAlignment(Pos.CENTER_LEFT);
+        //stackPane.setAlignment(Pos.CENTER_LEFT);
 
         VBox type = new VBox(new Label("Type:"),option);
         option.setStyle("-fx-background-color: #D0C9C0;");
@@ -93,11 +102,21 @@ public class ProposalFx extends BorderPane {
         removeBox.setPadding(new Insets(12));
         removeBox.setAlignment(Pos.CENTER);
         removeBox.setSpacing(30);
-        HBox blocks = new HBox(stackPane,new ReadFromFile(model));
-        blocks.setSpacing(20);
-        blocks.setAlignment(Pos.BASELINE_CENTER);
 
-        setLeft(new VBox(type,previous));
+        VBox t = new VBox(edit,new ReadFromFile(model));
+        t.setSpacing(10);
+        t.setAlignment(Pos.CENTER);
+
+        HBox blocks = new HBox(stackPane,t);
+        blocks.setSpacing(20);
+        blocks.setPadding(new Insets(20));
+        blocks.setAlignment(Pos.CENTER);
+
+        VBox left = new VBox(type,previous,new VBox(new Label("Students"),students),new VBox(new Label("Teachers"),teachers));
+        left.setSpacing(10);
+
+
+        setLeft(left);
         setCenter(blocks);
         setRight(list);
     }

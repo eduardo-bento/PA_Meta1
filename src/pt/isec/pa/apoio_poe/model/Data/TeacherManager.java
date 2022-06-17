@@ -82,4 +82,8 @@ public class TeacherManager extends Manager<Teacher> {
 
         return aux;
     }
+
+    public List<Teacher> getTeachers() {
+        return new ArrayList<>(list);
+    }
 }

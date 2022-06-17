@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.io.Serializable;
@@ -136,6 +137,16 @@ public abstract class ContextAdapter implements IState, Serializable {
 
     @Override
     public void exportFile(String filePath) {}
+
+    @Override
+    public List<Student> getStudents() {
+        return null;
+    }
+
+    @Override
+    public List<Teacher> getTeachers() {
+        return null;
+    }
 
     @Override
     public String getFilterList(List<Integer> filters) {

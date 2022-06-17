@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.io.*;
@@ -46,6 +47,14 @@ public class Context {
 
     public boolean back() {
         return state.back();
+    }
+
+    public List<Student> getStudents() {
+       return state.getStudents();
+    }
+
+    public List<Teacher> getTeachers() {
+        return state.getTeachers();
     }
 
     public boolean readFromFile(String filePath){

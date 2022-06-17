@@ -103,6 +103,10 @@ public class StudentManager extends Manager<Student> {
         return count;
     }
 
+    public List<Student> getStudents(){
+        return new ArrayList<>(list);
+    }
+
     //Phase 3
     public String getStudentsWithCandidacy(){
         StringBuilder builder = new StringBuilder();

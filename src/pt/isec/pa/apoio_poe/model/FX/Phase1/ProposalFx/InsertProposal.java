@@ -20,6 +20,10 @@ public class InsertProposal extends VBox {
         createViews();
     }
 
+    public TextField getStudentField() {
+        return studentField;
+    }
+
     private void createViews() {
         idField.setPromptText("Enter your id.");
         titleField.setPromptText("Enter your title.");

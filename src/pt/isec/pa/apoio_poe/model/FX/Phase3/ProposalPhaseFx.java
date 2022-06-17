@@ -176,8 +176,11 @@ public class ProposalPhaseFx extends BorderPane {
         VBox right = new VBox(previous,next,closePhase);
         right.setSpacing(10);
 
-        setLeft(left);
+        HBox box = new HBox(left,center);
+        box.setSpacing(50);
+        box.setAlignment(Pos.CENTER);
+
         setRight(right);
-        setCenter(center);
+        setCenter(box);
     }
 }

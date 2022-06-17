@@ -86,6 +86,7 @@ public abstract class Manager<T> implements Serializable {
     }
 
     private <K, A> void changeAttribute(K value, String label, Class<A> typeClass,Object s) {
+
         for (Field f : typeClass.getDeclaredFields()) {
             if (label.equals(f.getName())) {
                 try {

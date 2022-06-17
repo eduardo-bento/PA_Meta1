@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm;
 
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
 import java.util.List;
@@ -14,6 +15,9 @@ public interface IState {
 
     boolean undo();
     boolean redo();
+
+    List<Student> getStudents();
+    List<Teacher> getTeachers();
 
     int getNumberDestiny(String type);
     List<Integer> getPercentage();

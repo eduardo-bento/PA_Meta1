@@ -1,8 +1,10 @@
-package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx;
+package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.List;
 
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.Log;
 
 
 public class ProposalList extends ListPane {
@@ -18,5 +20,15 @@ public class ProposalList extends ListPane {
                 model.remove(proposal.getId());
             }
         });
+    }
+
+    public Proposal getSelected(){
+        if (!model.querying().isEmpty() && this.getSelectionModel().getSelectedItem() == null){
+            this.setStyle("-fx-background-color: #FF0000;");
+            Log.getInstance().addMessage("You need to select one of the teachers to change the name");
+            return null;
+        }
+        this.setStyle(null);
+        return (Proposal) this.getSelectionModel().getSelectedItem();
     }
 }

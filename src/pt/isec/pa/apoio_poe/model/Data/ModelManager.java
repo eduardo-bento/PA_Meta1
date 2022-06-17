@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.fsm.IState;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.model.FX.TopMenu;
 
@@ -98,6 +99,14 @@ public class ModelManager {
         pcs.firePropertyChange(PROP_STATE,null,context.getState());
         pcs.firePropertyChange(PROP_UPDATE,null,null);
         return value;
+    }
+
+    public List<Student> getStudents(){
+        return context.getStudents();
+    }
+
+    public List<Teacher> getTeachers(){
+        return context.getTeachers();
     }
 
     public boolean readFromFile(String filePath){
