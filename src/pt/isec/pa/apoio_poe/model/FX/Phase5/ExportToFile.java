@@ -33,7 +33,7 @@ public class ExportToFile extends VBox {
     private void createViews() {
         filePath.setPromptText("Enter the file name.");
 
-        this.getChildren().addAll(filePath,exportToFile);
+        this.getChildren().addAll(exportToFile,filePath);
 
         this.setLayoutX(10);
         this.setLayoutY(10);

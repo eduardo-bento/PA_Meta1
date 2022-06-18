@@ -103,7 +103,7 @@ public class TeachersFx extends BorderPane {
         lists.setAlignment(Pos.CENTER);
 
         HBox center = new HBox(r,attribution,lists);
-        center.setAlignment(Pos.BASELINE_CENTER);
+        center.setAlignment(Pos.CENTER);
         setCenter(center);
 
         VBox right = new VBox(previous,closePhase);

@@ -142,8 +142,8 @@ public class ProposalPhaseFx extends BorderPane {
 
         proposalId_Remove = new TextField();
         proposalId_Remove.setPromptText("Proposal id");
-        manualAttribution = new MyButton("Manual Attribution");
-        manualRemove = new MyButton("Manual Remove");
+        manualAttribution = new MyButton("Add");
+        manualRemove = new MyButton("Remove");
 
         filter = new ChoiceBox<>(FXCollections.observableArrayList(
                 "Proposals","SelfProposals","Teacher proposals","Available proposals","Proposals already attributed"));
@@ -161,7 +161,7 @@ public class ProposalPhaseFx extends BorderPane {
         undo_redo.setSpacing(10);
         undo_redo.setAlignment(Pos.CENTER);
 
-        VBox boxManualAttribution = new VBox(manualAttribution,proposalId,studentId,undo_redo);
+        VBox boxManualAttribution = new VBox(manualAttribution,proposalId,studentId);
         boxManualAttribution.setAlignment(Pos.CENTER);
         boxManualAttribution.setSpacing(10);
 
@@ -169,7 +169,7 @@ public class ProposalPhaseFx extends BorderPane {
         boxManualRemove.setAlignment(Pos.CENTER);
         boxManualRemove.setSpacing(10);
 
-        VBox attributions = new VBox(boxManualAttribution,boxManualRemove);
+        VBox attributions = new VBox(boxManualAttribution,boxManualRemove,undo_redo);
         attributions.setAlignment(Pos.CENTER);
         attributions.setSpacing(30);
 

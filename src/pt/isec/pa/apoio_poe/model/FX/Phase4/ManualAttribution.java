@@ -55,14 +55,7 @@ public class ManualAttribution extends VBox {
         proposalField.setPromptText("Enter the proposals id.");
         teacherField.setPromptText("Enter teacher id.");
         this.getChildren().addAll(insert,teacherField,proposalField);
-
-        this.setLayoutX(10);
-        this.setLayoutY(10);
-        this.setMaxWidth(300);
-        this.setPrefWidth(300);
-        this.setPadding(new Insets(30));
         insert.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
-
         setSpacing(10);
         setAlignment(Pos.CENTER);
     }
