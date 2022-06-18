@@ -77,7 +77,7 @@ public class StudentFx extends BorderPane {
         removeBox.setAlignment(Pos.CENTER);
 
         HBox center = new HBox(insertStudent,readFromFile,edit);
-        center.setAlignment(Pos.BASELINE_CENTER);
+        center.setAlignment(Pos.CENTER);
         center.setSpacing(40);
 
         setCenter(center);

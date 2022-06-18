@@ -1,5 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm.states.phase2;
 
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
@@ -7,6 +9,7 @@ import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.data.Data;
 
+import javax.swing.text.Style;
 import java.util.List;
 
 public class CandidacyState extends ContextAdapter {
@@ -48,6 +51,41 @@ public class CandidacyState extends ContextAdapter {
         Log.getInstance().addMessage("The Candidacy phase could not be locked " +
                 "because the configuration phase is not lock");
         return false;
+    }
+
+    @Override
+    public List<Student> getStudentsListWithoutCandidacy() {
+        return data.getStudentsListWithoutCandidacy();
+    }
+
+    @Override
+    public List<Student> getStudentsListWithCandidacy() {
+        return data.getStudentsListWithCandidacy();
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithoutCandidacyList() {
+        return data.getProposalsWithoutCandidacyList();
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithCandidacyList() {
+        return data.getProposalsWithCandidacyList();
+    }
+
+    @Override
+    public List<Proposal> getSelfProposalList() {
+        return data.getSelfProposalsList();
+    }
+
+    @Override
+    public List<Proposal> getProjectsList() {
+        return data.getProjectsList();
+    }
+
+    @Override
+    public List<Student> getStudentsListNoProposal() {
+        return data.getStudentsListNoProposal();
     }
 
     @Override

@@ -206,16 +206,24 @@ public class ProposalManager extends Manager<Proposal> {
         return proposals;
     }
 
-    public String getSelfProposalList(){
+    public String getSelfProposals(){
         StringBuilder builder = new StringBuilder();
         listOfProposals.get(SelfProposal.class).forEach(selfProposal -> builder.append(selfProposal).append("\n"));
         return builder.toString();
     }
 
-    public String getProjectList(){
+    public List<Proposal> getSelfProposalsList(){
+        return new ArrayList<>(listOfProposals.get(SelfProposal.class));
+    }
+
+    public String getProjects(){
         StringBuilder builder = new StringBuilder();
         listOfProposals.get(Project.class).forEach(project -> builder.append(project).append("\n"));
         return builder.toString();
+    }
+
+    public List<Proposal>  getProjectsList(){
+        return new ArrayList<>(listOfProposals.get(Project.class));
     }
 
     public String getProposalsWithCandidacy(){
@@ -228,6 +236,16 @@ public class ProposalManager extends Manager<Proposal> {
         return stringBuilder.toString();
     }
 
+    public List<Proposal> getProposalsWithCandidacyList(){
+        List<Proposal> proposals = new ArrayList<>();
+        for (Proposal proposal : list){
+            if(proposal.hasCandidacy()){
+                proposals.add(proposal);
+            }
+        }
+        return proposals;
+    }
+
     public String getProposalsWithoutCandidacy(){
         StringBuilder stringBuilder = new StringBuilder();
         for (Proposal proposal : list){
@@ -236,6 +254,16 @@ public class ProposalManager extends Manager<Proposal> {
             }
         }
         return stringBuilder.toString();
+    }
+
+    public List<Proposal> getProposalsWithoutCandidacyList(){
+        List<Proposal> proposals = new ArrayList<>();
+        for (Proposal proposal : list){
+            if(!proposal.hasCandidacy()){
+                proposals.add(proposal);
+            }
+        }
+        return proposals;
     }
 
     public String getProposalsAvailable(){

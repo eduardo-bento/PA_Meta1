@@ -106,19 +106,55 @@ public class Data implements Serializable {
                 "Self Proposal\n" + manager.getStudentsWithSelfProposal();
     }
 
+    public List<Student> getStudentsListWithoutCandidacy() {
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return manager.getStudentsListWithoutCandidacy();
+    }
+
+    public List<Student> getStudentsListWithCandidacy() {
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return manager.getStudentsListWithCandidacy();
+    }
+
+    public List<Student> getStudentsListNoProposal() {
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return manager.getStudentsListWithSelfProposal();
+    }
+
     public String getListProposals_CandidacyPhase(List<Integer> filters){
         ProposalManager manager = (ProposalManager) management.get(Proposal.class);
         StringBuilder stringBuilder = new StringBuilder();
         for (int f : filters){
             switch (f){
-                case 1 -> stringBuilder.append("SelfProposals\n").append(manager.getSelfProposalList());
-                case 2 -> stringBuilder.append("Teacher Proposals\n").append(manager.getProjectList());
+                case 1 -> stringBuilder.append("SelfProposals\n").append(manager.getSelfProposals());
+                case 2 -> stringBuilder.append("Teacher Proposals\n").append(manager.getProjects());
                 case 3 -> stringBuilder.append("Proposals with candidacy\n").append(manager.getProposalsWithCandidacy());
                 case 4 -> stringBuilder.append("Proposals without candidacy\n").append(manager.getProposalsWithoutCandidacy());
                 }
             }
         return stringBuilder.toString();
     }
+
+    public List<Proposal> getProposalsWithoutCandidacyList() {
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getProposalsWithoutCandidacyList();
+    }
+
+    public List<Proposal> getProposalsWithCandidacyList() {
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getProposalsWithCandidacyList();
+    }
+
+    public List<Proposal>  getProjectsList() {
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getProjectsList();
+    }
+
+    public List<Proposal> getSelfProposalsList(){
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getSelfProposalsList();
+    }
+
 
     public boolean readCSV(String filePath, Class<?> type){
         return management.get(type).readFile(filePath);
@@ -161,8 +197,8 @@ public class Data implements Serializable {
         ProposalManager manager = (ProposalManager) management.get(Proposal.class);
         for (int i : filters){
             switch (i){
-                case 1 -> builder.append("SelfProposal\n").append("-".repeat(20)).append("\n").append(manager.getSelfProposalList());
-                case 2 -> builder.append("Project\n").append("-".repeat(20)).append("\n").append(manager.getProjectList());
+                case 1 -> builder.append("SelfProposal\n").append("-".repeat(20)).append("\n").append(manager.getSelfProposals());
+                case 2 -> builder.append("Project\n").append("-".repeat(20)).append("\n").append(manager.getProjects());
                 case 3 -> builder.append("Available\n").append("-".repeat(20)).append("\n").append(manager.getProposalsAvailable());
                 case 4 -> builder.append("Attributed\n").append("-".repeat(20)).append("\n").append(manager.getProposalsAttributed());
             }

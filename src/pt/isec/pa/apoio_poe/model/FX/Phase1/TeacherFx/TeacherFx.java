@@ -114,7 +114,7 @@ public class TeacherFx extends BorderPane {
         HBox center = new HBox(vBox,readFromFile,edit);
         center.setSpacing(80);
 
-        center.setAlignment(Pos.BASELINE_CENTER);
+        center.setAlignment(Pos.CENTER);
 
         setCenter(center);
         setLeft(list);

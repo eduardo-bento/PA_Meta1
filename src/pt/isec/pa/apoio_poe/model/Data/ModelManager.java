@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.fsm.IState;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 import pt.isec.pa.apoio_poe.model.FX.TopMenu;
@@ -107,6 +108,34 @@ public class ModelManager {
 
     public List<Teacher> getTeachers(){
         return context.getTeachers();
+    }
+
+    public List<Student> getStudentsListWithoutCandidacy() {
+        return context.getStudentsListWithoutCandidacy();
+    }
+
+    public List<Student> getStudentsListWithCandidacy() {
+        return context.getStudentsListWithCandidacy();
+    }
+
+    public List<Student> getStudentsListNoProposal() {
+        return context.getStudentsListNoProposal();
+    }
+
+    public List<Proposal> getProjectsList() {
+        return context.getProjectsList();
+    }
+
+    public List<Proposal> getProposalsWithCandidacyList() {
+        return context.getProposalsWithCandidacyList();
+    }
+
+    public List<Proposal> getProposalsWithoutCandidacyList() {
+        return context.getProposalsWithoutCandidacyList();
+    }
+
+    public List<Proposal> getSelfProposalList() {
+        return context.getSelfProposalList();
     }
 
     public boolean readFromFile(String filePath){

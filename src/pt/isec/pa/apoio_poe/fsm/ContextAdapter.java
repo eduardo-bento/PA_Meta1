@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
@@ -145,6 +146,41 @@ public abstract class ContextAdapter implements IState, Serializable {
 
     @Override
     public List<Teacher> getTeachers() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentsListNoProposal() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentsListWithCandidacy() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentsListWithoutCandidacy() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getProjectsList() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithCandidacyList() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getSelfProposalList() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithoutCandidacyList() {
         return null;
     }
 

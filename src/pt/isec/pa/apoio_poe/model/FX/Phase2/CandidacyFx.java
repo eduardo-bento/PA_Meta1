@@ -11,7 +11,9 @@ import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithCandidacy;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithNoProposal;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithoutCandidacy;
 
 public class CandidacyFx extends BorderPane {
     ModelManager model;
@@ -19,6 +21,10 @@ public class CandidacyFx extends BorderPane {
     ReadFromFile readFromFile;
     InsertCandidacy insertCandidacy;
     ListFilterProposal listFilterProposal;
+    FilterCandidacy filterCandidacy;
+    StudentsWithoutCandidacy studentsWithoutCandidacy;
+    StudentsWithCandidacy studentsWithCandidacy;
+    StudentsWithNoProposal studentsWithNoProposal;
     MyButton previous,closePhase,next;
     Label listOfStudents;
 
@@ -74,6 +80,11 @@ public class CandidacyFx extends BorderPane {
 
         idField = new TextField();
         remove = new MyButton("Remove");
+        studentsWithCandidacy = new StudentsWithCandidacy(model);
+        studentsWithoutCandidacy = new StudentsWithoutCandidacy(model);
+        studentsWithNoProposal = new StudentsWithNoProposal(model);
+
+        filterCandidacy = new FilterCandidacy(model);
 
         VBox removeBox = new VBox(remove,idField);
         //r.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
@@ -98,15 +109,24 @@ public class CandidacyFx extends BorderPane {
         listOfStudents.setPadding(new Insets(10));
         listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
-        HBox center = new HBox(readFromFile,insertCandidacy,listFilterProposal,new VBox(new Label("Students"),listOfStudents));
-        center.setAlignment(Pos.BASELINE_CENTER);
-        center.setSpacing(10);
+        VBox studentsList = new VBox(new VBox(new Label("Students without candidacy"),studentsWithoutCandidacy)
+                ,new VBox(new Label("Students with candidacy"),studentsWithCandidacy),
+                new VBox(new Label("Students with no proposal"),studentsWithNoProposal));
+        studentsList.setAlignment(Pos.CENTER);
+        studentsList.setSpacing(10);
 
-        setCenter(center);
+        VBox center = new VBox(readFromFile,insertCandidacy);
+        center.setAlignment(Pos.CENTER);
+        center.setSpacing(10);
+        HBox c = new HBox(studentsList,center,filterCandidacy);
+        c.setAlignment(Pos.CENTER);
+        setCenter(c);
         setLeft(list);
+
 
         VBox right = new VBox(previous,next,closePhase);
         right.setSpacing(10);
+        right.setAlignment(Pos.TOP_RIGHT);
 
         setRight(right);
     }

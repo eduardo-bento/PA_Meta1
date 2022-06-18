@@ -16,8 +16,6 @@ public class TeacherList extends ListView<Teacher> {
         this.project = project;
         createViews();
         registerHandlers();
-
-
     }
     private void createViews(){
         this.setMaxHeight(200);

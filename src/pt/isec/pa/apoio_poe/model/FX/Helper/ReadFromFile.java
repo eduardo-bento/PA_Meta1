@@ -28,7 +28,7 @@ public class ReadFromFile extends VBox {
         this.setMaxWidth(200);
         this.setMinWidth(200);
         this.setMaxHeight(400);
-        this.setMinHeight(400);
+        //this.setMinHeight(400);
 
         this.setSpacing(30);
 

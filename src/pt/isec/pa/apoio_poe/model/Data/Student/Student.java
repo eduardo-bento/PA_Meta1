@@ -130,7 +130,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return "Student id :" + id + "\n" +
+        return "Id :" + id + "\n" +
                 "Name: " + name + "\n" +
                 "Email: " + email + "\n" +
                 "Curse: " + curse + "\n" +

@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
 
@@ -55,6 +56,34 @@ public class Context {
 
     public List<Teacher> getTeachers() {
         return state.getTeachers();
+    }
+
+    public List<Student> getStudentsListNoProposal() {
+        return state.getStudentsListNoProposal();
+    }
+
+    public List<Student> getStudentsListWithCandidacy() {
+        return state.getStudentsListWithCandidacy();
+    }
+
+    public List<Student> getStudentsListWithoutCandidacy() {
+        return state.getStudentsListWithoutCandidacy();
+    }
+
+    public List<Proposal> getProjectsList() {
+        return state.getProjectsList();
+    }
+
+    public List<Proposal> getProposalsWithCandidacyList() {
+        return state.getProposalsWithCandidacyList();
+    }
+
+    public List<Proposal> getProposalsWithoutCandidacyList() {
+        return state.getProposalsWithoutCandidacyList();
+    }
+
+    public List<Proposal> getSelfProposalList() {
+        return state.getSelfProposalList();
     }
 
     public boolean readFromFile(String filePath){

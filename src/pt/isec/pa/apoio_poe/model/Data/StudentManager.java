@@ -117,6 +117,15 @@ public class StudentManager extends Manager<Student> {
         return builder.toString();
     }
 
+    public List<Student> getStudentsListWithCandidacy(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (student.hasCandidacy())
+                students.add(student);
+        }
+        return students;
+    }
+
     public String getStudentsWithoutCandidacy(){
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
@@ -124,6 +133,15 @@ public class StudentManager extends Manager<Student> {
                 builder.append("-").append(student.getId()).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<Student> getStudentsListWithoutCandidacy(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (!student.hasCandidacy())
+                students.add(student);
+        }
+        return students;
     }
 
     public String getStudentsWithNoProposal(){
@@ -142,6 +160,15 @@ public class StudentManager extends Manager<Student> {
             builder.append("-").append(find(proposal.getStudent(),Student.class).getId()).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<Student> getStudentsListWithSelfProposal(){
+        List<Student> students = new ArrayList<>();
+        List<Proposal> proposals = data.getSelfProposalList();
+        for (Proposal proposal : proposals){
+            students.add(find(proposal.getStudent(),Student.class));
+        }
+        return students;
     }
 
     //Phase 4

@@ -44,18 +44,22 @@ public class ProposalFx extends BorderPane {
         model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
 
         option.setOnAction(event ->  {
-            if (option.getValue().equals("Project")){
-                project.setVisible(true);
-                interShip.setVisible(false);
-                selfProposal.setVisible(false);
-            } else if (option.getValue().equals("InterShip")){
-                project.setVisible(false);
-                interShip.setVisible(true);
-                selfProposal.setVisible(false);
-            } else if (option.getValue().equals("SelfProposal")){
-                project.setVisible(false);
-                interShip.setVisible(false);
-                selfProposal.setVisible(true);
+            switch (option.getValue()){
+                case "Project" -> {
+                    project.setVisible(true);
+                    interShip.setVisible(false);
+                    selfProposal.setVisible(false);
+                }
+                case "InterShip" -> {
+                    project.setVisible(false);
+                    interShip.setVisible(true);
+                    selfProposal.setVisible(false);
+                }
+                case "SelfProposal" ->{
+                    project.setVisible(false);
+                    interShip.setVisible(false);
+                    selfProposal.setVisible(true);
+                }
             }
         });
 
@@ -70,7 +74,6 @@ public class ProposalFx extends BorderPane {
 
         project = new ProjectFx(model);
         edit = new Edit(model,list);
-
 
         interShip = new InterShipFx(model);
         selfProposal = new SelfProposalFx(model);
@@ -103,11 +106,7 @@ public class ProposalFx extends BorderPane {
         removeBox.setAlignment(Pos.CENTER);
         removeBox.setSpacing(30);
 
-        VBox t = new VBox(edit,new ReadFromFile(model));
-        t.setSpacing(10);
-        t.setAlignment(Pos.CENTER);
-
-        HBox blocks = new HBox(stackPane,t);
+        HBox blocks = new HBox(stackPane,edit);
         blocks.setSpacing(20);
         blocks.setPadding(new Insets(20));
         blocks.setAlignment(Pos.CENTER);
@@ -118,6 +117,9 @@ public class ProposalFx extends BorderPane {
 
         setLeft(left);
         setCenter(blocks);
-        setRight(list);
+        VBox right = new VBox(new ReadFromFile(model),list);
+        right.setAlignment(Pos.CENTER);
+        right.setSpacing(10);
+        setRight(right);
     }
 }
