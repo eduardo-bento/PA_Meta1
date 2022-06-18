@@ -2,14 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="389b3476-46ab-4d23-a35b-cee808553c0b" name="Changes" comment="new">
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/FinalProposalWithTeacher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/FinalProposalWithoutTeacher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionLockState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionLockState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionSingleState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase3/ProposalAttributionSingleState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/ProposalPhaseFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualAttribution.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualAttribution.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualRemove.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/ManualRemove.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/data/Data.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/data/Data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/ContextAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/ContextAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/IState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/IState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase4/TeacherAttributionState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/states/phase4/TeacherAttributionState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterCandidacy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterCandidacy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProjectsList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProjectsList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProposalWithCandidacyList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProposalWithCandidacyList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProposalWithoutCandidacyList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/ProposalWithoutCandidacyList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/SelfProposalList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase2/FilterList/SelfProposalList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/FilterProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase3/FilterProposal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/List.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/List.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/TeachersFx.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase4/TeachersFx.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase5/ExportToFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/Phase5/ExportToFile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,11 +64,11 @@
       <recent name="pt.isec.pa.apoio_poe.model.Data" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="pt.isec.pa.apoio_poe.model.FX.Phase4" />
+      <recent name="pt.isec.pa.apoio_poe.model.FX.Phase4.List" />
       <recent name="pt.isec.pa.apoio_poe.model.FX.Phase3" />
       <recent name="pt.isec.pa.apoio_poe.model.FX.Phase3.List" />
       <recent name="pt.isec.pa.apoio_poe.model.FX.Phase2.FilterList" />
-      <recent name="pt.isec.pa.apoio_poe.model.FX.Phase2.List" />
-      <recent name="pt.isec.pa.apoio_poe.model.FX.Phase2" />
     </key>
   </component>
   <component name="RunManager">
@@ -121,7 +131,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655559483851</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="new">
+      <created>1655562615175</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1655562615175</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

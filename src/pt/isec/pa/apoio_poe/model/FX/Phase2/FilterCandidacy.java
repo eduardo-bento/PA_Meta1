@@ -25,9 +25,6 @@ public class FilterCandidacy extends VBox {
         registerHandlers();
     }
 
-    private void update() {
-    }
-
     private void registerHandlers() {
         candidacy.setOnAction(event -> {
             switch (candidacy.getValue()){

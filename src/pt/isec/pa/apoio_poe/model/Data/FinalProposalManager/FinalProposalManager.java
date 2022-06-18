@@ -175,9 +175,9 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return false;
     }
 
-    public List<FinalProposal> getFinalProposalWithTeacher(){
+    public List<FinalProposal> getFinalProposalWithTeacherList(){
         List<FinalProposal> proposals = new ArrayList<>();
-        StringBuilder builder = new StringBuilder();
+        //StringBuilder builder = new StringBuilder();
         for (FinalProposal proposal : list){
             if (!proposal.getTeacher().equals(""))
                 proposals.add(proposal);
@@ -194,6 +194,16 @@ public class FinalProposalManager extends Manager<FinalProposal> {
             }
         }
         return builder.toString();
+    }
+
+    public List<FinalProposal> getFinalProposalWithoutTeacherList() {
+        List<FinalProposal> proposals = new ArrayList<>();
+        for (FinalProposal proposal : list){
+            if (proposal.getTeacher().isEmpty()) {
+                proposals.add(proposal);
+            }
+        }
+        return proposals;
     }
 
     public String listOfFinalProposals(){

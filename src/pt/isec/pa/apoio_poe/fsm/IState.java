@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.fsm;
 
+import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
@@ -31,6 +32,13 @@ public interface IState {
     List<Proposal>  getProjectsList();
     List<Proposal> getProposalsWithoutCandidacyList();
     List<Proposal> getSelfProposalList();
+
+    List<FinalProposal> getFinalProposalWithoutTeacherList();
+    List<FinalProposal> getFinalProposalWithTeacherList();
+
+    float getTeachersAverage();
+    int getTeachersHighest();
+    int getTeachersLowest();
 
     int getNumberDestiny(String type);
     List<Integer> getPercentage();

@@ -8,7 +8,14 @@ public class ProposalWithoutCandidacyList extends ListView<Proposal> {
     private ModelManager model;
     public ProposalWithoutCandidacyList(ModelManager model) {
         this.model = model;
+        createViews();
         registerHandlers();
+    }
+
+    private void createViews() {
+        if (model.getProposalsWithoutCandidacyList() != null){
+            this.getItems().addAll(model.getProposalsWithoutCandidacyList());
+        }
     }
 
     private void registerHandlers() {

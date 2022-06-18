@@ -10,16 +10,17 @@ import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
-import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
-import pt.isec.pa.apoio_poe.model.FX.Phase2.ListFilterProposal;
+import pt.isec.pa.apoio_poe.model.FX.ListPane;
 import pt.isec.pa.apoio_poe.model.FX.Phase5.ExportToFile;
 
 public class TeachersFx extends BorderPane {
     ModelManager model;
     Label teacherData;
+    List list;
     Label listOfTeachers;
     MyButton previous,next, automaticAttribution,closePhase,undo,redo;
     ManualAttribution manualAttribution;
+    ListPane teachersList;
     ManualRemove manualRemove;
     ExportToFile export;
 
@@ -64,6 +65,8 @@ public class TeachersFx extends BorderPane {
     private void createViews() {
         this.setStyle("-fx-background-color: #5F7161;");
 
+        list = new List(model);
+
         previous = new MyButton("Back");
         automaticAttribution = new MyButton("Automatic Attribution");
         manualAttribution = new ManualAttribution(model);
@@ -83,6 +86,8 @@ public class TeachersFx extends BorderPane {
         teacherData.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
         teacherData.setAlignment(Pos.CENTER);
 
+        teachersList = new ListPane(model);
+
         undo = new MyButton("Undo");
         redo = new MyButton("Redo");
 
@@ -94,21 +99,20 @@ public class TeachersFx extends BorderPane {
         attribution.setAlignment(Pos.CENTER);
         attribution.setSpacing(10);
 
-        VBox r = new VBox(export,automaticAttribution);
+        VBox r = new VBox(export,automaticAttribution,listOfTeachers);
         r.setAlignment(Pos.CENTER);
-        r.setSpacing(10);
+        r.setSpacing(10);;
 
-        VBox lists = new VBox(listOfTeachers,teacherData);
-        lists.setSpacing(10);
-        lists.setAlignment(Pos.CENTER);
-
-        HBox center = new HBox(r,attribution,lists);
+        HBox center = new HBox(r,attribution);
         center.setAlignment(Pos.CENTER);
         setCenter(center);
 
-        VBox right = new VBox(previous,closePhase);
+        VBox right = new VBox(previous,closePhase,list);
         right.setSpacing(10);
+        right.setAlignment(Pos.TOP_RIGHT);
 
         setRight(right);
+
+        setLeft(teachersList);
     }
 }

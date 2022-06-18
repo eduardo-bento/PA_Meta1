@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.fsm;
 
 import pt.isec.pa.apoio_poe.data.Data;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
@@ -197,6 +198,31 @@ public abstract class ContextAdapter implements IState, Serializable {
     @Override
     public List<Proposal> getProposalsAvailableList() {
         return null;
+    }
+
+    @Override
+    public List<FinalProposal> getFinalProposalWithoutTeacherList() {
+        return null;
+    }
+
+    @Override
+    public List<FinalProposal> getFinalProposalWithTeacherList() {
+        return null;
+    }
+
+    @Override
+    public float getTeachersAverage() {
+        return 0;
+    }
+
+    @Override
+    public int getTeachersHighest() {
+        return 0;
+    }
+
+    @Override
+    public int getTeachersLowest() {
+        return 0;
     }
 
     @Override

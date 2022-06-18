@@ -269,9 +269,34 @@ public class Data implements Serializable {
     public String getAttributionTeacherData() {
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
         TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
-        return "List of students with teacher associated\n" + manager.getFinalProposalWithTeacher() +
+        return "List of students with teacher associated\n" + manager.getFinalProposalWithTeacherList() +
                 "List of students without teacher associated\n" + manager.getFinalProposalWithoutTeacher() +
                 "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
+    }
+
+    public float getTeachersAverage(){
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return teacherManager.average();
+    }
+
+    public int getTeachersHighest(){
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return teacherManager.highest();
+    }
+
+    public int getTeachersLowest(){
+        TeacherManager teacherManager = (TeacherManager) management.get(Teacher.class);
+        return teacherManager.lowest();
+    }
+
+    public List<FinalProposal> getFinalProposalWithoutTeacherList(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getFinalProposalWithoutTeacherList();
+    }
+
+    public List<FinalProposal> getFinalProposalWithTeacherList(){
+        FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
+        return manager.getFinalProposalWithTeacherList();
     }
 
     public void automaticTeacherAttribution() {
@@ -319,7 +344,7 @@ public class Data implements Serializable {
 
     public List<FinalProposal> teacherQuerying(){
         FinalProposalManager manager = (FinalProposalManager) management.get(FinalProposal.class);
-        return manager.getFinalProposalWithTeacher();
+        return manager.getFinalProposalWithTeacherList();
     }
 
     public boolean manualTeacherRemove(String proposalID) {

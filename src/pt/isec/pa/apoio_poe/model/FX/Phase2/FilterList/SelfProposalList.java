@@ -8,7 +8,15 @@ public class SelfProposalList extends ListView<Proposal> {
     private ModelManager model;
     public SelfProposalList(ModelManager model) {
         this.model = model;
+        createViews();
         registerHandlers();
+    }
+
+    private void createViews() {
+        if (model.getSelfProposalList() != null){
+            System.out.println("here");
+            this.getItems().addAll(model.getSelfProposalList());
+        }
     }
 
     private void registerHandlers() {

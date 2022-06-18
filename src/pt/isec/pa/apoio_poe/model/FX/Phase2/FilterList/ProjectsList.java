@@ -8,7 +8,14 @@ public class ProjectsList extends ListView<Proposal> {
     private ModelManager model;
     public ProjectsList(ModelManager model) {
         this.model = model;
+        createViews();
         registerHandlers();
+    }
+
+    private void createViews() {
+        if (model.getProjectsList() != null){
+            this.getItems().addAll(model.getProjectsList());
+        }
     }
 
     private void registerHandlers() {

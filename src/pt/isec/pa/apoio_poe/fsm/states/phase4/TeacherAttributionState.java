@@ -4,6 +4,7 @@ import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +33,31 @@ public class TeacherAttributionState extends ContextAdapter {
     @Override
     public void manualTeacherAttribution(String proposalID, String teacherID) {
         data.manualTeacherAttribution(proposalID,teacherID);
+    }
+
+    @Override
+    public List<FinalProposal> getFinalProposalWithoutTeacherList() {
+        return data.getFinalProposalWithoutTeacherList();
+    }
+
+    @Override
+    public List<FinalProposal> getFinalProposalWithTeacherList() {
+        return data.getFinalProposalWithTeacherList();
+    }
+
+    @Override
+    public float getTeachersAverage() {
+        return data.getTeachersAverage();
+    }
+
+    @Override
+    public int getTeachersHighest() {
+        return data.getTeachersHighest();
+    }
+
+    @Override
+    public int getTeachersLowest() {
+        return data.getTeachersLowest();
     }
 
     @Override

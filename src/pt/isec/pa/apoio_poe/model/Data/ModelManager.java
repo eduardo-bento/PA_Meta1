@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.Data;
 import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.fsm.IState;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
@@ -174,6 +175,27 @@ public class ModelManager {
 
     public String getAttributionTeacherData(){
         return context.getAttributionTeacherData();
+    }
+
+    public List<FinalProposal> getFinalProposalWithoutTeacherList() {
+        return context.getFinalProposalWithoutTeacherList();
+    }
+
+    public List<FinalProposal> getFinalProposalWithTeacherList() {
+        return context.getFinalProposalWithTeacherList();
+    }
+
+
+    public float getTeachersAverage() {
+        return context.getTeachersAverage();
+    }
+
+    public int getTeachersHighest() {
+        return context.getTeachersHighest();
+    }
+
+    public int getTeachersLowest() {
+        return context.getTeachersLowest();
     }
 
     public void automaticTeacherAttribution(){

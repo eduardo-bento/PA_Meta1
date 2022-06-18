@@ -10,7 +10,14 @@ public class ProposalWithCandidacyList extends ListView<Proposal> {
     private ModelManager model;
     public ProposalWithCandidacyList(ModelManager model) {
         this.model = model;
+        createViews();
         registerHandlers();
+    }
+
+    private void createViews() {
+        if (model.getProposalsWithCandidacyList() != null){
+            this.getItems().addAll(model.getProposalsWithCandidacyList());
+        }
     }
 
     private void registerHandlers() {
