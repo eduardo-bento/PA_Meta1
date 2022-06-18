@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.fsm.Context;
 import pt.isec.pa.apoio_poe.fsm.ContextAdapter;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 
 import java.util.List;
 
@@ -30,6 +32,41 @@ public class CandidacyStateLock extends ContextAdapter {
             return;
         }
         changeState(EState.PROPOSALS_PHASE_LOCK);
+    }
+
+    @Override
+    public List<Student> getStudentsListWithoutCandidacy() {
+        return data.getStudentsListWithoutCandidacy();
+    }
+
+    @Override
+    public List<Student> getStudentsListWithCandidacy() {
+        return data.getStudentsListWithCandidacy();
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithoutCandidacyList() {
+        return data.getProposalsWithoutCandidacyList();
+    }
+
+    @Override
+    public List<Proposal> getProposalsWithCandidacyList() {
+        return data.getProposalsWithCandidacyList();
+    }
+
+    @Override
+    public List<Proposal> getSelfProposalList() {
+        return data.getSelfProposalsList();
+    }
+
+    @Override
+    public List<Proposal> getProjectsList() {
+        return data.getProjectsList();
+    }
+
+    @Override
+    public List<Student> getStudentsListNoProposal() {
+        return data.getStudentsListNoProposal();
     }
 
     @Override

@@ -275,6 +275,16 @@ public class ProposalManager extends Manager<Proposal> {
         return builder.toString();
     }
 
+    public List<Proposal> getProposalsAvailableList(){
+        List<Proposal> proposals = new ArrayList<>();
+        for (Proposal proposal : list){
+            if (!proposal.isAssigned() && proposal.getStudent() == -1)
+                proposals.add(proposal);
+        }
+        return proposals;
+    }
+
+
     public String getProposalsAttributed(){
         StringBuilder builder = new StringBuilder();
         for (Proposal proposal : list){
@@ -282,6 +292,15 @@ public class ProposalManager extends Manager<Proposal> {
                 builder.append(proposal).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<Proposal> getProposalsAttributedList(){
+        List<Proposal> proposals = new ArrayList<>();
+        for (Proposal proposal : list){
+            if (proposal.isAssigned())
+                proposals.add(proposal);
+        }
+        return proposals;
     }
 
     public int branchCount(String branch){

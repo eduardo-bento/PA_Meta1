@@ -76,12 +76,17 @@ public class StudentFx extends BorderPane {
         removeBox.setSpacing(30);
         removeBox.setAlignment(Pos.CENTER);
 
-        HBox center = new HBox(insertStudent,readFromFile,edit);
+        HBox center = new HBox(insertStudent,edit);
         center.setAlignment(Pos.CENTER);
-        center.setSpacing(40);
+        center.setSpacing(200);
+
+        listPane.setMinHeight(500);
+        VBox left = new VBox(readFromFile,listPane);
+        left.setAlignment(Pos.CENTER);
+        left.setSpacing(10);
 
         setCenter(center);
-        setLeft(listPane);
+        setLeft(left);
         setRight(previous);
     }
 }

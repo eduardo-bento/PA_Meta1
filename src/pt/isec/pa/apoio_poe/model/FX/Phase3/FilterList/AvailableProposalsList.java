@@ -1,12 +1,12 @@
-package pt.isec.pa.apoio_poe.model.FX.Phase2.FilterList;
+package pt.isec.pa.apoio_poe.model.FX.Phase3.FilterList;
 
 import javafx.scene.control.ListView;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 
-public class SelfProposalList extends ListView<Proposal> {
+public class AvailableProposalsList extends ListView<Proposal> {
     private ModelManager model;
-    public SelfProposalList(ModelManager model) {
+    public AvailableProposalsList(ModelManager model) {
         this.model = model;
         registerHandlers();
     }
@@ -18,8 +18,8 @@ public class SelfProposalList extends ListView<Proposal> {
 
     private void update() {
         this.getItems().clear();
-        if (model.getSelfProposalList() != null){
-            this.getItems().addAll(model.getSelfProposalList());
+        if (model.getProposalsAvailableList() != null){
+            this.getItems().addAll(model.getProposalsAvailableList());
         }
     }
 }

@@ -24,13 +24,14 @@ public class ReadFromFile extends VBox {
         this.getChildren().addAll(readFromFile,idField);
         this.setPadding(new Insets(10));
         //this.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #EFEAD8;");
-
+        readFromFile.setMinWidth(200);
+        idField.setMinWidth(200);
         this.setMaxWidth(200);
         this.setMinWidth(200);
-        this.setMaxHeight(400);
+        //this.setMaxHeight(400);
         //this.setMinHeight(400);
 
-        this.setSpacing(30);
+        this.setSpacing(10);
 
         this.setAlignment(Pos.CENTER);
     }

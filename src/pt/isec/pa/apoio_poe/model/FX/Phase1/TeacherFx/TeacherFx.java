@@ -106,7 +106,7 @@ public class TeacherFx extends BorderPane {
         vBox.getChildren().addAll(insert,emailField,nameField);
         vBox.setMaxWidth(200);
         vBox.setMinWidth(200);
-        vBox.setSpacing(30);
+        vBox.setSpacing(10);
         vBox.setAlignment(Pos.CENTER_LEFT);
         vBox.setAlignment(Pos.CENTER);
 
@@ -115,7 +115,7 @@ public class TeacherFx extends BorderPane {
         center.setSpacing(80);
 
         center.setAlignment(Pos.CENTER);
-
+        center.setMinWidth(1);
         setCenter(center);
         setLeft(list);
         setRight(previous);

@@ -153,6 +153,16 @@ public class StudentManager extends Manager<Student> {
         return builder.toString();
     }
 
+    public List<Student> getStudentsWithNoProposalList(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (!student.hasAssignedProposal())
+                students.add(student);
+        }
+        return students;
+    }
+
+
     public String getStudentsWithSelfProposal(){
         StringBuilder builder = new StringBuilder();
         List<Proposal> proposals = data.getSelfProposalList();

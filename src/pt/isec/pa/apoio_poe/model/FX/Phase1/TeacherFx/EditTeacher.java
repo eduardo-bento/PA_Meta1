@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase1.TeacherFx;
 
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -54,7 +55,7 @@ public class EditTeacher extends VBox {
 
         this.getChildren().addAll(button,field);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(30);
+        this.setSpacing(10);
     }
 
 }

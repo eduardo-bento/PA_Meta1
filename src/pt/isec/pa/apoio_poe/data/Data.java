@@ -352,4 +352,19 @@ public class Data implements Serializable {
         StudentManager manager = (StudentManager) management.get(Student.class);
         return manager.getStudents();
     }
+
+    public List<Student> getStudentsListWithSelfProposal() {
+        StudentManager manager = (StudentManager) management.get(Student.class);
+        return manager.getStudentsListWithSelfProposal();
+    }
+
+    public List<Proposal> getProposalsAvailableList() {
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getProposalsAvailableList();
+    }
+
+    public List<Proposal> getProposalsAttributedList() {
+        ProposalManager manager = (ProposalManager) management.get(Proposal.class);
+        return manager.getProposalsAttributedList();
+    }
 }

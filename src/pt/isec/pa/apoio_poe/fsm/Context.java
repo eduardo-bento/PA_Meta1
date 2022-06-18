@@ -82,8 +82,20 @@ public class Context {
         return state.getProposalsWithoutCandidacyList();
     }
 
+    public List<Proposal> getProposalsAttributedList() {
+        return state.getProposalsAttributedList();
+    }
+
+    public List<Proposal> getProposalsAvailableList() {
+        return state.getProposalsAvailableList();
+    }
+
     public List<Proposal> getSelfProposalList() {
         return state.getSelfProposalList();
+    }
+
+    public List<Student> getStudentsListWithSelfProposal() {
+        return state.getStudentsListWithSelfProposal();
     }
 
     public boolean readFromFile(String filePath){

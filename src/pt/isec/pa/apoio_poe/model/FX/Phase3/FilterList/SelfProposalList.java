@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.model.FX.Phase2.FilterList;
+package pt.isec.pa.apoio_poe.model.FX.Phase3.FilterList;
 
 import javafx.scene.control.ListView;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
@@ -18,7 +18,7 @@ public class SelfProposalList extends ListView<Proposal> {
 
     private void update() {
         this.getItems().clear();
-        if (model.getSelfProposalList() != null){
+        if (model.getProjectsList() != null){
             this.getItems().addAll(model.getSelfProposalList());
         }
     }

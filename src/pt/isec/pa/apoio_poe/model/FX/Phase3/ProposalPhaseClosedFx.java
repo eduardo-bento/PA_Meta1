@@ -16,13 +16,12 @@ import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import java.util.Collections;
 
 public class ProposalPhaseClosedFx extends BorderPane {
-    ChoiceBox<String> filter;
-    MyButton filerButton,exportButton;
-    Label filterLabel,listOfStudents;
+    ModelManager model;
+    MyButton exportButton,next,previous;
+    StudentsList studentsList;
+    FilterProposal filterProposal;
     TextField exportField;
 
-    MyButton next, previous;
-    ModelManager model;
     public ProposalPhaseClosedFx(ModelManager model) {
         this.model = model;
         createViews();
@@ -32,7 +31,6 @@ public class ProposalPhaseClosedFx extends BorderPane {
 
     private void update() {
         this.setVisible(model != null && model.getState() == EState.PROPOSALS_PHASE_LOCK);
-        listOfStudents.setText(model.getListOfStudents());
     }
 
     private void registerHandlers() {
@@ -60,26 +58,11 @@ public class ProposalPhaseClosedFx extends BorderPane {
     private void createViews() {
         this.setStyle("-fx-background-color: #5F7161;");
 
-        filter = new ChoiceBox<>(FXCollections.observableArrayList(
-                "Proposals","SelfProposals","Teacher proposals","Available proposals","Proposals already attributed"));
-        filter.setValue("Available proposals");
-        filter.setStyle("-fx-background-color: #D0C9C0;");
-        filerButton = new MyButton("Get");
-        filterLabel = new Label(model.getFilterList(Collections.singletonList(filter.getSelectionModel().getSelectedIndex())));
-        filterLabel.setPadding(new Insets(10));
-        filterLabel.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
-
-        VBox filters = new VBox(filerButton,filter,filterLabel);
-        filters.setAlignment(Pos.CENTER);
-        filters.setSpacing(10);
+        studentsList = new StudentsList(model);
+        filterProposal = new FilterProposal(model);
 
         next = new MyButton("Next");
         previous = new MyButton("Back");
-
-        listOfStudents = new Label();
-        listOfStudents.setText(model.getListOfStudents());
-        listOfStudents.setPadding(new Insets(10));
-        listOfStudents.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
 
         exportButton = new MyButton("export");
         exportField = new TextField();
@@ -89,7 +72,7 @@ public class ProposalPhaseClosedFx extends BorderPane {
         export.setAlignment(Pos.CENTER);
         export.setSpacing(10);
 
-        HBox center = new HBox(filters,listOfStudents,export);
+        HBox center = new HBox(filterProposal,studentsList,export);
         center.setAlignment(Pos.CENTER);
         center.setSpacing(10);
 

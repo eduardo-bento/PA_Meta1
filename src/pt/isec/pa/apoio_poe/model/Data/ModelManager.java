@@ -134,9 +134,22 @@ public class ModelManager {
         return context.getProposalsWithoutCandidacyList();
     }
 
+    public List<Student> getStudentsListWithSelfProposal() {
+        return context.getStudentsListWithSelfProposal();
+    }
+
     public List<Proposal> getSelfProposalList() {
         return context.getSelfProposalList();
     }
+
+    public List<Proposal> getProposalsAvailableList() {
+        return context.getProposalsAvailableList();
+    }
+
+    public List<Proposal> getProposalsAttributedList() {
+        return context.getProposalsAttributedList();
+    }
+
 
     public boolean readFromFile(String filePath){
         boolean value = context.readFromFile(filePath);

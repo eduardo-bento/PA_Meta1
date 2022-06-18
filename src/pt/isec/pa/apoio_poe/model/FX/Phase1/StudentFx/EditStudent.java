@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx;
 
 import com.sun.javafx.scene.control.FakeFocusTextField;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -81,13 +82,20 @@ public class EditStudent extends VBox {
         button = new MyButton("Change");
         choiceBox.setStyle("-fx-background-color: #D0C9C0;");
 
-        VBox choose = new VBox(choiceBox,button);
-        choose.setSpacing(2);
+        VBox choose = new VBox(button,choiceBox,field);
+        choose.setSpacing(10);
         choose.setAlignment(Pos.CENTER);
+
+        this.setMaxWidth(250);
+        this.setMinWidth(250);
+        this.setMaxHeight(150);
+        this.setPadding(new Insets(10));
+        this.setMinHeight(150);
+        //this.setStyle("-fx-background-radius: 6; -fx-background-color: #5A6E5D;");
+
         field.setPromptText("Change " + choiceBox.getValue());
-        this.getChildren().addAll(choose,field);
+        this.getChildren().addAll(choose);
         this.setAlignment(Pos.CENTER);
-        this.setSpacing(30);
     }
 
 }

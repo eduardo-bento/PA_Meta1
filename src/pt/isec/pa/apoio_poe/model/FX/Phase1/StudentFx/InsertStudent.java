@@ -90,7 +90,7 @@ public class InsertStudent extends VBox {
                 )
         );
         HBox v = new HBox(slider,value);
-
+        v.setAlignment(Pos.CENTER);
         VBox classification = new VBox(classificationTitle,v);
         classification.maxWidth(200);
         insert = new MyButton("Insert");
@@ -128,15 +128,18 @@ public class InsertStudent extends VBox {
         emailField.setPromptText("Enter your email.");
 
         HBox chooseBoxes = new HBox(typesBox,curseBox,branchBox);
-        chooseBoxes.setSpacing(5);
+        chooseBoxes.setSpacing(10);
+        chooseBoxes.setAlignment(Pos.CENTER);
+        classification.setAlignment(Pos.CENTER);
         this.getChildren().addAll(insert,idField,nameField,emailField,chooseBoxes,classification);
         this.setAlignment(Pos.CENTER);
-        this.setMaxWidth(200);
-        this.setMinWidth(200);
-        this.setMaxHeight(400);
-        this.setMinHeight(400);
-
-        this.setSpacing(30);
+        this.setMaxWidth(250);
+        this.setMinWidth(250);
+        this.setMaxHeight(250);
+        this.setPadding(new Insets(10));
+        this.setMinHeight(250);
+        //this.setStyle("-fx-background-radius: 6; -fx-background-color: #5A6E5D;");
+        this.setSpacing(10);
     }
 
 

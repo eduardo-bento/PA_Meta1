@@ -23,7 +23,10 @@ public interface IState {
     List<Student> getStudentsListWithoutCandidacy();
     List<Student> getStudentsListWithCandidacy();
     List<Student> getStudentsListNoProposal();
+    List<Student> getStudentsListWithSelfProposal();
 
+    List<Proposal> getProposalsAvailableList();
+    List<Proposal> getProposalsAttributedList();
     List<Proposal> getProposalsWithCandidacyList();
     List<Proposal>  getProjectsList();
     List<Proposal> getProposalsWithoutCandidacyList();

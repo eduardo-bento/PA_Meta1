@@ -180,7 +180,22 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
+    public List<Student> getStudentsListWithSelfProposal() {
+        return null;
+    }
+
+    @Override
     public List<Proposal> getProposalsWithoutCandidacyList() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getProposalsAttributedList() {
+        return null;
+    }
+
+    @Override
+    public List<Proposal> getProposalsAvailableList() {
         return null;
     }
 

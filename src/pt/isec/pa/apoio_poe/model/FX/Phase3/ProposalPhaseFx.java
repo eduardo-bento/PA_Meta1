@@ -12,8 +12,13 @@ import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithCandidacy;
+import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithoutCandidacy;
+import pt.isec.pa.apoio_poe.model.FX.Phase3.List.StudentsSelfProposal;
+import pt.isec.pa.apoio_poe.model.FX.Phase3.List.StudentsWithNoProposal;
 import pt.isec.pa.apoio_poe.model.FX.Phase4.List;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -22,7 +27,8 @@ public class ProposalPhaseFx extends BorderPane {
     MyButton previous,next,closePhase, automaticAttributionForSelfProposalAndProject,
     automaticAttributionForStudentsWithoutDefinedAttribution,
             manualAttribution,manualRemove,undo,redo;
-
+    StudentsList studentsList;
+    FilterProposal filterProposal;
     ChoiceBox<String> filter;
 
     TextField proposalId,studentId;
@@ -118,6 +124,9 @@ public class ProposalPhaseFx extends BorderPane {
         automaticAttributionForStudentsWithoutDefinedAttribution = new MyButton("Automatic Attribution For Students Without Defined Attribution");
         automaticAttributionForStudentsWithoutDefinedAttribution.setMaxWidth(200);
 
+        studentsList = new StudentsList(model);
+        filterProposal = new FilterProposal(model);
+
         undo = new MyButton("Undo");
         redo = new MyButton("Redo");
 
@@ -164,11 +173,11 @@ public class ProposalPhaseFx extends BorderPane {
         attributions.setAlignment(Pos.CENTER);
         attributions.setSpacing(30);
 
-        VBox left = new VBox(automaticAttributionForSelfProposalAndProject,automaticAttributionForStudentsWithoutDefinedAttribution,listOfStudents);
+        VBox left = new VBox(automaticAttributionForSelfProposalAndProject,automaticAttributionForStudentsWithoutDefinedAttribution);
         left.setSpacing(10);
         left.setAlignment(Pos.CENTER);
 
-        HBox center = new HBox(attributions,filters);
+        HBox center = new HBox(attributions,filterProposal);
         center.setSpacing(60);
         center.setAlignment(Pos.CENTER);
         center.setPrefWidth(300);
@@ -180,6 +189,7 @@ public class ProposalPhaseFx extends BorderPane {
         box.setSpacing(50);
         box.setAlignment(Pos.CENTER);
 
+        setLeft(studentsList);
         setRight(right);
         setCenter(box);
     }
