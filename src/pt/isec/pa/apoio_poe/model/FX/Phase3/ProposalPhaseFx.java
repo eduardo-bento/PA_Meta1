@@ -189,6 +189,7 @@ public class ProposalPhaseFx extends BorderPane {
         box.setSpacing(50);
         box.setAlignment(Pos.CENTER);
 
+        studentsList.setPadding(new Insets(10));
         setLeft(studentsList);
         setRight(right);
         setCenter(box);

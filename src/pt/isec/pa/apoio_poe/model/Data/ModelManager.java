@@ -207,6 +207,18 @@ public class ModelManager {
         return context.getData();
     }
 
+    public List<FinalProposal> getFinalProposalsList() {
+        return context.getFinalProposalsList();
+    }
+
+    public List<Student> getStudentsWithAssignedProposalList() {
+        return context.getStudentsWithAssignedProposalList();
+    }
+
+    public List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList() {
+        return context.getStudentsWithoutFinalProposalAndWithCandidacyList();
+    }
+
     public void manualRemove(String proposalID){
         context.manualRemove(proposalID);
         pcs.firePropertyChange(PROP_DATA,null,null);

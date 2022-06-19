@@ -206,11 +206,15 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return proposals;
     }
 
-    public String listOfFinalProposals(){
+    public String finalProposals(){
         StringBuilder builder = new StringBuilder();
         for (FinalProposal finalProposal : list){
             builder.append(finalProposal.getProposal()).append("\n");
         }
         return builder.toString();
+    }
+
+    public List<FinalProposal> getFinalProposalsList(){
+        return new ArrayList<>(list);
     }
 }

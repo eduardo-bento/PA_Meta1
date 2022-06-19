@@ -2,8 +2,7 @@ package pt.isec.pa.apoio_poe.model.FX.Phase1.ProposalFx.List;
 
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Data.Student.Student;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.FX.Helper.ListPane;
 import pt.isec.pa.apoio_poe.model.Log;
 
 

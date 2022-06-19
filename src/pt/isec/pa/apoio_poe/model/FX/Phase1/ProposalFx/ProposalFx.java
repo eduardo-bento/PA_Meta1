@@ -114,9 +114,10 @@ public class ProposalFx extends BorderPane {
         VBox left = new VBox(type,previous,new VBox(new Label("Students"),students),new VBox(new Label("Teachers"),teachers));
         left.setSpacing(10);
 
-
         setLeft(left);
         setCenter(blocks);
+
+        list.setMinHeight(500);
         VBox right = new VBox(new ReadFromFile(model),list);
         right.setAlignment(Pos.CENTER);
         right.setSpacing(10);

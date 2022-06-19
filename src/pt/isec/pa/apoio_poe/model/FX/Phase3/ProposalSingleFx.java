@@ -58,6 +58,8 @@ public class ProposalSingleFx extends BorderPane {
         studentsList = new StudentsList(model);
         filterProposal = new FilterProposal(model);
 
+        studentsList.setPadding(new Insets(10));
+
         HBox center = new HBox(studentsList,automaticAttribution,filterProposal);
         center.setSpacing(10);
         center.setAlignment(Pos.CENTER);

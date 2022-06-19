@@ -4,7 +4,7 @@ import javafx.scene.layout.BorderPane;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.FX.Helper.ListPane;
 
 public class Template extends BorderPane {
     private ModelManager model;

@@ -312,9 +312,25 @@ public class Data implements Serializable {
         return "List of students with attributed proposal\n" + studentManager.getStudentsWithAssignedProposal() +
                 "List of students without attributed proposal but with candidacy options\n" + studentManager.getStudentsWithoutFinalProposalAndWithCandidacy() +
                 "Available Proposals\n" + proposalManager.getProposalsAvailable() +
-                "Proposals Attributed\n" + finalManager.listOfFinalProposals() +
+                "Proposals Attributed\n" + finalManager.finalProposals() +
                 "Average: " + teacherManager.average() + " Max: " + teacherManager.highest() + " Min: " + teacherManager.lowest();
     }
+
+    public List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList(){
+        StudentManager studentManager = (StudentManager) management.get(Student.class);
+        return studentManager.getStudentsWithoutFinalProposalAndWithCandidacyList();
+    }
+
+    public List<Student> getStudentsWithAssignedProposalList(){
+        StudentManager studentManager = (StudentManager) management.get(Student.class);
+        return studentManager.getStudentsWithAssignedProposalList();
+    }
+
+    public List<FinalProposal> getFinalProposalsList(){
+        FinalProposalManager finalManager = (FinalProposalManager) management.get(FinalProposal.class);
+        return finalManager.getFinalProposalsList();
+    }
+
 
     //Phase 4
     public boolean manualTeacherAttribution(String proposalID, String teacherID) {

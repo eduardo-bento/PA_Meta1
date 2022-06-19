@@ -26,6 +26,9 @@ public interface IState {
     List<Student> getStudentsListNoProposal();
     List<Student> getStudentsListWithSelfProposal();
 
+    List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList();
+    List<Student> getStudentsWithAssignedProposalList();
+
     List<Proposal> getProposalsAvailableList();
     List<Proposal> getProposalsAttributedList();
     List<Proposal> getProposalsWithCandidacyList();
@@ -35,6 +38,8 @@ public interface IState {
 
     List<FinalProposal> getFinalProposalWithoutTeacherList();
     List<FinalProposal> getFinalProposalWithTeacherList();
+
+    List<FinalProposal> getFinalProposalsList();
 
     float getTeachersAverage();
     int getTeachersHighest();

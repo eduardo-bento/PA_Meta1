@@ -1,5 +1,6 @@
-package pt.isec.pa.apoio_poe.model.FX;
+package pt.isec.pa.apoio_poe.model.FX.Helper;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Separator;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;

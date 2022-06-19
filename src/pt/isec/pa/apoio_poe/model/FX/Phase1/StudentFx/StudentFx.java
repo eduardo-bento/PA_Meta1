@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -9,8 +10,6 @@ import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
 import pt.isec.pa.apoio_poe.model.FX.Helper.ReadFromFile;
-import pt.isec.pa.apoio_poe.model.FX.Helper.Remove;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
 
 public class StudentFx extends BorderPane {
     ModelManager model;
@@ -83,7 +82,9 @@ public class StudentFx extends BorderPane {
         listPane.setMinHeight(500);
         VBox left = new VBox(readFromFile,listPane);
         left.setAlignment(Pos.CENTER);
+
         left.setSpacing(10);
+        left.setPadding(new Insets(30));
 
         setCenter(center);
         setLeft(left);

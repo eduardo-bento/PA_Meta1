@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase4;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -37,6 +38,7 @@ public class List extends VBox {
         teachersValues.setSpacing(10);
         teachersValues.setAlignment(Pos.CENTER);
 
+        this.setPadding(new Insets(20));
         this.getChildren().addAll(new VBox(new Label("Without teachers"),finalProposalWithoutTeacher),new VBox(new Label("With teachers"),finalProposalWithTeacher,teachersValues));
         this.setSpacing(20);
         this.setAlignment(Pos.CENTER);

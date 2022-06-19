@@ -63,7 +63,7 @@ public class FilterProposal extends VBox {
                 "SelfProposals","Teacher proposals",
                 "Available proposals","Proposals already attributed")
         );
-        candidacy.setValue("Available proposals");
+        candidacy.setValue("Proposals already attributed");
         candidacy.setStyle("-fx-background-color: #D0C9C0;");
 
         alreadyAttributedList = new AlreadyAttributedList(model);

@@ -171,6 +171,18 @@ public class Context {
         state.exportFile(filePath);
     }
 
+    public List<FinalProposal> getFinalProposalsList() {
+        return state.getFinalProposalsList();
+    }
+
+    public List<Student> getStudentsWithAssignedProposalList() {
+        return state.getStudentsWithAssignedProposalList();
+    }
+
+    public List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList() {
+        return state.getStudentsWithoutFinalProposalAndWithCandidacyList();
+    }
+
     public boolean manualTeacherRemove(String proposalID){
        return state.manualTeacherRemove(proposalID);
     }

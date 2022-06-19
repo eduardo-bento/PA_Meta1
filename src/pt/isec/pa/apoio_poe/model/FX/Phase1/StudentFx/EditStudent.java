@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model.FX.Phase1.StudentFx;
 
-import com.sun.javafx.scene.control.FakeFocusTextField;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,7 +9,6 @@ import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
 
 public class EditStudent extends VBox {
     ModelManager model;

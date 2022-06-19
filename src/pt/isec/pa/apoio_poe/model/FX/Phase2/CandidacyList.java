@@ -2,7 +2,7 @@ package pt.isec.pa.apoio_poe.model.FX.Phase2;
 
 import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.FX.Helper.ListPane;
 
 
 public class CandidacyList extends ListPane {

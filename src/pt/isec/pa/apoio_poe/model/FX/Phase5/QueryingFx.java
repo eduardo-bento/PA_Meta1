@@ -71,16 +71,17 @@ public class QueryingFx extends BorderPane {
         final NumberAxis yAxis = new NumberAxis();
 
         //bar = new BarChart<String,Integer>(xAxis,yAxis);
-
+        
         exit = new MyButton("Exit");
         exportToFile = new ExportToFile(model);
-
+        
         estagios_projetos = new PieChart();
         proposals_assigned = new PieChart();
         data = new Data(model);
 
-        HBox center = new HBox(exit,exportToFile,data, new VBox(estagios_projetos,proposals_assigned));
+        HBox center = new HBox(exportToFile,data,new VBox(estagios_projetos,proposals_assigned));
         center.setAlignment(Pos.CENTER);
         setCenter(center);
+        setLeft(exit);
     }
 }

@@ -226,6 +226,21 @@ public abstract class ContextAdapter implements IState, Serializable {
     }
 
     @Override
+    public List<FinalProposal> getFinalProposalsList() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentsWithAssignedProposalList() {
+        return null;
+    }
+
+    @Override
+    public List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList() {
+        return null;
+    }
+
+    @Override
     public String getFilterList(List<Integer> filters) {
         return null;
     }

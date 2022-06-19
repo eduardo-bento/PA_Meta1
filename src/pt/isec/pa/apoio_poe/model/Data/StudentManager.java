@@ -202,6 +202,16 @@ public class StudentManager extends Manager<Student> {
         return builder.toString();
     }
 
+    public List<Student> getStudentsWithoutFinalProposalAndWithCandidacyList(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (student.hasCandidacy() && student.hasAssignedProposal()){
+                students.add(student);
+            }
+        }
+        return students;
+    }
+
     public String getStudentsWithAssignedProposal(){
         StringBuilder builder = new StringBuilder();
         for (Student student : list){
@@ -210,4 +220,14 @@ public class StudentManager extends Manager<Student> {
         }
         return builder.toString();
     }
+
+    public List<Student> getStudentsWithAssignedProposalList(){
+        List<Student> students = new ArrayList<>();
+        for (Student student : list){
+            if (student.hasAssignedProposal())
+                students.add(student);
+        }
+        return students;
+    }
+
 }

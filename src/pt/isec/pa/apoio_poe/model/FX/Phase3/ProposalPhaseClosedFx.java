@@ -61,6 +61,8 @@ public class ProposalPhaseClosedFx extends BorderPane {
         studentsList = new StudentsList(model);
         filterProposal = new FilterProposal(model);
 
+        studentsList.setPadding(new Insets(10));
+
         next = new MyButton("Next");
         previous = new MyButton("Back");
 

@@ -9,12 +9,10 @@ import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.fsm.EState;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 import pt.isec.pa.apoio_poe.model.FX.Helper.MyButton;
-import pt.isec.pa.apoio_poe.model.FX.ListPane;
+import pt.isec.pa.apoio_poe.model.FX.Helper.ListPane;
 import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithCandidacy;
 import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithNoProposal;
 import pt.isec.pa.apoio_poe.model.FX.Phase2.List.StudentsWithoutCandidacy;
-
-import java.util.List;
 
 public class CandidacyClosedFx extends BorderPane {
     ModelManager model;
