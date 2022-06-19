@@ -11,6 +11,8 @@ import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 public class List extends VBox {
     private ModelManager model;
     private HBox teachersValues;
+    Label average,highest,lowest;
+
     public List(ModelManager model){
         this.model = model;
         createViews();
@@ -22,21 +24,25 @@ public class List extends VBox {
     }
 
     private void update(){
-        teachersValues = new HBox(new VBox(new Label("Average"),new Label(String.valueOf(model.getTeachersAverage()))),
-                new VBox(new Label("Lowest"),new Label(String.valueOf(model.getTeachersLowest()))),
-                new VBox(new Label("Highest"),new Label(String.valueOf(model.getTeachersHighest()))));
+        average.setText(String.valueOf(model.getTeachersAverage()));
+        lowest.setText(String.valueOf(model.getTeachersLowest()));
+        highest.setText(String.valueOf(model.getTeachersHighest()));
     }
 
     private void createViews() {
         FinalProposalWithoutTeacher finalProposalWithoutTeacher = new FinalProposalWithoutTeacher(model);
         FinalProposalWithTeacher finalProposalWithTeacher = new FinalProposalWithTeacher(model);
 
-        teachersValues = new HBox(new VBox(new Label("Average"),new Label(String.valueOf(model.getTeachersAverage()))),
-                new VBox(new Label("Lowest"),new Label(String.valueOf(model.getTeachersLowest()))),
-                new VBox(new Label("Highest"),new Label(String.valueOf(model.getTeachersHighest()))));
+        average = new Label(String.valueOf(model.getTeachersAverage()));
+        lowest = new Label(String.valueOf(model.getTeachersLowest()));
+        highest = new Label(String.valueOf(model.getTeachersHighest()));
 
-        teachersValues.setSpacing(10);
+        teachersValues = new HBox(new VBox(new Label("Average"),average),
+                new VBox(new Label("Lowest"),lowest),
+                new VBox(new Label("Highest"),highest));
+
         teachersValues.setAlignment(Pos.CENTER);
+        teachersValues.setSpacing(10);
 
         this.setPadding(new Insets(20));
         this.getChildren().addAll(new VBox(new Label("Without teachers"),finalProposalWithoutTeacher),new VBox(new Label("With teachers"),finalProposalWithTeacher,teachersValues));

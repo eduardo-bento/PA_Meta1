@@ -18,6 +18,7 @@ public class Data extends VBox {
     FinalProposals finalProposals;
     AvailableProposalsList availableProposalsList;
     HBox teachersValues;
+    Label average,highest,lowest;
 
     public Data(ModelManager model){
         this.model = model;
@@ -27,9 +28,9 @@ public class Data extends VBox {
     }
 
     private void update() {
-        teachersValues = new HBox(new VBox(new Label("Average"),new Label(String.valueOf(model.getTeachersAverage()))),
-                new VBox(new Label("Lowest"),new Label(String.valueOf(model.getTeachersLowest()))),
-                new VBox(new Label("Highest"),new Label(String.valueOf(model.getTeachersHighest()))));
+        average.setText(String.valueOf(model.getTeachersAverage()));
+        lowest.setText(String.valueOf(model.getTeachersLowest()));
+        highest.setText(String.valueOf(model.getTeachersHighest()));
     }
 
     private void registerHandlers() {
@@ -47,9 +48,13 @@ public class Data extends VBox {
         availableProposalsList = new AvailableProposalsList(model);
         availableProposalsList.setMaxHeight(200);
 
-        teachersValues = new HBox(new VBox(new Label("Average"),new Label(String.valueOf(model.getTeachersAverage()))),
-                new VBox(new Label("Lowest"),new Label(String.valueOf(model.getTeachersLowest()))),
-                new VBox(new Label("Highest"),new Label(String.valueOf(model.getTeachersHighest()))));
+        average = new Label(String.valueOf(model.getTeachersAverage()));
+        lowest = new Label(String.valueOf(model.getTeachersLowest()));
+        highest = new Label(String.valueOf(model.getTeachersHighest()));
+
+        teachersValues = new HBox(new VBox(new Label("Average"),average),
+                new VBox(new Label("Lowest"),lowest),
+                new VBox(new Label("Highest"),highest));
 
         teachersValues.setSpacing(10);
         teachersValues.setAlignment(Pos.CENTER);
