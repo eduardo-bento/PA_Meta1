@@ -22,7 +22,7 @@ public class ExportToFile extends VBox {
     private void registerHandlers(){
         exportToFile.setOnAction(event -> {
             String fileName;
-            fileName = exportToFile.getText();
+            fileName = filePath.getText();
             if (fileName.isEmpty()){
                 return;
             }

@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.model;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.Data.ModelManager;
@@ -22,6 +23,9 @@ public class MainJFX extends Application {
         stage.setTitle("App");
         stage.setMinWidth(400);
         stage.show();
+        stage.setOnCloseRequest(windowEvent -> {
+            Platform.exit();
+        });
 
         Stage stage2 = new Stage();
         RootPane root2 = new RootPane(model);
@@ -31,5 +35,8 @@ public class MainJFX extends Application {
         stage2.setTitle("App_v2");
         stage2.setMinWidth(400);
         stage2.show();
+        stage2.setOnCloseRequest(windowEvent -> {
+            Platform.exit();
+        });
     }
 }

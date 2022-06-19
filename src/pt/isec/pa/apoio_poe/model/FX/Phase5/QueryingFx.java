@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.model.FX.Phase5;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -78,6 +79,10 @@ public class QueryingFx extends BorderPane {
         estagios_projetos = new PieChart();
         proposals_assigned = new PieChart();
         data = new Data(model);
+        data.setStyle("-fx-background-radius: 6;" + "-fx-background-color: #D0C9C0;");
+        data.setPadding(new Insets(10));
+        data.setMaxHeight(500);
+        data.setMaxWidth(600);
 
         HBox center = new HBox(exportToFile,data,new VBox(estagios_projetos,proposals_assigned));
         center.setAlignment(Pos.CENTER);

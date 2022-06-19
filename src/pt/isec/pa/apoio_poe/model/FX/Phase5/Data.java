@@ -34,6 +34,7 @@ public class Data extends VBox {
 
     private void registerHandlers() {
         model.addPropertyChangeListener(ModelManager.PROP_DATA, evt -> update());
+        model.addPropertyChangeListener(ModelManager.PROP_STATE, evt -> update());
     }
 
     private void createViews() {
