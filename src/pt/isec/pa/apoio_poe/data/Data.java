@@ -2,6 +2,7 @@ package pt.isec.pa.apoio_poe.data;
 
 import pt.isec.pa.apoio_poe.model.Data.*;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposalManager.FinalProposalManager;
+import pt.isec.pa.apoio_poe.model.Data.FinalProposalManager.FinalProposalManagerReceiver;
 import pt.isec.pa.apoio_poe.model.Log;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
 import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;

@@ -5,7 +5,6 @@ import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.Data.Student.Student;
 
 public class AddProposal extends CommandAdapter {
-    FinalProposal proposal;
     String proposalID;
     long studentID;
 
@@ -17,10 +16,10 @@ public class AddProposal extends CommandAdapter {
 
     @Override
     public boolean execute() {
-        return receiver.manualAttribution(proposalID,studentID);
+        return receiver.manualAttribution_(proposalID,studentID);
     }
 
     public boolean undo() {
-        return receiver.manuelRemove(proposal.getProposal());
+        return receiver.manuelRemove(proposalID);
     }
 }

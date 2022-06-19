@@ -16,10 +16,10 @@ public class AddTeacher extends CommandAdapter {
 
     @Override
     public boolean execute() {
-        return receiver.manualTeacherAttribution(proposalID,teacherID);
+        return receiver.manualTeacherAttribution_(proposalID,teacherID);
     }
 
     public boolean undo() {
-        return receiver.manualTeacherRemove(proposalID);
+        return !receiver.manualTeacherRemove_(proposalID);
     }
 }

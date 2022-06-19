@@ -1,27 +1,18 @@
 package pt.isec.pa.apoio_poe.model.Data.FinalProposalManager;
 
-import pt.isec.pa.apoio_poe.model.Data.Candidacy.Candidacy;
+import pt.isec.pa.apoio_poe.data.Data;
 import pt.isec.pa.apoio_poe.model.Data.Command.Invoker;
 import pt.isec.pa.apoio_poe.model.Data.FinalProposal.FinalProposal;
-import pt.isec.pa.apoio_poe.model.Data.Proposals.Project;
-import pt.isec.pa.apoio_poe.model.Data.Proposals.Proposal;
-import pt.isec.pa.apoio_poe.model.Data.Proposals.SelfProposal;
-import pt.isec.pa.apoio_poe.model.Data.Student.Student;
-import pt.isec.pa.apoio_poe.model.Data.Student.StudentClassification;
-import pt.isec.pa.apoio_poe.model.Data.Teacher.Teacher;
-import pt.isec.pa.apoio_poe.model.Log;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FinalProposalManagerReceiver {
-    private FinalProposalManager receiver;
+    private final FinalProposalManager receiver;
     private final Invoker invokerProposal;
     private final Invoker invokerTeacher;
 
-    public FinalProposalManagerReceiver(FinalProposalManager finalProposal) {
-        this.receiver = finalProposal;
+    public FinalProposalManagerReceiver(Data data) {
+        this.receiver = new FinalProposalManager(data);
         invokerProposal = new Invoker();
         invokerTeacher = new Invoker();
     }
@@ -52,15 +43,15 @@ public class FinalProposalManagerReceiver {
     }
 
     public boolean undoProposal(){
-        return receiver.undoProposal();
+        return invokerProposal.undo();
     }
 
     public boolean redoProposal() {
-        return receiver.redoProposal();
+        return invokerProposal.redo();
     }
 
     public boolean manuelRemove(String proposalID){
-        return receiver.manuelRemove(proposalID);
+        return invokerProposal.invokeCommand(new RemoveProposal(receiver,proposalID));
     }
 
     public void automaticTeacherAttribution(){

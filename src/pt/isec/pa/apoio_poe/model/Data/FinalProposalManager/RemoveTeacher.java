@@ -15,15 +15,11 @@ public class RemoveTeacher extends CommandAdapter{
 
     @Override
     public boolean execute() {
-        String teacherID = receiver.manualTeacherRemove(proposalID);
-        if(teacherID.isEmpty()){
-            return false;
-        }
-        this.teacherID = teacherID;
-        return true;
+        teacherID = receiver.getProposal(proposalID).getTeacher();
+        return receiver.manualTeacherRemove_(proposalID);
     }
 
     public boolean undo() {
-        return receiver.manualTeacherAttribution(proposalID,teacherID);
+        return receiver.manualTeacherAttribution_(proposalID,teacherID);
     }
 }

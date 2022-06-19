@@ -106,6 +106,14 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     }
 
     public boolean manualAttribution(String proposalID, long studentID) {
+        return invokerProposal.invokeCommand(new AddProposal(this,proposalID,studentID));
+    }
+
+    public boolean manuelRemove(String proposalID){
+        return invokerProposal.invokeCommand(new RemoveProposal(this,proposalID));
+    }
+
+    public boolean manualAttribution_(String proposalID, long studentID) {
         Student student = find(studentID,Student.class);
         Proposal proposal = find(proposalID,Proposal.class);
         if (student == null || proposal == null) return false;
@@ -130,7 +138,7 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return invokerProposal.redo();
     }
 
-    public boolean manuelRemove(String proposalID){
+    public boolean manuelRemove_(String proposalID){
         Proposal proposal = find(proposalID,Proposal.class);
         if (proposal == null || proposal instanceof SelfProposal || proposal.getStudent() == -1) return false;
 
@@ -156,6 +164,10 @@ public class FinalProposalManager extends Manager<FinalProposal> {
     }
 
     public boolean manualTeacherAttribution(String proposalID, String teacherID) {
+        return invokerTeacher.invokeCommand(new AddTeacher(this,proposalID,teacherID));
+    }
+
+    public boolean manualTeacherAttribution_(String proposalID, String teacherID) {
         Teacher teacher = find(teacherID,Teacher.class);
         if (find(teacherID,Teacher.class) != null){
             FinalProposal proposal = getProposal(proposalID);
@@ -170,6 +182,32 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return false;
     }
 
+    public boolean undoTeacher(){
+        return invokerTeacher.undo();
+    }
+
+    public boolean redoTeacher(){
+        return invokerTeacher.redo();
+    }
+
+    public boolean manualTeacherRemove(String proposalID){
+        return invokerTeacher.invokeCommand(new RemoveTeacher(this,proposalID));
+    }
+
+    public boolean manualTeacherRemove_(String proposalID){
+        FinalProposal proposal = getProposal(proposalID);
+        if (proposal != null){
+            Teacher teacher = find(proposal.getTeacher(),Teacher.class);
+            Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
+                    " was removed from the proposal " + proposalID);
+            proposal.setTeacher("");
+            teacher.subToAmount();
+            return true;
+        }
+        return false;
+    }
+
+
     public FinalProposal getProposal(String proposalId){
         for (FinalProposal proposal : list){
             if (proposal.getProposal().equals(proposalId)){
@@ -179,26 +217,6 @@ public class FinalProposalManager extends Manager<FinalProposal> {
         return null;
     }
 
-    public boolean undoTeacher(){
-        return invokerTeacher.undo();
-    }
-
-    public boolean redoTeacher(){
-        return invokerTeacher.redo();
-    }
-
-    public String manualTeacherRemove(String proposalID){
-        FinalProposal proposal = getProposal(proposalID);
-        if (proposal != null){
-            Teacher teacher = find(proposal.getTeacher(),Teacher.class);
-            Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
-                    " was removed from the proposal " + proposalID);
-            proposal.setTeacher("");
-            teacher.subToAmount();
-            return proposal.getTeacher();
-        }
-        return "";
-    }
 
     public List<FinalProposal> getFinalProposalWithTeacherList(){
         List<FinalProposal> proposals = new ArrayList<>();
