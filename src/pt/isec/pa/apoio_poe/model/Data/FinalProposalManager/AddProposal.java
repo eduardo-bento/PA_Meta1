@@ -8,6 +8,7 @@ public class AddProposal extends CommandAdapter {
     FinalProposal proposal;
     String proposalID;
     long studentID;
+
     public AddProposal(FinalProposalManager receiver,String proposalID,long studentID) {
         super(receiver);
         this.proposalID = proposalID;
@@ -16,26 +17,10 @@ public class AddProposal extends CommandAdapter {
 
     @Override
     public boolean execute() {
-        Student student = receiver.find(studentID,Student.class);
-        Proposal proposal = receiver.find(proposalID,Proposal.class);
-        if (student == null || proposal == null) return false;
-
-        if (proposal.getStudent() != -1) return false;
-
-        FinalProposal finalProposal = receiver.find(studentID,FinalProposal.class);
-        if (finalProposal == null){
-            proposal.setStudent(studentID);
-            receiver.insert(new FinalProposal(studentID,proposalID,-1));
-        }
-        proposal.setAssigned(true);
-        receiver.linkToStudent(studentID);
-
-        this.proposal = new FinalProposal(studentID,proposalID,-1);
-        return true;
+        return receiver.manualAttribution(proposalID,studentID);
     }
 
     public boolean undo() {
-        receiver.manuelRemove(proposal.getProposal());
-        return true;
+        return receiver.manuelRemove(proposal.getProposal());
     }
 }

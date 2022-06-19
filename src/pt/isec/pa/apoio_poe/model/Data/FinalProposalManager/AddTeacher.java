@@ -16,22 +16,10 @@ public class AddTeacher extends CommandAdapter {
 
     @Override
     public boolean execute() {
-        Teacher teacher = receiver.find(teacherID,Teacher.class);
-        if (receiver.find(teacherID,Teacher.class) != null){
-            FinalProposal proposal = receiver.getProposal(proposalID);
-            if (proposal != null){
-                proposal.setTeacher(teacherID);
-                teacher.addToAmount();
-                Log.getInstance().addMessage("The teacher with email " + teacher.getEmail() +
-                        " was added to the proposal " + proposalID);
-                return true;
-            }
-        }
-        return false;
+        return receiver.manualTeacherAttribution(proposalID,teacherID);
     }
 
     public boolean undo() {
-        receiver.manualTeacherRemove(proposalID);
-        return true;
+        return receiver.manualTeacherRemove(proposalID);
     }
 }

@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="389b3476-46ab-4d23-a35b-cee808553c0b" name="Changes" comment="new">
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManagerReceiver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/RemoveTeacher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/d.data" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/q.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/fsm/Context.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Command/Invoker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/Command/Invoker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/ModelManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/TopMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/FX/TopMenu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddProposal.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddProposal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddTeacher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/AddTeacher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/pt/isec/pa/apoio_poe/model/Data/FinalProposalManager/FinalProposalManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655630164608</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="new">
+      <created>1655631247255</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1655631247255</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
