@@ -254,10 +254,12 @@ public class ModelManager {
 
     public void save() {
         context.save();
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void load() {
         context.load();
+        pcs.firePropertyChange(PROP_DATA,null,null);
     }
 
     public void manualAttribution(String proposal_id, long student_id) {

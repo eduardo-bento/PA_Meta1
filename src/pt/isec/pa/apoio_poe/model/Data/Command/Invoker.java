@@ -1,9 +1,10 @@
 package pt.isec.pa.apoio_poe.model.Data.Command;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class Invoker {
+public class Invoker implements Serializable {
     private Deque<ICommand> history;
     private Deque<ICommand> redo;
 

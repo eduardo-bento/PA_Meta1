@@ -10,8 +10,9 @@ import pt.isec.pa.apoio_poe.model.Data.ModelManager;
 
 public class TopMenu extends MenuBar {
     ModelManager model;
-    Menu save;
-    MenuItem mSave;
+    Menu properties;
+    MenuItem save;
+    MenuItem load;
 
     public TopMenu(ModelManager model) {
         this.model = model;
@@ -24,18 +25,25 @@ public class TopMenu extends MenuBar {
     }
 
     private void registerHandlers() {
-        mSave.setOnAction(save -> model.save());
+        save.setOnAction(event -> {
+            model.save();
+        });
+        load.setOnAction(event -> {
+            model.load();
+        });
     }
 
     private void createViews() {
-        save = new Menu("Save");
-        mSave = new MenuItem("save");
-        mSave.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
-        mSave = new MenuItem("Save");
+        properties = new Menu("Properties");
 
-        save.getItems().add(mSave);
+        save = new MenuItem("Save");
+        load = new MenuItem("Load");
+        save.setAccelerator(new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN));
+        load.setAccelerator(new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN));
 
-        this.getMenus().addAll(save);
+        properties.getItems().addAll(save,load);
+
+        this.getMenus().addAll(properties);
 
         //this.setUseSystemMenuBar(true);
     }

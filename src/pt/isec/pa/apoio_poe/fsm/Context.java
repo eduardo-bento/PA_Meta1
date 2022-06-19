@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.List;
 
 public class Context {
-    static final String FILENAME = "d.data";
+    static final String FILENAME = "data.data";
     private IState state;
     private Data data;
 
